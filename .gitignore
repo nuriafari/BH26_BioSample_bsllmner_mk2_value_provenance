@@ -1,2 +1,7 @@
+# Data
 data/raw
+
+
+# Environments
 .venv
+.conda_env

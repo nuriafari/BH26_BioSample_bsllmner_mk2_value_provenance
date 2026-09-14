@@ -1,0 +1,26 @@
+name: claude_sandbox_env
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+
+dependencies:
+  # core
+  - python=3.12
+  - pip
+  - setuptools
+  - wheel
+  - curl
+  - pip:
+      - numpy
+      - pandas
+      - scikit-learn
+      - rapidfuzz
+      - torch
+      - transformers
+      - sentence-transformers
+      - matplotlib
+      - streamlit
+      - nltk
+      - nbconvert
+      - nbconvert           # pip — headless `jupyter nbconvert --execute` to run notebooks
