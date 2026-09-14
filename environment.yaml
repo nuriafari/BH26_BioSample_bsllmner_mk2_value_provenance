@@ -23,4 +23,3 @@ dependencies:
       - streamlit
       - nltk
       - nbconvert
-      - nbconvert           # pip — headless `jupyter nbconvert --execute` to run notebooks
