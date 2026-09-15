@@ -10,9 +10,9 @@
 conda config --set env_prompt '({name})'
 
 # Activate the environment
-conda activate $(pwd)/.conda_env
+conda activate $(pwd)/.bh_env
 
-
+    
 
 ### GET DATA ###
 mkdir data
@@ -20,4 +20,4 @@ mkdir data/raw
 
 # Download data from from URL
 curl -O https://biosampleplus.s3.ap-northeast-1.amazonaws.com/releases/2026-06_mistral-small3.1-24b.tar.gz
-tar xzf 2026-06_mistral-small3.1-24b.tar.gz -C data/raw
+tar xzf 2026-06_mistral-small3.1-24b.tar.gz -C data

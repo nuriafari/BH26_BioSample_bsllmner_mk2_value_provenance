@@ -1,7 +1,9 @@
 # Data
-data/raw
+data/2026-06_mistral-small3.1-24b
 
 
 # Environments
 .venv
 .conda_env
+.claude
+.claude-config
