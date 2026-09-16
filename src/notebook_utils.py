@@ -8,13 +8,15 @@ Enforced via .claude/skills/notebook-practices/SKILL.md.
 
 from __future__ import annotations
 
+import html
 import json
 import re
 from pathlib import Path
+from typing import Self
 
-import pandas as pd
 import matplotlib.pyplot as plt
-from IPython.display import Markdown, display
+import pandas as pd
+from IPython.display import HTML, Markdown, display
 
 
 def md(text: str) -> None:
@@ -107,3 +109,111 @@ def plot_heatmap_table(
 
     plt.tight_layout()
     plt.show()
+
+
+_NESTED_TABLE_CSS = """
+<style>
+.nested-table-outer { overflow-x: auto; }
+.nested-table-outer table.dataframe { font-size: 12px; border-collapse: collapse; }
+.nested-table-outer table.dataframe > thead > tr > th { text-align: left; background: #f0f0f0; position: sticky; top: 0; }
+.nested-table-outer table.dataframe > tbody > tr > td { vertical-align: top; text-align: left; padding: 4px 8px; border: 1px solid #ddd; }
+.nested-cell { max-height: 220px; overflow: auto; border: 1px solid #ccc; }
+.nested-cell table { font-size: 11px; border-collapse: collapse; }
+.nested-cell th, .nested-cell td { padding: 2px 5px; border: 1px solid #e0e0e0; }
+.nested-empty { color: #999; font-style: italic; }
+</style>
+"""
+
+
+_RAWHTML_MARKER = "\x01RAWHTML\x01"
+
+
+class RawHTML(str):
+    """Marks a string as already-safe, pre-built HTML (e.g. text with a substring highlighted
+    in `<b>`) -- `_cell_to_html` passes it through unescaped instead of running it through
+    `html.escape` like a normal string value. Caller is responsible for escaping any real data
+    text before embedding it. Uses a content-marker PREFIX, not just subclassing, because pandas
+    can silently downcast `str` subclasses back to plain `str` during DataFrame construction --
+    the marker survives that, class identity doesn't (ported from the same
+    `previous_work/notebooks/10_gemma_contrast_metadata_collation.ipynb` pattern as
+    `display_with_nested_tables`).
+    """
+
+    def __new__(cls, content: str) -> Self:
+        return super().__new__(cls, _RAWHTML_MARKER + content)
+
+
+def _cell_to_html(value: object, max_colwidth: int | None = None) -> str:
+    """Renders one cell for `display_with_nested_tables`: a nested DataFrame becomes its own
+    embedded, scrollable HTML sub-table instead of pandas' opaque `<DataFrame>` repr; a `RawHTML`
+    string is passed through unescaped; everything else is HTML-escaped, since the outer table is
+    rendered with `escape=False` (required to let the nested `<table>` tags through) -- free text
+    can genuinely contain '<'/'>'/'&' and must not be left raw.
+    """
+    if isinstance(value, str) and value.startswith(_RAWHTML_MARKER):
+        return value[len(_RAWHTML_MARKER) :]
+    if isinstance(value, pd.DataFrame):
+        if len(value) == 0:
+            return '<span class="nested-empty">(no rows)</span>'
+        # recurse through _cell_to_html for the nested frame's own cells too, so a RawHTML value
+        # (e.g. a bolded match) inside a nested table renders correctly instead of being escaped
+        # by pandas' own to_html -- otherwise this only worked one level deep.
+        inner_view = value.apply(lambda col: col.map(lambda v: _cell_to_html(v, max_colwidth)))
+        inner_html = inner_view.to_html(index=False, border=0, escape=False)
+        inner_html = re.sub(r">\s+<", "><", inner_html.strip())
+        return f'<div class="nested-cell">{inner_html}</div>'
+    if isinstance(value, list):
+        if len(value) == 0:
+            return '<span class="nested-empty">(none)</span>'
+        text = ", ".join(str(v).strip() for v in value)
+        if max_colwidth is not None and len(text) > max_colwidth:
+            text = text[:max_colwidth] + "…"
+        return html.escape(text)
+    if pd.isna(value):
+        return ""
+    text = str(value).strip()
+    if max_colwidth is not None and len(text) > max_colwidth:
+        text = text[:max_colwidth] + "…"
+    return html.escape(text)
+
+
+def _nested_table_html(df: pd.DataFrame, max_colwidth: int | None = None) -> str:
+    html_view = df.apply(lambda col: col.map(lambda v: _cell_to_html(v, max_colwidth)))
+    table_html = html_view.to_html(escape=False, index=False)
+    return _NESTED_TABLE_CSS + f'<div class="nested-table-outer">{table_html}</div>'
+
+
+def display_with_nested_tables(df: pd.DataFrame, max_colwidth: int | None = None) -> None:
+    """Displays a DataFrame as HTML with every DataFrame-valued cell rendered as a real,
+    scrollable embedded sub-table instead of pandas' cut-off `<DataFrame>` text repr. Use this
+    whenever a row naturally embeds nested per-record data (e.g. a BioSample summary row whose
+    `attributes` column holds its own small attribute-name/value table) -- adapted from the
+    `display_with_nested_tables` helper in `previous_work/notebooks/10_gemma_contrast_metadata_collation.ipynb`
+    (ported and simplified here, not imported, per this project's self-contained-code rule).
+    """
+    display(HTML(_nested_table_html(df, max_colwidth)))
+
+
+def json_leaf_values(obj: object) -> list[str]:
+    """Every scalar leaf value in a nested JSON-like structure (dict/list of
+    dicts/lists/scalars), stringified, `None` excluded. Used by
+    `table_covers_json` to check a nested-table view hasn't silently dropped
+    a value from the JSON it was built from.
+    """
+    if isinstance(obj, dict):
+        return [v for value in obj.values() for v in json_leaf_values(value)]
+    if isinstance(obj, list):
+        return [v for item in obj for v in json_leaf_values(item)]
+    if obj is None:
+        return []
+    return [str(obj)]
+
+
+def table_covers_json(raw: object, df: pd.DataFrame, max_colwidth: int | None = None) -> bool:
+    """True iff every scalar leaf value in `raw` appears somewhere in the
+    rendered HTML of `df` (as built by `display_with_nested_tables`) -- a
+    live completeness check, not an assumption, for whenever a table is
+    meant to be trusted as a full substitute for its source JSON.
+    """
+    table_html = _nested_table_html(df, max_colwidth)
+    return all(html.escape(str(v)) in table_html for v in json_leaf_values(raw))

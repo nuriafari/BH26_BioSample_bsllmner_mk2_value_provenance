@@ -11,6 +11,7 @@ dependencies:
   - setuptools
   - wheel
   - curl
+  - ollama  # serves the crate's own extraction model (mistral-small3.1:24b) locally, for the LLM trace-back tier -- see src/llm_evidence.py
   - pip:
       - numpy
       - pandas
@@ -23,3 +24,5 @@ dependencies:
       - streamlit
       - nltk
       - nbconvert
+      - spacy
+      - negspacy
