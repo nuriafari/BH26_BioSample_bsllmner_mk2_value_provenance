@@ -9,6 +9,7 @@ data
 .claude*
 CLAUDE*
 
+# Caches
 __pycache__/
-
-
+.cache
+.cc-toolchain
