@@ -26,7 +26,7 @@ help:
 	@echo "  env          Create the conda environment ($(CONDA_ENV)) from environment.yaml"
 	@echo "  data         Download and extract the RO-Crate into $(CRATE_DIR)"
 	@echo "  derived      Build derived parquet tables from the RO-Crate"
-	@echo "  notebooks    Execute both notebooks in place (builds env/data/derived first if needed)"
+	@echo "  notebooks    Execute all three notebooks in place (builds env/data/derived first if needed)"
 	@echo "  lint         Run ruff over src/ and notebooks/"
 	@echo "  llm-evidence Print how to run the optional GPU/vLLM evidence tier (see README.md)"
 	@echo "  clean        Remove derived data and Python caches (keeps the downloaded RO-Crate)"
@@ -58,7 +58,8 @@ $(TRACE_BACK_FULL): $(CRATE_DIR) | $(CONDA_ENV)
 derived: $(BIOSAMPLE_METADATA) $(TRACE_BACK_FULL)
 
 notebooks: derived
-	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_input_output_pilot.ipynb
+	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_rocrate_overview.ipynb
+	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_trace_back_pipeline.ipynb
 	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_trace_back_analysis.ipynb
 
 lint: | $(CONDA_ENV)

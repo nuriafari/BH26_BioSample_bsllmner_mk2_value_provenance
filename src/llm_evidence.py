@@ -43,6 +43,7 @@ installed -- only code paths that actually call the model need it importable.
 from __future__ import annotations
 
 import json
+import re
 from typing import TYPE_CHECKING, Any
 
 from bs_entries import _record_search_groups, _search, as_list, unwrap_biosample
@@ -103,10 +104,10 @@ Values to check:
 
 For each value: set found=true only if you can point to exact, verbatim text above that establishes it. If found=true, quotes must be one or more EXACT substrings copied character-for-character from the field text above (not paraphrased, not corrected, not re-punctuated) -- each quote copied from a single field's text; use more than one quote when the evidence is split across different fields. IMPORTANT: a value split across two different fields still counts as found=true -- e.g. if one field says "CD4" and a separate field says "TREG", that IS sufficient evidence for the value "CD4 TREG", even though no single field contains that whole phrase; quote "CD4" and quote "TREG" as two separate quotes. Only set found=false when the text genuinely provides no basis at all for the value, not merely because the exact phrase doesn't appear in one place. Each quote must be ONLY the raw text itself, copied exactly as it appears after the colon above -- never include the field name or a colon in the quote (e.g. quote `CD4`, never `cell_type: CD4`). If you cannot find a genuine verbatim quote, set found=false and quotes=[] -- do NOT invent a quote just because you believe the value is probably true, and do NOT rely on outside world knowledge that goes beyond what this text itself supports.
 
-Return one verdict per numbered item above, with `item_index` set to that item's number.
+Return one verdict per numbered item above, with `item_index` set to that item's number -- a complete, separate verdict object for EVERY item listed above, written out in full. Never omit an item's verdict, and never write "..." (or similar) in place of a verdict to mean "the rest follow the same pattern" -- every item gets its own real object, no matter how many there are.
 
-Respond with ONLY a JSON object of this exact shape, no other text:
-{{"verdicts": [{{"item_index": <int>, "found": <bool>, "quotes": [<string>, ...]}}, ...]}}"""
+Respond with ONLY a JSON object, no other text. This example shows the shape for two items -- adjust the number of verdict objects to match the number of items above, writing every one out:
+{{"verdicts": [{{"item_index": 1, "found": true, "quotes": ["exact quoted text"]}}, {{"item_index": 2, "found": false, "quotes": []}}]}}"""
 
 
 def load_engine(model: str = DEFAULT_MODEL, gpu_memory_utilization: float = 0.85) -> vllm.LLM:
@@ -129,13 +130,18 @@ def default_sampling_params() -> vllm.SamplingParams:
     return SamplingParams(temperature=0, max_tokens=MAX_OUTPUT_TOKENS)
 
 
+_TRAILING_COMMA = re.compile(r",(\s*[}\]])")
+
+
 def _parse_verdicts_json(content: str) -> dict[str, Any] | None:
     """Unconstrained generation (see module docstring -- no `format`/grammar constraint, just a
-    prompt instruction) sometimes wraps the JSON in a markdown fence or trails extra text after it;
-    strip a fence if present, then `raw_decode` (not `loads`) so trailing text after the JSON object
-    doesn't break parsing -- only the leading object matters.
+    prompt instruction) sometimes wraps the JSON in a markdown fence, trails extra text after it, or
+    leaves a trailing comma before a closing bracket (valid in Python/JS, not JSON) -- strip a fence
+    if present and any trailing commas, then `raw_decode` (not `loads`) so trailing text after the
+    JSON object doesn't break parsing -- only the leading object matters.
     """
     content = content.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
+    content = _TRAILING_COMMA.sub(r"\1", content)
     try:
         parsed, _ = json.JSONDecoder().raw_decode(content)
         return parsed
@@ -154,7 +160,11 @@ def call_llm_batch(
     place to check for "the call itself didn't work" separately from "the model said not found."
     """
     messages_batch = [[{"role": "system", "content": _SYSTEM_PROMPT}, {"role": "user", "content": p}] for p in prompts]
-    outputs = llm.chat(messages_batch, sampling_params, use_tqdm=False)
+    # Qwen3's chat template defaults to emitting a <think>...</think> block before the answer;
+    # ignored harmlessly by chat templates (Qwen2.5's included) that don't reference this kwarg at
+    # all. Disabled here because `_parse_verdicts_json` expects the JSON object to start the
+    # response -- a thinking trace first would break `raw_decode`, not because thinking is bad.
+    outputs = llm.chat(messages_batch, sampling_params, use_tqdm=False, chat_template_kwargs={"enable_thinking": False})
 
     results = []
     for output in outputs:
@@ -215,7 +225,12 @@ def _rows_from_verdicts(
     by_index: dict[int, dict[str, Any]] = {}
     if structured is not None:
         for v in structured.get("verdicts", []):
-            by_index[v["item_index"]] = v
+            # Unconstrained generation (see module docstring) means a syntactically valid JSON
+            # object can still be missing a required key -- treat that item as if the model hadn't
+            # returned a verdict for it at all (falls into the `verdict is None` branch below),
+            # rather than crashing the whole batch on one malformed item.
+            if isinstance(v, dict) and isinstance(v.get("item_index"), int) and isinstance(v.get("found"), bool):
+                by_index[v["item_index"]] = v
 
     rows = []
     for i, (field, value) in enumerate(not_found_items, 1):
@@ -240,7 +255,8 @@ def _rows_from_verdicts(
             )
             continue
 
-        matches, ungrounded = _ground_quotes(raw, verdict["quotes"])
+        quotes = [q for q in verdict.get("quotes") or [] if isinstance(q, str)]
+        matches, ungrounded = _ground_quotes(raw, quotes)
         rows.append(
             {
                 "target_field": field, "target_value": value, "llm_verdict": True,
