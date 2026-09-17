@@ -1,11 +1,9 @@
 """Analyzing raw source-field naming diversity behind the curated `target_field`s.
 
-`trace_back_full.parquet`'s own `raw_field`/`curated_fields` columns are confusingly named for
-this purpose -- `raw_field` is actually the ~9-value LLM-curated TARGET field (`cell_line`,
-`tissue`, ...), and `curated_fields` is the RAW metadata field name the evidence was found in
-(thousands of values). `rename_for_analysis` renames both to the names used throughout this
-notebook (`target_field`/`raw_field`) so "raw" means what it sounds like it means: as submitted,
-not yet curated.
+`trace_back_full.parquet` itself already names its columns this way: `target_field` is the
+~9-value LLM-curated field (`cell_line`, `tissue`, ...) an extraction targets, and `raw_fields` is
+the list of RAW metadata field name(s) (thousands of distinct values) the evidence for it was
+actually found under -- see `bs_entries.verify_extracted_against_raw_rows`.
 """
 
 from __future__ import annotations
@@ -15,25 +13,16 @@ import re
 import numpy as np
 import pandas as pd
 
-RENAME_TO_ANALYSIS_NAMES = {"raw_field": "target_field", "curated_fields": "raw_field"}
-
-
-def rename_for_analysis(trace_back: pd.DataFrame) -> pd.DataFrame:
-    """Renames `trace_back_full.parquet`'s own columns to this notebook's clearer names -- see
-    module docstring. Leaves every other column (`raw_value`, `strategy`, ...) untouched.
-    """
-    return trace_back.rename(columns=RENAME_TO_ANALYSIS_NAMES)
-
 
 def explode_raw_fields(trace_back: pd.DataFrame) -> pd.DataFrame:
     """One row per (extracted value, evidence field) pair, dropping `strategy == "not found"`
-    rows (their `raw_field` list is always empty -- nothing was found, so there's no source
+    rows (their `raw_fields` list is always empty -- nothing was found, so there's no source
     field to attribute the value to). A value matching more than one raw field (`n_matches > 1`)
     contributes one row per matching field, so it counts toward each -- e.g. a value filed under
     both `cell_line` and `source_name` counts as evidence for both when tallying raw-field usage.
     """
     found = trace_back[trace_back["strategy"] != "not found"]
-    return found.explode("raw_field").rename(columns={"raw_field": "raw_field"})
+    return found.explode("raw_fields").rename(columns={"raw_fields": "raw_field"})
 
 
 _NORMALIZE_STRIP_RE = re.compile(r"[-/|_.\s]")

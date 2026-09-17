@@ -2,8 +2,8 @@
 `bs_entries.py` already marked `"not found"` (exact/case-insensitive/normalized/ontology-synonym/
 fuzzy all failed -- see `MATCH_STRATEGIES`).
 
-Same output shape as the deterministic check (`curated_fields`/`curated_texts`/
-`curated_matched_phrase`, rendered with the same `matches_display_table`), so the two tiers are a
+Same output shape as the deterministic check (`raw_fields`/`raw_texts`/`raw_matched_phrase`,
+rendered with the same `matches_display_table`), so the two tiers are a
 drop-in continuation of each other, not a parallel system: the LLM is asked to find evidence
 in the record's full text (which can bridge abbreviations, construct-name prefixes, or a value
 split across two attributes -- gaps the deterministic tiers can't close), but every quote it
@@ -14,64 +14,59 @@ modeled on `previous_work/scripts/common/evidence_grounding.py`'s Validator A/B 
 that hallucinates a quote is caught here regardless of how confident it sounds, because the check
 never trusts the model's own claim that something is "verbatim."
 
-Calls the SAME open-source model the crate's own extraction pipeline used --
-`mistral-small3.1:24b`, served locally by Ollama (see `data/2026-06_mistral-small3.1-24b/README.md`:
-"Runs used `bsllmner2_select` with `mistral-small3.1:24b` served by Ollama, `--num-ctx 4096`") --
-rather than a hosted API: this keeps the validator in the same model family/weight class as the
-extractor it's checking (a genuinely different model would also work, but there's no reason to pay
-for a hosted frontier model when the project already has GPU capacity and the exact open-weight
-model on hand), and it costs nothing per call beyond GPU time this environment already has.
+Calls a local open-source model served by vLLM, not a hosted API -- no per-call cost beyond GPU
+time this environment already has. Deliberately a DIFFERENT model than the one that produced the
+extraction being checked (`mistral-small3.1:24b`, see `EXTRACTOR_MODEL` below and
+`data/2026-06_mistral-small3.1-24b/README.md`), not the same weights re-run: re-querying the exact
+model that already produced a value can't be expected to independently catch that same model's own
+blind spots (e.g. a multi-hop inference it wasn't inclined to make during extraction is unlikely to
+suddenly appear when the same weights are asked about it again) -- the `grounding_verification_
+literature_design` memory's own recommendation is explicit on this ("different model than the
+extractor"), which an earlier version of this module got wrong by defaulting to `EXTRACTOR_MODEL`.
+Still a small, self-hostable open model (not a frontier hosted one) -- one step up in scale from
+the extractor, not a categorically bigger/more expensive tier -- so the design stays scalable to
+the full crate's residual, per the cost/time discussion in the notebook.
+
+vLLM (not Ollama): measured directly, Ollama's llama.cpp backend serves concurrent requests near-
+serially under real load (throughput stayed flat at ~0.2-0.3 calls/sec per GPU from 4 to 16
+concurrent requests, and JSON-schema-constrained decoding made it worse) -- vLLM's PagedAttention
+lets it batch dynamically instead, measured at ~23 calls/sec on one GPU with 200 real prompts in
+one batch. That means the calling convention here is batch-shaped, not one-call-per-record: the
+`vllm.LLM` engine is loaded once per process (expensive -- model load plus CUDA graph capture) and
+every function in this module that talks to it takes a *list* of records and returns a *list* of
+results from one `llm.chat()` call, rather than being called once per accession. The vLLM import
+is deferred into the functions that need it (not at module level) because this module is also
+imported by notebooks running under the project's main conda env, which doesn't have vLLM
+installed -- only code paths that actually call the model need it importable.
 """
 
 from __future__ import annotations
 
 import json
-import urllib.error
-import urllib.request
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from bs_entries import _record_search_groups, _search, as_list, unwrap_biosample
 
-DEFAULT_MODEL = "mistral-small3.1:24b"
-OLLAMA_HOST = "http://127.0.0.1:11434"
-# Matches the extraction pipeline's own `--num-ctx 4096` (see module docstring) -- this tier's
-# prompts (one record's text + a handful of field/value pairs) are well under that.
-NUM_CTX = 4096
+if TYPE_CHECKING:
+    import vllm
+
+# The crate's own extraction model (see module docstring) -- named here for documentation/
+# comparison purposes only; this module never calls it, on purpose (see DEFAULT_MODEL).
+EXTRACTOR_MODEL = "mistral-small3.1:24b"
+
+# A distinct, moderately larger open-weight model -- independent of EXTRACTOR_MODEL's own biases,
+# still small enough to self-host at crate scale.
+DEFAULT_MODEL = "Qwen/Qwen2.5-3B-Instruct"
+# Passed as `max_model_len` when constructing the `vllm.LLM` engine. Unlike Ollama, vLLM doesn't
+# reserve this much KV-cache per concurrent slot -- PagedAttention shares one dynamic pool across
+# every in-flight sequence, so this just caps how long any single prompt+output can be (prompts
+# here run ~350-950 tokens); it's not a lever for concurrency the way it was for Ollama.
+NUM_CTX = 3072
+# Plenty for a handful of `{item_index, found, quotes}` verdicts per record -- observed outputs
+# top out under 120 tokens even for records with several not-found items.
+MAX_OUTPUT_TOKENS = 256
 
 _SYSTEM_PROMPT = "You are a careful fact-checking assistant for biomedical metadata curation."
-
-# Ollama's structured-output mode (`format` as a JSON Schema, constrained decoding -- supported
-# regardless of whether the underlying model was trained for tool use) -- one verdict per
-# requested item, matched back by a plain echoed integer `item_index` rather than by echoing the
-# field/value strings themselves: measured directly against this model (unlike Claude in an
-# earlier version of this tier), `mistral-small3.1:24b` sometimes echoes the whole labeled token
-# (`'field="knockout_gene"'`) instead of just the value inside it when asked to echo a quoted
-# string -- a plain integer has no such formatting ambiguity, and a call here only ever covers a
-# handful of items (one record's own not-found fields), so trusting position via an explicit,
-# model-stated index is both simpler and more robust than previous_work's string-echo approach
-# (justified there by calls covering many more claims at once).
-_VERDICT_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "verdicts": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "item_index": {"type": "integer", "description": "the number of this item from the numbered list above"},
-                    "found": {"type": "boolean", "description": "true only if exact text above establishes this value"},
-                    "quotes": {
-                        "type": "array",
-                        "items": {"type": "string"},
-                        "description": "if found=true: one or more EXACT verbatim substrings copied from the text above",
-                    },
-                },
-                "required": ["item_index", "found", "quotes"],
-            },
-        }
-    },
-    "required": ["verdicts"],
-}
 
 
 def _field_lines(raw: dict[str, Any]) -> list[str]:
@@ -95,7 +90,7 @@ def _field_lines(raw: dict[str, Any]) -> list[str]:
 
 
 def build_prompt(raw: dict[str, Any], items: list[tuple[str, str]]) -> str:
-    """`items`: `(raw_field, raw_value)` pairs already marked `"not found"` for this one record."""
+    """`items`: `(target_field, target_value)` pairs already marked `"not found"` for this one record."""
     text_block = "\n".join(_field_lines(raw))
     items_block = "\n".join(f"{i}. {field} = {value}" for i, (field, value) in enumerate(items, 1))
     return f"""Below is a BioSample record's searchable text, one field per line:
@@ -106,50 +101,70 @@ A deterministic exact/case-insensitive/normalized substring search already faile
 Values to check:
 {items_block}
 
-For each value: set found=true only if you can point to exact, verbatim text above that establishes it. If found=true, quotes must be one or more EXACT substrings copied character-for-character from the field text above (not paraphrased, not corrected, not re-punctuated) -- each quote copied from a single field's text; use more than one quote when the evidence is split across different fields. If you cannot find a genuine verbatim quote, set found=false and quotes=[] -- do NOT invent a quote just because you believe the value is probably true, and do NOT rely on outside world knowledge that goes beyond what this text itself supports.
+For each value: set found=true only if you can point to exact, verbatim text above that establishes it. If found=true, quotes must be one or more EXACT substrings copied character-for-character from the field text above (not paraphrased, not corrected, not re-punctuated) -- each quote copied from a single field's text; use more than one quote when the evidence is split across different fields. IMPORTANT: a value split across two different fields still counts as found=true -- e.g. if one field says "CD4" and a separate field says "TREG", that IS sufficient evidence for the value "CD4 TREG", even though no single field contains that whole phrase; quote "CD4" and quote "TREG" as two separate quotes. Only set found=false when the text genuinely provides no basis at all for the value, not merely because the exact phrase doesn't appear in one place. Each quote must be ONLY the raw text itself, copied exactly as it appears after the colon above -- never include the field name or a colon in the quote (e.g. quote `CD4`, never `cell_type: CD4`). If you cannot find a genuine verbatim quote, set found=false and quotes=[] -- do NOT invent a quote just because you believe the value is probably true, and do NOT rely on outside world knowledge that goes beyond what this text itself supports.
 
-Return one verdict per numbered item above, with `item_index` set to that item's number."""
+Return one verdict per numbered item above, with `item_index` set to that item's number.
+
+Respond with ONLY a JSON object of this exact shape, no other text:
+{{"verdicts": [{{"item_index": <int>, "found": <bool>, "quotes": [<string>, ...]}}, ...]}}"""
 
 
-def call_llm(prompt: str, model: str = DEFAULT_MODEL, timeout: int = 120) -> tuple[dict[str, Any] | None, dict[str, Any]]:
-    """Runs one call against a local Ollama server's `/api/chat` with schema-validated structured
-    output. Returns `(structured_output, call_info)` -- `structured_output` is `None` on any
-    failure (connection error, timeout, or a response that isn't valid JSON), so callers have one
-    place to check for "the call itself didn't work" separately from "the model said not found."
-    `call_info` (wall time plus Ollama's own prompt/output token counts) is always returned, for
-    the notebook's call log -- no cost field, since this is self-hosted GPU inference, not a
-    billed API call.
+def load_engine(model: str = DEFAULT_MODEL, gpu_memory_utilization: float = 0.85) -> vllm.LLM:
+    """Constructs the `vllm.LLM` engine for one GPU (set `CUDA_VISIBLE_DEVICES` before calling this,
+    one process per GPU -- vLLM doesn't need a second GPU to be handed data-parallel work the way a
+    single Ollama instance did). Expensive (model load plus CUDA graph capture, a few minutes) --
+    call this once per process and reuse the returned engine for every batch, never per-record.
     """
-    body = {
-        "model": model,
-        "messages": [{"role": "system", "content": _SYSTEM_PROMPT}, {"role": "user", "content": prompt}],
-        "format": _VERDICT_SCHEMA,
-        "stream": False,
-        "options": {"num_ctx": NUM_CTX},
-    }
-    request = urllib.request.Request(
-        f"{OLLAMA_HOST}/api/chat", data=json.dumps(body).encode(), headers={"Content-Type": "application/json"}, method="POST",
-    )
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            data = json.loads(response.read())
-    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
-        return None, {"error": str(e)}
+    from vllm import LLM
 
-    call_info = {
-        "duration_ms": data.get("total_duration", 0) / 1e6,
-        "prompt_tokens": data.get("prompt_eval_count"),
-        "output_tokens": data.get("eval_count"),
-    }
-    content = (data.get("message") or {}).get("content")
-    if not content:
-        call_info["error"] = f"no message content in response: {data}"
-        return None, call_info
+    return LLM(model=model, dtype="bfloat16", gpu_memory_utilization=gpu_memory_utilization, max_model_len=NUM_CTX)
+
+
+def default_sampling_params() -> vllm.SamplingParams:
+    """Greedy decoding (this is a fact-checking verdict, not creative generation -- there's no
+    reason to sample) up to `MAX_OUTPUT_TOKENS`.
+    """
+    from vllm import SamplingParams
+
+    return SamplingParams(temperature=0, max_tokens=MAX_OUTPUT_TOKENS)
+
+
+def _parse_verdicts_json(content: str) -> dict[str, Any] | None:
+    """Unconstrained generation (see module docstring -- no `format`/grammar constraint, just a
+    prompt instruction) sometimes wraps the JSON in a markdown fence or trails extra text after it;
+    strip a fence if present, then `raw_decode` (not `loads`) so trailing text after the JSON object
+    doesn't break parsing -- only the leading object matters.
+    """
+    content = content.strip().removeprefix("```json").removeprefix("```").removesuffix("```").strip()
     try:
-        return json.loads(content), call_info
-    except json.JSONDecodeError as e:
-        call_info["error"] = f"model response wasn't valid JSON despite the schema: {e}"
-        return None, call_info
+        parsed, _ = json.JSONDecoder().raw_decode(content)
+        return parsed
+    except json.JSONDecodeError:
+        return None
+
+
+def call_llm_batch(
+    prompts: list[str], llm: vllm.LLM, sampling_params: vllm.SamplingParams
+) -> list[tuple[dict[str, Any] | None, dict[str, Any]]]:
+    """Runs every prompt in `prompts` through one `llm.chat()` call -- vLLM batches them internally
+    (continuous batching + PagedAttention), so this is the unit that actually gets the throughput
+    win described in the module docstring; calling this once per prompt would defeat the point.
+    Returns one `(structured_output, call_info)` pair per prompt, in the same order --
+    `structured_output` is `None` if the model's response wasn't valid JSON, so callers have one
+    place to check for "the call itself didn't work" separately from "the model said not found."
+    """
+    messages_batch = [[{"role": "system", "content": _SYSTEM_PROMPT}, {"role": "user", "content": p}] for p in prompts]
+    outputs = llm.chat(messages_batch, sampling_params, use_tqdm=False)
+
+    results = []
+    for output in outputs:
+        text = output.outputs[0].text
+        call_info = {"output_tokens": len(output.outputs[0].token_ids), "prompt_tokens": len(output.prompt_token_ids)}
+        structured = _parse_verdicts_json(text)
+        if structured is None:
+            call_info["error"] = f"model response wasn't valid JSON: {text!r}"
+        results.append((structured, call_info))
+    return results
 
 
 def _ground_quotes(raw: dict[str, Any], quotes: list[str]) -> tuple[list[tuple[str, str, tuple[int, int]]], list[str]]:
@@ -176,14 +191,11 @@ def _ground_quotes(raw: dict[str, Any], quotes: list[str]) -> tuple[list[tuple[s
     return matches, ungrounded
 
 
-def verify_not_found_with_llm(
-    raw: dict[str, Any], not_found_items: list[tuple[str, str]], model: str = DEFAULT_MODEL,
-) -> tuple[list[dict[str, Any]], dict[str, Any]]:
-    """One call to the local model covering every `(raw_field, raw_value)` in `not_found_items` for
-    this one record (batched per record, not per field -- same reasoning as `previous_work`'s
-    Validator B: one call amortizes the fixed per-request overhead -- prompt-processing the
-    record's text, model load state -- over every field this record still needs checked). Returns
-    `(rows, call_info)`; `rows` has the same shape as
+def _rows_from_verdicts(
+    structured: dict[str, Any] | None, not_found_items: list[tuple[str, str]], raw: dict[str, Any]
+) -> list[dict[str, Any]]:
+    """Shared by the single-record and batch entry points below: turns one call's parsed `structured`
+    output (or `None`, on a call failure) into one row per `not_found_items` entry. Row shape matches
     `bs_entries.verify_extracted_against_raw_rows` plus three columns:
 
     - `strategy`: `"llm"` if at least one of the LLM's quotes grounded (see `_ground_quotes`),
@@ -196,13 +208,10 @@ def verify_not_found_with_llm(
       text -- empty in the normal case; non-empty is the hallucination signal this tier exists to
       catch.
 
-    If the call itself fails (`call_llm` returns `None`), every item is returned with
+    If the call itself failed (`structured` is `None`), every item is returned with
     `strategy="not found"` and `llm_verdict=None` (a call failure, not a "not found" verdict --
     kept distinguishable via `llm_verdict is None` rather than silently treated as agreement).
     """
-    prompt = build_prompt(raw, not_found_items)
-    structured, call_info = call_llm(prompt, model=model)
-
     by_index: dict[int, dict[str, Any]] = {}
     if structured is not None:
         for v in structured.get("verdicts", []):
@@ -214,8 +223,8 @@ def verify_not_found_with_llm(
         if verdict is None:
             rows.append(
                 {
-                    "raw_field": field, "raw_value": value, "strategy": "not found", "llm_verdict": None,
-                    "curated_fields": [], "curated_texts": [], "curated_matched_phrase": [], "n_matches": 0,
+                    "target_field": field, "target_value": value, "strategy": "not found", "llm_verdict": None,
+                    "raw_fields": [], "raw_texts": [], "raw_matched_phrase": [], "n_matches": 0,
                     "llm_ungrounded_quotes": [],
                 }
             )
@@ -224,8 +233,8 @@ def verify_not_found_with_llm(
         if not verdict["found"]:
             rows.append(
                 {
-                    "raw_field": field, "raw_value": value, "strategy": "not found", "llm_verdict": False,
-                    "curated_fields": [], "curated_texts": [], "curated_matched_phrase": [], "n_matches": 0,
+                    "target_field": field, "target_value": value, "strategy": "not found", "llm_verdict": False,
+                    "raw_fields": [], "raw_texts": [], "raw_matched_phrase": [], "n_matches": 0,
                     "llm_ungrounded_quotes": [],
                 }
             )
@@ -234,13 +243,43 @@ def verify_not_found_with_llm(
         matches, ungrounded = _ground_quotes(raw, verdict["quotes"])
         rows.append(
             {
-                "raw_field": field, "raw_value": value, "llm_verdict": True,
+                "target_field": field, "target_value": value, "llm_verdict": True,
                 "strategy": "llm" if matches else "not found",
-                "curated_fields": [name for name, _, _ in matches],
-                "curated_texts": [content for _, content, _ in matches],
-                "curated_matched_phrase": [content[start:end] for _, content, (start, end) in matches],
+                "raw_fields": [name for name, _, _ in matches],
+                "raw_texts": [content for _, content, _ in matches],
+                "raw_matched_phrase": [content[start:end] for _, content, (start, end) in matches],
                 "n_matches": len(matches),
                 "llm_ungrounded_quotes": ungrounded,
             }
         )
+    return rows
+
+
+def verify_not_found_with_llm_batch(
+    records: list[tuple[dict[str, Any], list[tuple[str, str]]]], llm: vllm.LLM, sampling_params: vllm.SamplingParams
+) -> list[tuple[list[dict[str, Any]], dict[str, Any]]]:
+    """The batch entry point real callers should use (see module docstring): one `(raw,
+    not_found_items)` pair per BioSample record, all sent to vLLM in a single `llm.chat()` call via
+    `call_llm_batch` (one call per record, batched per record not per field -- same reasoning as
+    `previous_work`'s Validator B: one call amortizes the fixed per-request overhead over every
+    field that record still needs checked). Returns one `(rows, call_info)` pair per input record,
+    in the same order -- see `_rows_from_verdicts` for what `rows` contains.
+    """
+    prompts = [build_prompt(raw, items) for raw, items in records]
+    call_results = call_llm_batch(prompts, llm, sampling_params)
+    return [
+        (_rows_from_verdicts(structured, items, raw), call_info)
+        for (raw, items), (structured, call_info) in zip(records, call_results)
+    ]
+
+
+def verify_not_found_with_llm(
+    raw: dict[str, Any], not_found_items: list[tuple[str, str]], llm: vllm.LLM, sampling_params: vllm.SamplingParams
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Single-record convenience wrapper over `verify_not_found_with_llm_batch`, for notebook use
+    (checking one record at a time) -- real batch jobs should call the batch function directly
+    rather than loop this over records one by one, since a length-1 batch wastes vLLM's whole
+    reason for existing.
+    """
+    [(rows, call_info)] = verify_not_found_with_llm_batch([(raw, not_found_items)], llm, sampling_params)
     return rows, call_info

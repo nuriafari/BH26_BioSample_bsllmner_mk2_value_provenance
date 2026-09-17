@@ -180,7 +180,7 @@ def bs_record_table(raw: dict[str, Any]) -> pd.DataFrame:
 # Weakest/riskiest evidence last: a literal match of the value itself (exact/case-insensitive/
 # normalized) is trusted more than a match against a different-but-related string (ontology
 # synonym), which in turn is trusted more than a spelling-tolerant guess (fuzzy).
-MATCH_STRATEGIES: list[str] = ["exact", "case-insensitive", "normalized", "ontology synonym", "fuzzy"]
+MATCH_STRATEGIES: list[str] = ["exact", "case-insensitive", "normalized", "ontology synonym", "bag of words", "fuzzy"]
 
 
 # Values an extraction pipeline can emit that mean "no answer", not a real claim about the
@@ -238,6 +238,34 @@ def is_negated(content: str, span: tuple[int, int]) -> bool:
     return bool(entity._.negex)
 
 
+# Dotted JSON paths (see `_iter_leaf_fields`) that predate the generic secondary-field walk and
+# are remapped back to their original short names -- `field_diversity.py`'s free-text/structured
+# field-name bucketing keys off these exact names, and both were common enough (title on most
+# records, comment on roughly a third) to deserve a readable label anyway.
+_SECONDARY_LEGACY_NAMES = {"Description.Title": "title", "Description.Comment.Paragraph": "comment"}
+
+
+def _iter_leaf_fields(obj: Any, prefix: str) -> Iterator[tuple[str, str]]:
+    """Walks a nested dict/list, yielding `(name, content)` for every non-empty leaf value.
+    `name` is the dotted path of keys leading to it, with a trailing `.content` dropped -- this
+    record's JSON is BioSample XML converted to JSON, so almost every leaf sits under a `content`
+    key (the XML text-node convention), and that suffix alone names nothing.
+    """
+    if isinstance(obj, dict):
+        for key, value in obj.items():
+            yield from _iter_leaf_fields(value, f"{prefix}{key}.")
+        return
+    if isinstance(obj, list):
+        for item in obj:
+            yield from _iter_leaf_fields(item, prefix)
+        return
+    content = str(obj) if obj is not None else ""
+    if not content:
+        return
+    name = prefix.rstrip(".").removesuffix(".content")
+    yield name, content
+
+
 def _record_search_groups(raw: dict[str, Any]) -> tuple[list[tuple[str, str, str]], list[tuple[str, str, str]], str, str]:
     """Precomputes everything `verify_extracted_against_raw_rows` needs to search this one
     record, ONCE per record rather than once per (field, attribute) pair -- measured 71x faster
@@ -245,16 +273,19 @@ def _record_search_groups(raw: dict[str, Any]) -> tuple[list[tuple[str, str, str
     against it (1,148 -> 81,686 records/s).
 
     Returns two separate groups, each `[(name, content, content_lower), ...]`: `attribute_entries`
-    (every `Attributes.Attribute`, in order) and `secondary_entries` (`Title`, then
-    `Description.Comment.Paragraph` -- a free-text submitter protocol description, present on
-    roughly a third of records). `_search` checks `secondary_entries` only when nothing in
-    `attribute_entries` matches at any tier: a submitter far more often repeats the same fact
-    from a structured attribute into free text than states something new there, so this is both
-    the more useful field to report a match against and the cheaper one to check first (skips
-    scanning the -- often much longer -- title/comment text entirely for the common case).
-    `attr_combined_lower`/`secondary_combined_lower` are each group's content joined into one
-    lowercased string, for a cheap single-`in`-check pre-screen before the more expensive
-    per-attribute `_search_group` (see its docstring for why this pre-screen exists).
+    (every `Attributes.Attribute`, in order) and `secondary_entries` (every leaf value elsewhere
+    in the record -- `Description.Title`/`.Comment.Paragraph`, but also `Ids.Id`, `Owner`,
+    `Links.Link`, and anything else the record happens to carry). `_search` checks
+    `secondary_entries` only when nothing in `attribute_entries` matches at any tier: a submitter
+    far more often repeats the same fact from a structured attribute into free text than states
+    something new there, so this is both the more useful field to report a match against and the
+    cheaper one to check first. Checking every other field, not just title/comment, catches cases
+    like a submitter encoding a knockout gene only in the record's own sample-name identifier
+    (`Ids.Id[db_label=Sample name].content`), invisible to a checker that only ever looked at
+    title/comment free text. `attr_combined_lower`/`secondary_combined_lower` are each group's
+    content joined into one lowercased string, for a cheap single-`in`-check pre-screen before the
+    more expensive per-attribute `_search_group` (see its docstring for why this pre-screen
+    exists).
 
     Each attribute contributes its content AND, separately, its own NAME as a second searchable
     entry under the same reported field -- found directly on real data (5/100 in a hand-reviewed
@@ -273,10 +304,12 @@ def _record_search_groups(raw: dict[str, Any]) -> tuple[list[tuple[str, str, str
             attribute_entries.append((name, name))
     attribute_entries = [(name, content, content.lower()) for name, content in attribute_entries]
 
-    description = bs.get("Description") or {}
-    title = description.get("Title") or ""
-    comment = (description.get("Comment") or {}).get("Paragraph") or ""
-    secondary_entries = [(name, content, content.lower()) for name, content in [("title", title), ("comment", str(comment))] if content]
+    secondary_entries = [
+        (_SECONDARY_LEGACY_NAMES.get(path, path), content, content.lower())
+        for key, value in bs.items()
+        if key != "Attributes"
+        for path, content in _iter_leaf_fields(value, f"{key}.")
+    ]
 
     attr_combined_lower = " ".join(content_lower for _, _, content_lower in attribute_entries)
     secondary_combined_lower = " ".join(content_lower for _, _, content_lower in secondary_entries)
@@ -323,17 +356,26 @@ def _find_all_matches(needle: str, needle_lower: str, entries: list[tuple[str, s
 _NORMALIZE_MIN_LENGTH = 4  # below this, a normalized needle is too short/generic to trust as a match signal
 _ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH = 5  # below this, an ontology-synonym candidate (e.g. a 2-letter chemical symbol) only gets exact matching -- see _search_ontology_synonyms
 _SEPARATOR_CHARS = " \t\n\r-_"
+_BRACKET_OPEN = "([{"
+_BRACKET_CLOSE = ")]}"
 
 
-def _normalize_with_positions(text: str, strip_separators: bool = False) -> tuple[str, list[int]]:
-    """Lowercases `text`, drops any `(...)` parenthetical content, and either collapses runs of
+def _normalize_with_positions(text: str, strip_separators: bool = False, keep_bracket_content: bool = False) -> tuple[str, list[int]]:
+    """Lowercases `text`, then handles `(...)`/`[...]`/`{...}` one of two ways -- `keep_bracket_content=False`
+    (the default) drops the whole bracketed span, `keep_bracket_content=True` keeps the inner text and treats
+    just the bracket characters themselves as separators -- and either collapses runs of
     whitespace/hyphen/underscore to a single space (`strip_separators=False` -- the default) or
-    removes them entirely (`strip_separators=True`). The default form matches a separator that's
-    merely spelled differently on each side (`"Sinoatrial node (SAN) cells"` and
-    `"sinoatrial_node cells"` both normalize to `"sinoatrial node cells"`); the stripped form
-    additionally matches a separator present on only ONE side (`"HEK293"` inside `"HEK 293"`,
+    removes them entirely (`strip_separators=True`). Dropping bracket content is right when the
+    bracket holds a redundant restatement (`"Sinoatrial node (SAN) cells"` -> matches
+    `"sinoatrial node cells"`); keeping it is right when the bracket holds content that's actually
+    part of the value (`"lung (carcinoma) cell line"` -> matches `"lung carcinoma cell line"`,
+    needed for `disease="lung carcinoma"`) -- the two real cases need opposite treatment of the
+    same syntax, so `_search_normalized_one` tries both rather than picking one. Separately, the
+    default (collapse-to-space) form matches a separator that's merely spelled differently on each
+    side (`"sinoatrial_node cells"` also normalizes to `"sinoatrial node cells"`); the stripped
+    form additionally matches a separator present on only ONE side (`"HEK293"` inside `"HEK 293"`,
     `"cellline"` inside `"cell_line"`) -- a collapse-to-one-space rule can't bridge a boundary
-    that's simply missing on the other side, so `_search_normalized_one` tries both forms.
+    that's simply missing on the other side.
     Returns the normalized string alongside `positions`, where `positions[i]` is the index in the
     ORIGINAL `text` that `normalized[i]` came from, so a match found in the normalized string can
     still be highlighted at its real location in the original text.
@@ -344,17 +386,17 @@ def _normalize_with_positions(text: str, strip_separators: bool = False) -> tupl
     prev_was_space = True  # collapses leading separators too
     while i < n:
         c = text[i]
-        if c == "(":
+        if c in _BRACKET_OPEN and not keep_bracket_content:
             depth = 1
             i += 1
             while i < n and depth > 0:
-                if text[i] == "(":
+                if text[i] in _BRACKET_OPEN:
                     depth += 1
-                elif text[i] == ")":
+                elif text[i] in _BRACKET_CLOSE:
                     depth -= 1
                 i += 1
             continue
-        if c in _SEPARATOR_CHARS:
+        if (c in _SEPARATOR_CHARS) or (keep_bracket_content and (c in _BRACKET_OPEN or c in _BRACKET_CLOSE)):
             if not strip_separators and not prev_was_space:
                 out_chars.append(" ")
                 out_positions.append(i)
@@ -371,21 +413,76 @@ def _normalize_with_positions(text: str, strip_separators: bool = False) -> tupl
     return "".join(out_chars), out_positions
 
 
+# Fused-affix boundary exception for the `normalized` tier ONLY (never exact/case-insensitive --
+# see MATCH_STRATEGIES ordering: normalized is already the tolerant tier, this narrows what it
+# additionally accepts rather than loosening the strict tiers above it). Empirically derived
+# (2026-09, 5,000-row sample of the live "not found" residual, `_record_search_groups`-based scan
+# of what's actually fused to a matched span with no boundary) from the dominant, safe, reusable
+# genotype/construct-naming markers -- deliberately excludes bare digits/single letters (a fused
+# digit can rename a different gene entirely, e.g. Nrf1/Nrf2 -- same risk `_words_fuzzy_equal`
+# already guards against) and one-off compound tokens that turned out to be a DIFFERENT gene name
+# fused with no separator (e.g. "Trp53", "Kras", "Pten" turned up as "suffixes" purely because they
+# sat next to some other matched value in the same free-text attribute, not because they're a
+# generic marker) rather than a generalizable marker.
+_KNOWN_SUFFIX_TOKENS = frozenset(
+    {
+        "KO", "ko", "CKO", "cKO", "fl", "f", "flox", "LSL", "GFP", "eGFP", "OE", "KD", "wt", "Cre", "IRES", "lox", "delta", "del", "s",
+    }
+)
+_KNOWN_PREFIX_TOKENS = frozenset({"sh", "si", "sg", "TRE", "peg"})
+# Point-mutation notation (e.g. KrasG12D, BrafV600E, Trp53R172H) -- a naming CLASS, not a fixed
+# string list: one wild-type residue letter, a codon number, one mutant residue letter.
+_POINT_MUTATION_SUFFIX_RE = re.compile(r"^[A-Z]\d{1,4}[A-Z]$")
+
+
+def _fused_token(content: str, index: int, direction: int) -> str:
+    """The contiguous run of alnum characters in `content` starting at `index` and extending in
+    `direction` (+1 for a suffix scan going right, -1 for a prefix scan going left) -- the whole
+    token fused to a match with no separator, for checking against `_KNOWN_SUFFIX_TOKENS`/
+    `_KNOWN_PREFIX_TOKENS`/`_POINT_MUTATION_SUFFIX_RE` as a single unit (not "starts with"), so
+    `"OEHZ"` isn't accepted just because `"OE"` is known -- it would need its own list entry.
+    """
+    n = len(content)
+    j = index
+    while 0 <= j < n and content[j].isalnum():
+        j += direction
+    return content[index:j] if direction > 0 else content[j + 1 : index + 1]
+
+
+def _has_word_boundary_or_known_affix(content: str, start: int, end: int) -> bool:
+    """Same as `_has_word_boundary`, but a violated boundary is still accepted when the fused
+    token sitting there exactly matches a known suffix/prefix marker (or the point-mutation
+    pattern) -- e.g. `"Ptgsc"` fused to a trailing `"KO"` with no separator, or `"sh"` fused to a
+    leading `"BRD9"`. Only used by the `normalized` tier (see `_search_normalized_one`) -- exact
+    and case-insensitive stay strict.
+    """
+    left_ok = start == 0 or not content[start - 1].isalnum() or _fused_token(content, start - 1, -1) in _KNOWN_PREFIX_TOKENS
+    if not left_ok:
+        return False
+    if end >= len(content) or not content[end].isalnum():
+        return True
+    suffix = _fused_token(content, end, 1)
+    return suffix in _KNOWN_SUFFIX_TOKENS or bool(_POINT_MUTATION_SUFFIX_RE.match(suffix))
+
+
 def _search_normalized_one(needle: str, content: str) -> tuple[int, int] | None:
-    """Whether `needle` appears in `content` once both are normalized -- tried with separators
-    collapsed to a space first (catches punctuation/parenthetical noise, e.g. `"Sinoatrial node
-    cell"` inside `"Sinoatrial node (SAN) cells"`), then with separators stripped entirely
-    (catches a boundary present on only one side, e.g. `"HEK293"` inside `"HEK 293"`, `"cellline"`
-    inside `"cell_line"`) -- see `_normalize_with_positions` for why both forms are needed.
+    """Whether `needle` appears in `content` once both are normalized -- tried under three forms
+    (see `_normalize_with_positions`): separators collapsed to a space (catches punctuation/
+    parenthetical noise, e.g. `"Sinoatrial node cell"` inside `"Sinoatrial node (SAN) cells"`),
+    separators stripped entirely (catches a boundary present on only one side, e.g. `"HEK293"`
+    inside `"HEK 293"`), and bracket punctuation stripped with its CONTENT kept (catches
+    `"lung carcinoma"` inside `"lung (carcinoma) cell line"`). A boundary that's merely a known,
+    fused genotype/construct marker (see `_has_word_boundary_or_known_affix`) also counts as valid
+    here, e.g. `"Ptgsc"` immediately followed by `"KO"` with no separator.
     Returns the matched span in the ORIGINAL `content` (not the normalized string), or `None` if
     the normalized needle is too short to trust (`_NORMALIZE_MIN_LENGTH`) or doesn't appear at
-    all under either form.
+    all under any form.
     """
-    for strip_separators in (False, True):
-        normalized_needle, _ = _normalize_with_positions(needle, strip_separators)
+    for strip_separators, keep_bracket_content in [(False, False), (True, False), (False, True)]:
+        normalized_needle, _ = _normalize_with_positions(needle, strip_separators, keep_bracket_content)
         if len(normalized_needle) < _NORMALIZE_MIN_LENGTH:
             continue
-        normalized_content, positions = _normalize_with_positions(content, strip_separators)
+        normalized_content, positions = _normalize_with_positions(content, strip_separators, keep_bracket_content)
         search_from = 0
         while True:
             idx = normalized_content.find(normalized_needle, search_from)
@@ -393,7 +490,7 @@ def _search_normalized_one(needle: str, content: str) -> tuple[int, int] | None:
                 break
             start = positions[idx]
             end = positions[idx + len(normalized_needle) - 1] + 1
-            if _has_word_boundary(content, start, end):
+            if _has_word_boundary_or_known_affix(content, start, end):
                 return start, end
             search_from = idx + 1
     return None
@@ -437,6 +534,35 @@ def _fuzzy_max_distance(word_len: int) -> int:
 
 _DIGITS_RE = re.compile(r"\d+")
 
+# Visual look-alike characters -- deliberately just these two families (l/I/1 and O/0), the pairs
+# a person or an OCR/typing slip genuinely confuses, not a general edit-distance allowance. Maps
+# each confusable character to a shared canonical form so two characters "match" iff they map to
+# the same canonical value.
+_CONFUSABLE_CANON = {"l": "1", "i": "1", "1": "1", "o": "0", "0": "0"}
+
+
+def _is_single_confusable_swap(a: str, b: str) -> bool:
+    """Whether `a` and `b` are identical except for exactly one character position, where that
+    position holds a known look-alike pair (e.g. `"l"`/`"I"`, `"O"`/`"0"`) -- e.g. `"DNase l"` vs
+    `"DNase I"` (comparing the words `"l"` and `"I"`). Deliberately NOT a general edit-distance
+    relaxation: same length, exactly one differing position, and that specific pair curated as
+    look-alikes -- narrower than `_fuzzy_max_distance`'s budget, so it's checked and accepted
+    BEFORE the digit-guard/length-floor below rather than folded into that general budget.
+    """
+    if len(a) != len(b):
+        return False
+    diff_count = 0
+    for ca, cb in zip(a.lower(), b.lower()):
+        if ca == cb:
+            continue
+        diff_count += 1
+        if diff_count > 1:
+            return False
+        canon_a, canon_b = _CONFUSABLE_CANON.get(ca), _CONFUSABLE_CANON.get(cb)
+        if canon_a is None or canon_a != canon_b:
+            return False
+    return diff_count == 1
+
 
 def _words_fuzzy_equal(a: str, b: str) -> bool:
     """Whether two words are close enough to call the same spelling -- but never if their digit
@@ -449,9 +575,16 @@ def _words_fuzzy_equal(a: str, b: str) -> bool:
     their digits and name unrelated markers/genes/microRNAs. A letter-only word carries no such
     risk and keeps the normal length-scaled budget (`Asbesos`/`Asbestos`, `Gliobmastoma`/
     `Glioblastoma`).
+
+    One exception to both the digit-guard and the length floor below: a single curated
+    visual-confusable swap (`_is_single_confusable_swap`, e.g. `"DNase l"` vs `"DNase I"`) is
+    accepted regardless of word length or whether it looks like a digit/letter conflict -- it's a
+    narrower, curated check than either of those general rules, not a loosening of them.
     """
     a_lower, b_lower = a.lower(), b.lower()
     if a_lower == b_lower:
+        return True
+    if _is_single_confusable_swap(a, b):
         return True
     has_digit = bool(_DIGITS_RE.search(a_lower) or _DIGITS_RE.search(b_lower))
     if has_digit and _DIGITS_RE.findall(a_lower) != _DIGITS_RE.findall(b_lower):
@@ -544,6 +677,54 @@ def _search_group(needle: str, needle_lower: str, entries: list[tuple[str, str, 
     return None
 
 
+_BAG_OF_WORDS_MIN_WORDS = 2  # a 1-word value has no order to ignore -- exact/case-insensitive/normalized already cover it
+# Deliberately its own regex, NOT `_WORD_TOKEN_RE` (used by `_fuzzy_find`): `_WORD_TOKEN_RE` is
+# ASCII-only ([A-Za-z0-9]), which would silently DROP a Greek letter or other non-ASCII identity
+# character from a token entirely -- found directly while reviewing this tier's own output:
+# `"C/EBPβ"` (a real gene name) tokenized to `["C", "EBP"]` under `_WORD_TOKEN_RE`, discarding
+# the "β" that's the actual distinguishing character between C/EBPα and C/EBPβ (two
+# different genes) -- the same class of risk the digit-guard in `_words_fuzzy_equal` already
+# exists to prevent, just for a different character class. `[^\W_]+` matches any run of Unicode
+# letters/digits while still treating `_` as a separator, consistent with the rest of this module.
+_BAG_OF_WORDS_TOKEN_RE = re.compile(r"[^\W_]+", re.UNICODE)
+
+
+def _bag_of_words_find(needle: str, content: str) -> tuple[int, int] | None:
+    """Finds `needle`'s words as a CONSECUTIVE run in `content`, in ANY order -- e.g. `"Src
+    inhibitor"` inside `"Inhibitor_Src"` (the underscore is just a token separator to
+    `_BAG_OF_WORDS_TOKEN_RE`, same as whitespace). Unlike `_fuzzy_find`, word comparison here is
+    exact (case-insensitive), not spelling-tolerant -- this tier's tolerance is reordering, not
+    spelling. Requires the window to have the exact same multiset of words as `needle` (not merely
+    overlapping), and requires `needle` to have at least `_BAG_OF_WORDS_MIN_WORDS` words -- a
+    single word has no order to permute, so applying this tier to it would just be a redundant,
+    less-precise re-check of tiers already tried.
+    """
+    needle_words = [w.lower() for w in _BAG_OF_WORDS_TOKEN_RE.findall(needle)]
+    n = len(needle_words)
+    if n < _BAG_OF_WORDS_MIN_WORDS:
+        return None
+    needle_key = sorted(needle_words)
+    content_matches = list(_BAG_OF_WORDS_TOKEN_RE.finditer(content))
+    for start_i in range(len(content_matches) - n + 1):
+        window = content_matches[start_i : start_i + n]
+        if sorted(w.group().lower() for w in window) == needle_key:
+            return window[0].start(), window[-1].end()
+    return None
+
+
+def _search_group_bag_of_words(needle: str, entries: list[tuple[str, str, str]]) -> tuple[list[tuple[str, str, tuple[int, int]]], str] | None:
+    """Same shape as `_search_group`'s other tiers, but via `_bag_of_words_find` -- its own,
+    separately-invoked function (like `_search_group_fuzzy`) since it's a distinct risk tier
+    (word-order-tolerant, not spelling-tolerant) that callers try only after every order-preserving
+    option (including ontology synonyms) has failed, and before the spelling-tolerant `fuzzy` tier
+    -- see `MATCH_STRATEGIES`.
+    """
+    matches = [(name, content, span) for name, content, _ in entries if (span := _bag_of_words_find(needle, content)) is not None]
+    if matches:
+        return _preferred_matches(matches), "bag of words"
+    return None
+
+
 def _search_group_fuzzy(needle: str, entries: list[tuple[str, str, str]]) -> tuple[list[tuple[str, str, tuple[int, int]]], str] | None:
     """Same shape as `_search_group`'s other tiers, but via `_fuzzy_find` -- kept as its own,
     separately-invoked function (rather than folded into `_search_group`) so callers can choose
@@ -559,8 +740,8 @@ def _search(
     needle: str, needle_lower: str, attribute_entries: list[tuple[str, str, str]], secondary_entries: list[tuple[str, str, str]]
 ) -> tuple[list[tuple[str, str, tuple[int, int]]], str] | None:
     """Two-pass search for one needle string: `attribute_entries` first (structured fields), and
-    only if nothing matches there at all, `secondary_entries` (title/comment free text) -- see
-    `_record_search_groups` for why. Covers `_search_group`'s exact/case-insensitive/normalized
+    only if nothing matches there at all, `secondary_entries` (every other field in the record) --
+    see `_record_search_groups` for why. Covers `_search_group`'s exact/case-insensitive/normalized
     tiers only -- NOT `fuzzy`, which the caller tries as its own, final fallback, after ontology
     synonyms, since a curated ontology synonym is more trustworthy evidence than a spelling-
     tolerant guess (see `MATCH_STRATEGIES`). Returns `(matches, strategy)`, or `None` if nothing
@@ -615,14 +796,15 @@ def _search_ontology_synonyms(
 
 
 VERIFY_COLUMNS = [
-    "raw_field",
-    "raw_value",
+    "target_field",
+    "target_value",
     "is_placeholder",
     "strategy",
-    "curated_fields",
-    "curated_texts",
-    "curated_matched_phrase",
+    "raw_fields",
+    "raw_texts",
+    "raw_matched_phrase",
     "negated",
+    "row_negated",
     "n_matches",
     "assigned_term_id",
     "assigned_term_label",
@@ -667,20 +849,23 @@ def verify_extracted_against_raw_rows(
     `verify_extracted_against_raw` for the single-record convenience wrapper that still returns
     a DataFrame directly, fine to use when only checking one record at a time).
 
-    Row keys: `raw_field`/`raw_value` are the extraction's own field name and value; `is_placeholder`
-    is whether `raw_value` is a non-answer like "not applicable" rather than a real claim (see
-    `PLACEHOLDER_VALUES`) -- independent of `strategy`, since a placeholder can still happen to
-    match something in the raw text (or get assigned an ontology term regardless). `strategy` is
-    which tier found it (or `"not found"`); `curated_fields`/`curated_texts` are, in parallel,
-    where each match was found (an `attribute_name`, `"title"`, or `"comment"`) and that field's
-    full raw text -- both empty lists when `strategy` is `"not found"`. `curated_matched_phrase`
-    is, per match, the exact substring read directly out of that match's own span -- NOT
-    `raw_value` re-used across every match, which would be wrong whenever the real text differs
-    from it (a different case, a different punctuation/spelling variant for `normalized`/`fuzzy`,
-    or an ontology synonym's own text) -- needed to reconstruct which span to highlight without
-    re-searching (see `matches_display_table`, used for interactive display; these three list
-    columns stay plain strings/ints here, not `RawHTML`/`DataFrame` objects, because bulk callers
-    checkpoint rows to parquet, which can't serialize those). `negated` is, per match in the same
+    Row keys: `target_field`/`target_value` are the extraction's own (LLM-curated) field name and
+    value -- named `target_*` because they're what the trace-back is trying to find evidence FOR,
+    not raw input. `is_placeholder` is whether `target_value` is a non-answer like "not applicable"
+    rather than a real claim (see `PLACEHOLDER_VALUES`) -- independent of `strategy`, since a
+    placeholder can still happen to match something in the raw text (or get assigned an ontology
+    term regardless). `strategy` is which tier found it (or `"not found"`); `raw_fields`/`raw_texts`
+    are, in parallel, where each match was found IN THE RAW RECORD (an `attribute_name`,
+    `"title"`/`"comment"`, or any other field's own dotted JSON path, e.g. `"Ids.Id"` -- see
+    `_record_search_groups`) and that field's full raw text -- both empty lists when `strategy` is
+    `"not found"`. `raw_matched_phrase` is, per match, the exact substring read directly out of
+    that match's own span -- NOT `target_value` re-used across every match, which would be wrong
+    whenever the real text differs from it (a different case, a different punctuation/spelling
+    variant for `normalized`/`fuzzy`, or an ontology synonym's own text) -- needed to reconstruct
+    which span to highlight without re-searching (see `matches_display_table`, used for interactive
+    display; these three list columns stay plain strings/ints here, not `RawHTML`/`DataFrame`
+    objects, because bulk callers checkpoint rows to parquet, which can't serialize those).
+    `negated` is, per match in the same
     order, whether that match's surrounding text negates it (see `is_negated`) -- e.g. "Cre
     negative; Ccm3/..." negates a `knockout_gene` match on "Ccm3" -- empty when `strategy` is
     `"not found"`. `assigned_term_id`/`assigned_term_label`/`assigned_term_synonyms` are filled in
@@ -721,33 +906,51 @@ def verify_extracted_against_raw_rows(
                 found = _search_ontology_synonyms(candidates, attribute_entries, secondary_entries, attr_combined_lower, secondary_combined_lower)
 
             if found is None:
+                # word-order-tolerant (not spelling-tolerant) match, tried after every
+                # order-preserving option -- see `_search_group_bag_of_words`
+                found = _search_group_bag_of_words(one_value, attribute_entries) or _search_group_bag_of_words(one_value, secondary_entries)
+
+            if found is None:
                 # last resort: spelling-tolerant match of the extracted value itself, tried only
-                # after every exact/normalized/ontology-synonym option has failed -- see `_search`
+                # after every exact/normalized/ontology-synonym/bag-of-words option has failed --
+                # see `_search`
                 found = _search_group_fuzzy(one_value, attribute_entries) or _search_group_fuzzy(one_value, secondary_entries)
 
             row = {
-                "raw_field": field,
-                "raw_value": one_value,
+                "target_field": field,
+                "target_value": one_value,
                 "is_placeholder": is_placeholder_value(one_value),
                 "assigned_term_id": term_id or "",
                 "assigned_term_label": term_label,
                 "assigned_term_synonyms": term_synonyms,
             }
             if found is None:
-                row.update(strategy="not found", curated_fields=[], curated_texts=[], curated_matched_phrase=[], negated=[], n_matches=0)
+                row.update(
+                    strategy="not found", raw_fields=[], raw_texts=[], raw_matched_phrase=[],
+                    negated=[], row_negated=False, n_matches=0,
+                )
             else:
                 matches, strategy_used = found
+                # per match, not per row: the same value can match one attribute where the
+                # surrounding text negates it and another where it doesn't
+                negated_flags = [is_negated(content, span) for _, content, span in matches]
                 row.update(
                     strategy=strategy_used,
-                    curated_fields=[name for name, _, _ in matches],
-                    curated_texts=[content for _, content, _ in matches],
+                    raw_fields=[name for name, _, _ in matches],
+                    raw_texts=[content for _, content, _ in matches],
                     # the phrase actually found, read straight out of its own match span -- NOT
                     # `one_value` re-used across every match, which would be wrong for `normalized`/
                     # `fuzzy` matches whose real text differs (punctuation/spelling) from the value
-                    curated_matched_phrase=[content[start:end] for _, content, (start, end) in matches],
-                    # per match, not per row: the same value can match one attribute where the
-                    # surrounding text negates it and another where it doesn't
-                    negated=[is_negated(content, span) for _, content, span in matches],
+                    raw_matched_phrase=[content[start:end] for _, content, (start, end) in matches],
+                    negated=negated_flags,
+                    # True only when EVERY match for this row sits in a negated context -- a row
+                    # with at least one non-negated match still has genuine standalone evidence, so
+                    # it isn't downgraded just because a DIFFERENT match happened to be negated.
+                    # A row_negated=True row textually matched but shouldn't be trusted as
+                    # confirmed evidence (e.g. "Cre negative; Ccm3..." matching a knockout_gene on
+                    # "Ccm3") -- kept as its own flagged signal alongside `strategy`, not folded
+                    # into "not found" (the match is real, just untrustworthy) or silently trusted.
+                    row_negated=all(negated_flags),
                     n_matches=len(matches),
                 )
             rows.append(row)
@@ -755,23 +958,23 @@ def verify_extracted_against_raw_rows(
     return rows
 
 
-def matches_display_table(curated_fields: list[str], curated_texts: list[str], curated_matched_phrase: list[str]) -> pd.DataFrame:
-    """Builds a small `(curated_field, curated_value)` table, one row per match, `curated_value`
-    bolding the matched phrase within that field's full text -- for interactive display via
+def matches_display_table(raw_fields: list[str], raw_texts: list[str], raw_matched_phrase: list[str]) -> pd.DataFrame:
+    """Builds a small `(raw_field, raw_text)` table, one row per match, `raw_text` bolding the
+    matched phrase within that field's full text -- for interactive display via
     `display_with_nested_tables` (as a nested-table cell when a row has more than one match).
     Not used by bulk/parquet callers: `RawHTML`/`DataFrame` cells aren't Arrow-serializable, which
-    is exactly why `verify_extracted_against_raw_rows` keeps its own `curated_fields`/
-    `curated_texts`/`curated_matched_phrase` columns as plain strings and builds this only when
-    something actually needs to render them.
+    is exactly why `verify_extracted_against_raw_rows` keeps its own `raw_fields`/`raw_texts`/
+    `raw_matched_phrase` columns as plain strings and builds this only when something actually
+    needs to render them.
     """
     out = []
-    for field, text, phrase in zip(curated_fields, curated_texts, curated_matched_phrase):
+    for field, text, phrase in zip(raw_fields, raw_texts, raw_matched_phrase):
         idx = text.find(phrase)
         if idx == -1:
             idx = text.lower().find(phrase.lower())
         span = (idx, idx + len(phrase)) if idx != -1 else (0, 0)
-        out.append({"curated_field": field, "curated_value": bold_span_html(text, span)})
-    return pd.DataFrame(out, columns=["curated_field", "curated_value"])
+        out.append({"raw_field": field, "raw_text": bold_span_html(text, span)})
+    return pd.DataFrame(out, columns=["raw_field", "raw_text"])
 
 
 def verify_extracted_against_raw(
@@ -785,14 +988,14 @@ def verify_extracted_against_raw(
     Call `verify_extracted_against_raw_rows` directly and build one DataFrame from the
     accumulated rows afterward instead -- see its docstring for why that matters at scale.
 
-    Adds one column beyond `VERIFY_COLUMNS`, `matches` -- a nested `(curated_field, curated_value)`
-    table (via `matches_display_table`) for display, since a single record's worth of rows is
-    small enough that the parquet-serialization concern driving `VERIFY_COLUMNS`'s flat list
-    columns doesn't apply here.
+    Adds one column beyond `VERIFY_COLUMNS`, `matches` -- a nested `(raw_field, raw_text)` table
+    (via `matches_display_table`) for display, since a single record's worth of rows is small
+    enough that the parquet-serialization concern driving `VERIFY_COLUMNS`'s flat list columns
+    doesn't apply here.
     """
     rows = verify_extracted_against_raw_rows(raw, extracted, results, ontology_indexes)
     df = pd.DataFrame(rows, columns=VERIFY_COLUMNS)
-    df["matches"] = [matches_display_table(r["curated_fields"], r["curated_texts"], r["curated_matched_phrase"]) for r in rows]
+    df["matches"] = [matches_display_table(r["raw_fields"], r["raw_texts"], r["raw_matched_phrase"]) for r in rows]
     return df
 
 
