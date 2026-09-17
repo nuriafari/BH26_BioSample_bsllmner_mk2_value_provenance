@@ -1,0 +1,902 @@
+[
+ [
+  "SAMN19116347",
+  "disease",
+  "Asthma",
+  "disease",
+  "Asthmatic patients",
+  "Asthmatic",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN26541934",
+  "overexpressed_gene",
+  "VEGFA",
+  "treatment",
+  "HEK293FT_pegHBB-RES-OT-c_MM3;...;HEK293FT_pegVEGFA-OT-a_MM3;...",
+  "pegVEGFA",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN22555214",
+  "tissue",
+  "dendritic cell",
+  "tissue",
+  "DC",
+  null,
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN17170426",
+  "chip_antigen",
+  "I-A/E",
+  "sample_type",
+  "F4/80highI-A/Ehigh",
+  "I-A/Ehigh",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN00739107",
+  "knockout_gene",
+  "E6",
+  "cell description",
+  "pancreatic duct cells immortalized with E6E7 gene of HPV",
+  "E6E7",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN06372158",
+  "drug",
+  "KDM4 inhibitor",
+  "treatment",
+  "10 nM kDM4(i) for 18 hours",
+  "kDM4(i)",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN37494211",
+  "knockout_gene",
+  "Ptgsc",
+  "genotype",
+  "Gli1-PtgscKO",
+  "PtgscKO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN11348570",
+  "knockout_gene",
+  "Cpt2",
+  "maternal genotype",
+  "Cpt2f/f",
+  "Cpt2f",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN22335973",
+  "knockout_gene",
+  "Gpr174",
+  "not found",
+  "",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN36792794",
+  "knockout_gene",
+  "Fgf23c",
+  "genotype",
+  "Fgf23cKO",
+  "Fgf23cKO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN40861569",
+  "knockdown_gene",
+  "CDC40",
+  "comment",
+  "24h KD of shCDC40-1",
+  "shCDC40",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN39579875",
+  "knockout_gene",
+  "Ext1",
+  "genotype",
+  "Ext1e2neof/e2neof",
+  "Ext1e2neof",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN04925760",
+  "knockdown_gene",
+  "COX2",
+  "lentiviral shrna",
+  "shCOX2",
+  "shCOX2",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN25519995",
+  "overexpressed_gene",
+  "Zfp131",
+  "title",
+  "ChIPseq NELF in Zbtb11KO Zfp131KO ES cells (iZbtb11-HA iZfp131-V5 Zbtb11KO Zfp131KO)",
+  "Zfp131KO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMD00171431",
+  "knockdown_gene",
+  "CALIC-1",
+  "title",
+  "siCALIC-1 Re1",
+  "siCALIC-1",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN35880621",
+  "tissue",
+  "buccal mucosa",
+  "source_name",
+  "Buccal cells",
+  null,
+  "inferred from domain knowledge"
+ ],
+ [
+  "SAMN37211846",
+  "knockout_gene",
+  "DCAF15",
+  "genotype",
+  "G401 dTag DCAF5",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMEA7047760",
+  "knockdown_gene",
+  "MXD1",
+  "comment",
+  "siNon-targeting siCtrl...siMXD1, Ambion, Cat. No. s8390",
+  "siMXD1",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMEA122004238",
+  "knockout_gene",
+  "FMR1",
+  "disease",
+  "Fragile X syndrome",
+  null,
+  "inferred from domain knowledge"
+ ],
+ [
+  "SAMN01178354",
+  "knockdown_gene",
+  "Aes",
+  "genotype",
+  "24h siAes; 111011",
+  "siAes",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN02209082",
+  "knockout_gene",
+  "Gata3",
+  "strain",
+  "C57BL/6 Gata3fl/fl, infected with hCre-GFP-RV, GFP+",
+  "Gata3fl",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN14124621",
+  "knockout_gene",
+  "COP1",
+  "genotype",
+  "COP1KO",
+  "COP1KO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN04028831",
+  "cell_type",
+  "IFNg secreting central memory CD4 T cell",
+  "cell_type",
+  "IFNg secreting central memory CD4 Tcells - CD3+ CD4+ CD45RA- CCR7+ IFNG+",
+  null,
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN16351323",
+  "knockout_gene",
+  "Fntb",
+  "title",
+  "FntbKO_eTreg2_ATACseq",
+  "FntbKO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN33865542",
+  "drug",
+  "DNase I",
+  "treatment",
+  "DNase l",
+  null,
+  "misspelling (typo, below fuzzy's safe length threshold)"
+ ],
+ [
+  "SAMN03195908",
+  "knockdown_gene",
+  "XPB",
+  "targeted by",
+  "shXPB",
+  "shXPB",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN41719664",
+  "cell_type",
+  "CD4 TREG",
+  "cell_type + phenotype (2 separate attributes)",
+  "cell_type=CD4 | phenotype=TREG",
+  null,
+  "value combines multiple separate attributes"
+ ],
+ [
+  "SAMN09658561",
+  "knockout_gene",
+  "a6",
+  "genotype",
+  "a3a6KO",
+  null,
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN17120240",
+  "cell_type",
+  "bronchoepithelial cell",
+  "source_name",
+  "human bronchoepithelial cells",
+  null,
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN15017513",
+  "knockout_gene",
+  "Erbb4",
+  "biological_replicate",
+  "Tu_Erbb4CKO_PLUS_ApcMin_1",
+  "Erbb4CKO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN01922231",
+  "knockout_gene",
+  "DOCK1",
+  "genotype",
+  "NIC+DOCK1flx/flx",
+  "DOCK1flx",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN30523651",
+  "knockdown_gene",
+  "BRD9",
+  "treatment",
+  "shBRD9",
+  "shBRD9",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN53128103",
+  "cell_line",
+  "GBM06CL",
+  "isolate",
+  "glioblastoma patient, cell line",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN45151549",
+  "cell_type",
+  "cardiac myocyte",
+  "cell_type",
+  "left ventricle tissue",
+  null,
+  "inferred from domain knowledge"
+ ],
+ [
+  "SAMN46306599",
+  "knockout_gene",
+  "ORAI2",
+  "genotype",
+  "ORAI 1/2/3 KO",
+  null,
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMEA5841432",
+  "disease",
+  "mammary tumor",
+  "title",
+  "Transcriptomic study of bone marrow and mammary tumours of PyMT mice exposed to chronic jetlag",
+  "mammary tumours",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN18620482",
+  "knockdown_gene",
+  "RB1",
+  "knockdown",
+  "shRB",
+  null,
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN18537506",
+  "cell_type",
+  "colon carcinoma cell",
+  "cell_type",
+  "Human colon carcinoma",
+  null,
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN08897533",
+  "cell_type",
+  "HSC",
+  "cell_type",
+  "Sorted HSCs",
+  "HSCs",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN22321177",
+  "overexpressed_gene",
+  "Gck",
+  "title",
+  "GckPVT 4 output",
+  "GckPVT",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN36416300",
+  "cell_type",
+  "ILT3-CD4+CD25+ T cell",
+  "cell_type",
+  "ILT3-CD4+CD25+ T cells",
+  "T cells",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMEA7705308",
+  "knockdown_gene",
+  "DDIT3",
+  "Submitter Id",
+  "S-TOXR1774:PHH_siDDIT3_TUN_N1",
+  "siDDIT3",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN17812093",
+  "disease",
+  "colon cancer",
+  "source_name",
+  "Primary CRC",
+  "CRC",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMEA6806901",
+  "knockdown_gene",
+  "B55alpha",
+  "comment",
+  "treated with lentiviral shCtrl and shB55alpha (Sigma; TRCN0000002489)",
+  "shB55alpha",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN35360488",
+  "drug",
+  "immune checkpoint blockade",
+  "disease",
+  "ICB-treated HCC patients",
+  "ICB",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN35881425",
+  "knockout_gene",
+  "POU2AF2",
+  "treatment",
+  "sgPOU2AF2 #2",
+  "sgPOU2AF2",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN09394965",
+  "overexpressed_gene",
+  "Kir2.1",
+  "injection",
+  "Kir-Gfp electroporation",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN12558165",
+  "cell_type",
+  "myeloma cell",
+  "cell_type",
+  "5TGM1-GFP Myeloma cells, bone lining",
+  "Myeloma cells",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN38066130",
+  "tissue",
+  "head",
+  "tissue",
+  "Wnt1-CRE recombined cells (i.e., eGFP+) cell sorted from dissocated E11.5 heads (rostral to the otic placode)",
+  "heads",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN40606227",
+  "drug",
+  "Thiazopyrimidine",
+  "treatment",
+  "Thiazopyr_10_uM",
+  "Thiazopyr",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN05230122",
+  "knockout_gene",
+  "Cic",
+  "genotype",
+  "Otp-Cre; Cicflox/flox; ROSAfsTRAP",
+  "Cicflox",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN08583676",
+  "knockout_gene",
+  "Plag1",
+  "genotype",
+  "Plag1KO",
+  "Plag1KO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN21163036",
+  "drug",
+  "Entecavir",
+  "treatment",
+  "HBV-infected (ayw, MOI 200), ETV (100 nM)-treated",
+  "ETV",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN06010099",
+  "cell_type",
+  "neocortical cell",
+  "cell_type",
+  "cultured primary neocortical cells",
+  "neocortical cells",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN11179148",
+  "knockout_gene",
+  "Rdh1",
+  "genotype",
+  "Rdh1KO",
+  "Rdh1KO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN49057686",
+  "knockout_gene",
+  "MSI2",
+  "Ids.Id",
+  "KRT14Cre/+::MSI2 Flox/Flox",
+  "MSI2",
+  "identifier field (present verbatim in `Ids.Id`, outside attributes/title/comment)"
+ ],
+ [
+  "SAMN31891919",
+  "knockdown_gene",
+  "LINC02143",
+  "condition",
+  "siLINC2",
+  "LINC2",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN50497702",
+  "knockout_gene",
+  "MLP",
+  "title",
+  "double knockout (MLPKO-cRADKO) mouse heart 5, 16 weeks of age",
+  "MLPKO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN48196193",
+  "drug",
+  "Surufatinib",
+  "isolate",
+  "Surufatinib1",
+  "Surufatinib1",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN32873513",
+  "knockdown_gene",
+  "DEC2",
+  "not found",
+  "",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN13717685",
+  "disease",
+  "Rhabdomyosarcoma",
+  "source_name",
+  "RD ERMS cell line derived from biopsy specimen of a 7year old female with pelvic RMS",
+  "RMS",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN39678524",
+  "overexpressed_gene",
+  "G3BP2",
+  "genotype",
+  "G3BP1/2 KO cells stably expressing transgenic mEGFP-G3BP2A",
+  "G3BP2A",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN14348450",
+  "tissue",
+  "lymph nodes",
+  "tissue",
+  "lymphonodes",
+  "lymphonodes",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN46955449",
+  "overexpressed_gene",
+  "C9ORF72",
+  "title",
+  "C9ORF72exp_CPA+FB23-2",
+  "C9ORF72exp",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN11969409",
+  "disease",
+  "lung carcinoma",
+  "source_name",
+  "Human lung (carcinoma) cell line",
+  "lung (carcinoma)",
+  "compound token (word/phrase inserted between parts of the value)"
+ ],
+ [
+  "SAMN38457665",
+  "knockout_gene",
+  "eIF2\u03b1",
+  "genotype",
+  "eIF2{alpha}A/A (KI)",
+  "eIF2{alpha}",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN22487913",
+  "disease",
+  "lupus nephritis",
+  "disease",
+  "lupus symptomatic nephritic disease",
+  null,
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN03892686",
+  "knockdown_gene",
+  "Ren.713",
+  "title",
+  "shRen.713_RNASeq rep1",
+  "shRen.713",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN33550898",
+  "knockout_gene",
+  "YBX1",
+  "title",
+  "SCC25, YBX1KO, DOXneg, rep 3 [RNA-seq]",
+  "YBX1KO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN13519754",
+  "knockdown_gene",
+  "METTL18",
+  "not found",
+  "",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN46220850",
+  "knockdown_gene",
+  "Nas1",
+  "Treated",
+  "siNas1-A",
+  "siNas1",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMD00122100",
+  "drug",
+  "Src inhibitor",
+  "title",
+  "RNA-seq_II-18_24h_D07_PD-166285 hydrate (Inhibitor_Src and FGFR)_0.42",
+  "Inhibitor_Src",
+  "reworded (word order reversed)"
+ ],
+ [
+  "SAMN25599802",
+  "drug",
+  "recombinant interleukin-17A",
+  "treatment_2",
+  "i.p and i.m. rIL-17A",
+  "rIL-17A",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN36617246",
+  "knockout_gene",
+  "PPM1B",
+  "genotype",
+  "Ppm1bCKO",
+  "Ppm1bCKO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN30812759",
+  "drug",
+  "Escherichia coli kifCD",
+  "treatment",
+  "None, C. ramosum, E. coli Nissl, E. coli kifCD",
+  "E. coli kifCD",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN36620907",
+  "knockout_gene",
+  "CD5",
+  "title",
+  "Donor2_CD5KO_2",
+  "CD5KO",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN30812759",
+  "drug",
+  "Escherichia coli Nissle",
+  "treatment",
+  "None, C. ramosum, E. coli Nissl, E. coli kifCD",
+  "E. coli Nissl",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN35778149",
+  "knockout_gene",
+  "Mirc11",
+  "genotype",
+  "Mirc11fl/fl Mirc22fl/fl Lyz2Cre/Cre",
+  "Mirc11fl",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN08177822",
+  "knockdown_gene",
+  "Chd5",
+  "knockdown",
+  "shChd5",
+  "shChd5",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN17072774",
+  "chip_antigen",
+  "NEUN",
+  "nuclei population",
+  "NEUNnegOLIG2neg nuclei",
+  "NEUNneg",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMEA14497215",
+  "knockdown_gene",
+  "Foxa2",
+  "title",
+  "CL1 siFoxa2 1",
+  "siFoxa2",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN17293665",
+  "drug",
+  "puromycin",
+  "exogenous vectors",
+  "pSBbi-Hyg-APP, pSBbi-Pur",
+  "Pur",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN03943833",
+  "cell_type",
+  "liver rhabdoid tumor cell",
+  "cell_type",
+  "liver rhabdoid tumor derived cell line",
+  null,
+  "compound token (word/phrase inserted between parts of the value)"
+ ],
+ [
+  "SAMN06230985",
+  "knockout_gene",
+  "AATF",
+  "title",
+  "LALB_siAATF_3",
+  "siAATF",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN35036845",
+  "tissue",
+  "Trachea",
+  "tissue",
+  "Trachael aspirate",
+  "Trachael",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN00780189",
+  "cell_type",
+  "inducible motor neuron",
+  "cell_type",
+  "inducible motor neurons-embryonic stem cells (iMN-ESCs)",
+  "motor neurons",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMEA110218887",
+  "overexpressed_gene",
+  "IKK2",
+  "comment",
+  "Rb1FL/FL, p53FL/FL, R26.LSL.IKK2ca",
+  "IKK2ca",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN05210768",
+  "cell_type",
+  "P19 embryonal carcinoma cell",
+  "cell_type",
+  "P19 embryonal carcinoma (EC) cells treated 48 hrs with RA",
+  "P19 embryonal carcinoma (EC) cells",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN22984295",
+  "cell_type",
+  "thyroid epithelial cell",
+  "source_name",
+  "Human Primary Thyroid Epithelial Cells",
+  "Thyroid Epithelial Cells",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN22567776",
+  "knockout_gene",
+  "Nkx3.1",
+  "genotype",
+  "Nkx3.1CreERT2/+; Ptenflox/flox; ARR2/Pbsn-MYCTg/; R26R-CAGLSL-EYFP/+",
+  "Nkx3.1CreERT2",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN34536288",
+  "knockout_gene",
+  "Pdcd5",
+  "genotype",
+  "Pdcd5fl/f",
+  "Pdcd5fl",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN41686272",
+  "knockout_gene",
+  "Irgm1",
+  "title",
+  "RNA-seq, KPC in vitro, sgFitm2, sgIrgm1, PBS, Replicate 3",
+  "sgIrgm1",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN11098848",
+  "knockout_gene",
+  "ANK3",
+  "not found",
+  "",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN32608812",
+  "knockdown_gene",
+  "S100A9",
+  "not found",
+  "",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN11313122",
+  "knockout_gene",
+  "setdb1",
+  "genotype",
+  "setdb1fl/fl",
+  "setdb1fl",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN08574372",
+  "knockout_gene",
+  "DM112",
+  "isolate",
+  "112",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN01998263",
+  "tissue",
+  "striatum",
+  "not found",
+  "",
+  null,
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN18114600",
+  "cell_type",
+  "CD4+ CD90.1+ T cell",
+  "cell_type",
+  "CD4+ CD90.1+ T cells",
+  "T cells",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN14600382",
+  "knockout_gene",
+  "Hnf4g",
+  "genotype",
+  "Villin-CreERT2; Hnf4alphaf/f; Hnf4gammaCrispr/Crispr",
+  "Hnf4gamma",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN12744578",
+  "knockout_gene",
+  "eIF2a",
+  "genotype",
+  "eIF2aS51A",
+  "eIF2aS51A",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ]
+]

@@ -36,7 +36,27 @@ CHECKSUMS_SHA256 = CRATE_PROVENANCE_DIR / "checksums.sha256"
 # full-scale trace-back check, which takes too long to recompute on every notebook run.
 DERIVED_DIR = DATA_DIR / "derived"
 TRACE_BACK_FULL_PARQUET = DERIVED_DIR / "trace_back_full.parquet"
-MANUAL_REVIEW_SAMPLE_PARQUET = DERIVED_DIR / "manual_review_sample_100.parquet"
+# A second, independently-drawn 100-sample against the CURRENT (post-five-tiers) "not found"
+# residual, reviewed by Claude and cross-checked against the live Qwen3-8B evidence tier -- kept
+# alongside MANUAL_REVIEW_SAMPLE_PARQUET (not overwriting it) so the original pre-fix snapshot
+# stays available as a before/after reference.
+MANUAL_REVIEW_SAMPLE_QWEN3_8B_PARQUET = DERIVED_DIR / "manual_review_sample_100_qwen3_8b.parquet"
+QWEN3_8B_CLAUDE_REVIEW_JSON = DERIVED_DIR / "qwen3_8b_claude_review_100.json"
+
+# Small, git-committed reference data the notebooks depend on: frozen historical samples,
+# hand/LLM-review tables, and before/after baselines. Unlike DATA_DIR (gitignored, holds the large
+# downloaded RO-Crate and its regenerable derived artifacts), these are tiny, one-of-a-kind, and
+# can't be recomputed from the crate alone -- so they're checked into the repo instead.
+NOTEBOOK_FIXTURES_DIR = PROJECT_ROOT / "notebooks" / "fixtures"
+MANUAL_REVIEW_SAMPLE_PARQUET = NOTEBOOK_FIXTURES_DIR / "manual_review_sample_100.parquet"
+MANUAL_REVIEW_100_JSON = NOTEBOOK_FIXTURES_DIR / "manual_review_100.json"
+LLM_DEMO_ITEMS_JSON = NOTEBOOK_FIXTURES_DIR / "llm_demo_items.json"
+TRACE_BACK_STRATEGY_COUNTS_BEFORE_FIVE_TIERS_JSON = (
+    NOTEBOOK_FIXTURES_DIR / "trace_back_strategy_counts_before_five_tiers.json"
+)
+TRACE_BACK_STRATEGY_COUNTS_BEFORE_WHOLE_RECORD_SEARCH_JSON = (
+    NOTEBOOK_FIXTURES_DIR / "trace_back_strategy_counts_before_whole_record_search.json"
+)
 
 # Per-BioSample metadata (submission/publication dates, primary BioProject, owner lab) that
 # isn't in trace_back_full.parquet -- built once by `biosample_metadata.py` from a full scan of

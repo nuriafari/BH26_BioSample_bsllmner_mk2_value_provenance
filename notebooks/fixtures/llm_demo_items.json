@@ -1,0 +1,72 @@
+[
+ [
+  "SAMN19116347",
+  "rnaseq_human_5y_2021-12",
+  "disease",
+  "Asthma",
+  "reworded (paraphrase, word-form, or punctuation variant)"
+ ],
+ [
+  "SAMN22555214",
+  "rnaseq_human_5y_2021-12",
+  "tissue",
+  "dendritic cell",
+  "abbreviation (raw text abbreviates the value)"
+ ],
+ [
+  "SAMN22335973",
+  "rnaseq_mouse_2021-10",
+  "knockout_gene",
+  "Gpr174",
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN35880621",
+  "chipatlas_hg38_part3",
+  "tissue",
+  "buccal mucosa",
+  "inferred from domain knowledge"
+ ],
+ [
+  "SAMN41719664",
+  "rnaseq_human_5y_2025-07",
+  "cell_type",
+  "CD4 TREG",
+  "value combines multiple separate attributes"
+ ],
+ [
+  "SAMN11969409",
+  "chipatlas_hg38_part1",
+  "disease",
+  "lung carcinoma",
+  "compound token (word/phrase inserted between parts of the value)"
+ ],
+ [
+  "SAMN33865542",
+  "rnaseq_mouse_2023-05",
+  "drug",
+  "DNase I",
+  "misspelling (typo, below fuzzy's safe length threshold)"
+ ],
+ [
+  "SAMN49057686",
+  "rnaseq_mouse_2025-09",
+  "knockout_gene",
+  "MSI2",
+  "fabricated / no textual basis"
+ ],
+ [
+  "SAMN30523651",
+  "rnaseq_human_5y_2023-02",
+  "knockdown_gene",
+  "BRD9",
+  "reworded (construct-name prefix, e.g. \"shBRD9\")"
+ ],
+ [
+  "SAMN17812093",
+  "chipatlas_hg38_part1",
+  "disease",
+  "colon cancer",
+  "abbreviation (reverse direction -- raw text has the abbreviation)"
+ ]
+]

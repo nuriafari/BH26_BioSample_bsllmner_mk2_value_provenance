@@ -160,14 +160,33 @@ def call_llm_batch(
     place to check for "the call itself didn't work" separately from "the model said not found."
     """
     messages_batch = [[{"role": "system", "content": _SYSTEM_PROMPT}, {"role": "user", "content": p}] for p in prompts]
+
+    # A handful of BioSample records have unusually many not-found items (one has 52) and produce
+    # a prompt well past NUM_CTX -- vLLM raises for the WHOLE batch call if any single prompt's
+    # token count leaves no room for the requested output under max_model_len, not just for that
+    # one prompt (measured directly: took down a whole production run). Pre-check token counts and
+    # route oversized ones to an error result instead of sending them to `llm.chat()` at all.
+    tokenizer = llm.get_tokenizer()
+    prompt_lengths = [len(tokenizer.apply_chat_template(m, tokenize=True, add_generation_prompt=True)) for m in messages_batch]
+    oversized = {i for i, length in enumerate(prompt_lengths) if length + sampling_params.max_tokens > NUM_CTX}
+
+    fitting_messages = [m for i, m in enumerate(messages_batch) if i not in oversized]
     # Qwen3's chat template defaults to emitting a <think>...</think> block before the answer;
     # ignored harmlessly by chat templates (Qwen2.5's included) that don't reference this kwarg at
     # all. Disabled here because `_parse_verdicts_json` expects the JSON object to start the
     # response -- a thinking trace first would break `raw_decode`, not because thinking is bad.
-    outputs = llm.chat(messages_batch, sampling_params, use_tqdm=False, chat_template_kwargs={"enable_thinking": False})
+    outputs = iter(
+        llm.chat(fitting_messages, sampling_params, use_tqdm=False, chat_template_kwargs={"enable_thinking": False})
+        if fitting_messages
+        else []
+    )
 
     results = []
-    for output in outputs:
+    for i in range(len(prompts)):
+        if i in oversized:
+            results.append((None, {"error": f"prompt too long ({prompt_lengths[i]} tokens, max {NUM_CTX})"}))
+            continue
+        output = next(outputs)
         text = output.outputs[0].text
         call_info = {"output_tokens": len(output.outputs[0].token_ids), "prompt_tokens": len(output.prompt_token_ids)}
         structured = _parse_verdicts_json(text)
