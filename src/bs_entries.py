@@ -758,40 +758,56 @@ def _search_ontology_synonyms(
     secondary_combined_lower: str,
 ) -> tuple[list[tuple[str, str, tuple[int, int]]], str] | None:
     """Same attributes-first, secondary-second precedence as `_search`, but over a whole list of
-    ontology-synonym candidate strings (a term can have 10-20+): each group is pre-screened with
-    its own combined string first, since calling `_search_group` for every candidate is too
-    expensive to do unconditionally. Never tries the `fuzzy` tier here -- fuzzy-matching every
-    one of 10-20+ candidate strings per field would be both slow and a much larger false-positive
-    surface than fuzzy-matching the single extracted value in `_search`, which is the one thing
-    the user explicitly asked to keep bounded.
+    ontology-synonym candidate strings (a term can have 10-20+). For each candidate, tries: exact/
+    case-insensitive/normalized (`_search_group`, pre-screened with the group's own combined
+    string first, since calling it unconditionally for every candidate is too expensive); then
+    `bag of words` (`_bag_of_words_find`) and `fuzzy` (`_fuzzy_find`) against that same candidate,
+    same as `_search` tries them for the extracted value itself -- e.g. a raw field that states an
+    ontology synonym's words out of order, or with one word spelled differently (British vs.
+    American), which a literal substring check would miss. All three still count as `"ontology
+    synonym"` evidence, not a separate strategy: they differ only in how tolerant the text
+    comparison is, not in what's being compared against (the assigned term's own label/synonyms,
+    not the extracted value's literal text).
 
     A candidate shorter than `_ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH` only gets the `exact`
-    (case-sensitive) tier, never `case-insensitive`/`normalized` -- found directly on real data: a
-    free-text dietary note ("No dairy. Limited soy...") case-insensitively matched ChEBI's
-    two-letter symbol for nitric oxide, `"NO"`, purely because the sentence happened to start with
-    the English word "No". Word-boundary enforcement doesn't catch this (`"No"` is a genuine,
-    complete word there), so a length floor is the only thing that does -- exactly the same
-    short-string collision risk already guarded against in `fuzzy`/`normalized`, just previously
-    unguarded here.
+    (case-sensitive) tier, never the looser ones -- found directly on real data: a free-text
+    dietary note ("No dairy. Limited soy...") case-insensitively matched ChEBI's two-letter symbol
+    for nitric oxide, `"NO"`, purely because the sentence happened to start with the English word
+    "No". Word-boundary enforcement doesn't catch this (`"No"` is a genuine, complete word there),
+    so a length floor is the only thing that does -- exactly the same short-string collision risk
+    already guarded against in `fuzzy`/`normalized`, just previously unguarded here.
 
-    Returns `(matches, "ontology synonym")` for the first candidate that matches anywhere in a
-    group -- the matched phrase itself is read back out of each match's own span by the caller,
-    not returned here, since it can differ per match (e.g. a case-insensitive hit reads back in
-    whatever case the raw text actually used).
+    Returns `(matches, "ontology synonym")` for the first candidate/tier combination that matches
+    anywhere in a group -- the matched phrase itself is read back out of each match's own span by
+    the caller, not returned here, since it can differ per match (e.g. a case-insensitive hit reads
+    back in whatever case the raw text actually used).
     """
     for entries, combined_lower in [(attribute_entries, attr_combined_lower), (secondary_entries, secondary_combined_lower)]:
         for candidate in candidates:
-            if not candidate or candidate.lower() not in combined_lower:
-                continue  # cheap single-string pre-screen -- skip the O(attributes) _search_group for candidates that can't match anywhere in this group
-            if len(candidate) < _ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH:
-                matches = _find_all_matches(candidate, candidate.lower(), entries, case_insensitive=False)
-                if matches:
-                    return _preferred_matches(matches), "ontology synonym"
+            if not candidate:
                 continue
-            found = _search_group(candidate, candidate.lower(), entries)
-            if found is not None:
-                matches, _ = found
-                return matches, "ontology synonym"
+            candidate_lower = candidate.lower()
+            if len(candidate) < _ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH:
+                if candidate_lower in combined_lower:
+                    matches = _find_all_matches(candidate, candidate_lower, entries, case_insensitive=False)
+                    if matches:
+                        return _preferred_matches(matches), "ontology synonym"
+                continue
+
+            if candidate_lower in combined_lower:  # cheap single-string pre-screen -- skips the O(attributes) _search_group when it can't possibly match
+                found = _search_group(candidate, candidate_lower, entries)
+                if found is not None:
+                    matches, _ = found
+                    return matches, "ontology synonym"
+
+            # bag-of-words/fuzzy tolerate reordering/spelling drift, so a candidate can match here
+            # even when it's not a literal substring -- the pre-screen above doesn't gate these
+            matches = [(name, content, span) for name, content, _ in entries if (span := _bag_of_words_find(candidate, content)) is not None]
+            if matches:
+                return _preferred_matches(matches), "ontology synonym"
+            matches = [(name, content, span) for name, content, _ in entries if (span := _fuzzy_find(candidate, content)) is not None]
+            if matches:
+                return _preferred_matches(matches), "ontology synonym"
     return None
 
 
@@ -826,9 +842,11 @@ def verify_extracted_against_raw_rows(
     `ontology.py:build_field_ontology_indexes`) are supplied -- a match against the LABEL or any
     SYNONYM of the ontology term `results[field]` actually assigned, i.e. not the extracted
     value's own text at all, but what the pipeline's own ontology search (`text2term`) already
-    resolved it to; and finally `fuzzy` -- a spelling-tolerant, word-by-word match of the value
-    itself (see `_fuzzy_find`), tried dead last since it's the one tier not backed by an exact or
-    curated match.
+    resolved it to, tried literally first and then with the same reordering/spelling tolerance as
+    the tiers below (see `_search_ontology_synonyms`); `bag of words` -- a word-order-
+    tolerant match of the value itself; and finally `fuzzy` -- a spelling-tolerant, word-by-word
+    match of the value itself (see `_fuzzy_find`), tried dead last since it's the one tier not
+    backed by an exact or curated match.
 
     Within a tier, every `Attributes.Attribute` is checked FIRST -- including each attribute's
     own NAME, not just its content, since a value is sometimes encoded as the attribute's label

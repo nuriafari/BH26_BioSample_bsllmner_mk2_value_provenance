@@ -57,6 +57,17 @@ TRACE_BACK_STRATEGY_COUNTS_BEFORE_FIVE_TIERS_JSON = (
 TRACE_BACK_STRATEGY_COUNTS_BEFORE_WHOLE_RECORD_SEARCH_JSON = (
     NOTEBOOK_FIXTURES_DIR / "trace_back_strategy_counts_before_whole_record_search.json"
 )
+# A fresh 100-sample of (target_field, target_value) patterns still "not found" by the
+# deterministic cascade, restricted to accessions the live Qwen3-8B production run has already
+# processed -- independently re-read (Claude, blind to Qwen3-8B's own call) and compared against
+# Qwen3-8B's own evidence, one row per pattern, both sides' cited evidence kept as
+# raw_fields/raw_texts/raw_matched_phrase for `matches_display_table` to bold. Supersedes
+# MANUAL_REVIEW_SAMPLE_QWEN3_8B_PARQUET above.
+QWEN_INDEPENDENT_REVIEW_100_PARQUET = NOTEBOOK_FIXTURES_DIR / "qwen_independent_review_100.parquet"
+# Same 100-pattern sample, scored three ways -- the independent read above, a smaller/cheaper
+# reviewer model's own blind attempt at the identical task, and Qwen3-8B -- so the independent
+# read's own reliability can be checked before trusting it as ground truth elsewhere.
+INDEPENDENT_REVIEW_MODEL_COMPARISON_100_PARQUET = NOTEBOOK_FIXTURES_DIR / "independent_review_model_comparison_100.parquet"
 
 # Per-BioSample metadata (submission/publication dates, primary BioProject, owner lab) that
 # isn't in trace_back_full.parquet -- built once by `biosample_metadata.py` from a full scan of
