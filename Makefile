@@ -59,7 +59,7 @@ derived: $(BIOSAMPLE_METADATA) $(TRACE_BACK_FULL)
 
 notebooks: derived
 	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_rocrate_overview.ipynb
-	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_trace_back_pipeline.ipynb
+	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_trace_back_evaluation.ipynb
 	$(RUN) jupyter nbconvert --to notebook --execute --inplace notebooks/biosample_trace_back_analysis.ipynb
 
 lint: | $(CONDA_ENV)

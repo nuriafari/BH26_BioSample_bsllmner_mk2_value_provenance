@@ -19,7 +19,7 @@ See [Results](#results) for where the actual findings live.
 | Path | Contents |
 |---|---|
 | `src/` | **Record loading:** raw and curated BioSample records (`bs_entries.py`, `select_results.py`).<br>**Trace-back matching:** deterministic matching, ontology rescoring, and optional LLM evidence (`bs_entries.py`, `ontology_rescore.py`, `llm_evidence.py`).<br>**Analysis support:** full-crate trace-back tables, per-accession metadata, notebook helpers, and path constants (`build_trace_back_full.py`, `biosample_metadata.py`, `notebook_utils.py`, `paths.py`). |
-| `notebooks/` | **RO-Crate overview:** `biosample_rocrate_overview.ipynb`, covering categories, raw and curated inputs, source overlap, and paired examples.<br>**Trace-back pipeline:** `biosample_trace_back_pipeline.ipynb`, covering matching, LLM evaluation, and pipeline issues.<br>**Full-crate analysis:** `biosample_trace_back_analysis.ipynb`, covering raw-field diversity and trends by year, source, and BioProject. |
+| `notebooks/` | **RO-Crate overview:** `biosample_rocrate_overview.ipynb`, covering categories, raw and curated inputs, source overlap, and paired examples.<br>**Trace-back analysis:** `biosample_trace_back_analysis.ipynb`, covering how the matching cascade and LLM tiers work, what each tier means, and raw-field diversity and trends by year, source, and BioProject.<br>**Trace-back evaluation:** `biosample_trace_back_evaluation.ipynb`, covering matching-method examples, LLM evidence-tier precision/recall, and pipeline issues. |
 | `data/` | **Raw data:** the downloaded RO-Crate.<br>**Derived data:** this project's parquet tables under `data/derived/`.<br>Not tracked in Git. |
 | `environment.yaml` | **Main environment:** everything except the optional LLM evidence tier. |
 
@@ -69,6 +69,6 @@ make notebooks  # execute all three notebooks in place
 
 ## Results
 
-See `notebooks/biosample_rocrate_overview.ipynb`, `notebooks/biosample_trace_back_pipeline.ipynb`, and `notebooks/biosample_trace_back_analysis.ipynb` for the data overview, pipeline evaluation, and full-crate analysis.
+See `notebooks/biosample_rocrate_overview.ipynb`, `notebooks/biosample_trace_back_analysis.ipynb`, and `notebooks/biosample_trace_back_evaluation.ipynb` for the data overview, trace-back analysis, and trace-back evaluation.
 
 The generated results are not yet available as a published data release. The notebooks provide an overview of the data, the trace-back pipeline, and the current analysis.
