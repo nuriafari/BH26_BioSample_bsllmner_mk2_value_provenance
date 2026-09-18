@@ -140,6 +140,9 @@ def not_found_items_from_prior_pass(paths: list[Path]) -> dict[str, list[tuple[s
     for path in paths:
         with path.open() as f:
             for line in f:
+                line = line.strip()
+                if not line:
+                    continue
                 rec = json.loads(line)
                 items = [(row["target_field"], row["target_value"]) for row in rec["rows"] if row["strategy"] == "not found"]
                 if items:
@@ -151,10 +154,19 @@ def run_name_lookup(accessions: set[str]) -> dict[str, str]:
     """`accession -> run_name` for a specific set of accessions, read from the same parquet
     `sample_not_found_by_accession` uses -- needed when `by_accession` instead comes from a prior
     pass's own output (see `not_found_items_from_prior_pass`), which doesn't carry `run_name`.
+    Raises if the parquet was regenerated since that prior pass ran and no longer has one of these
+    accessions -- better a clear failure here than a bare KeyError from `raw_path_for` mid-run.
     """
     trace_back = pd.read_parquet(TRACE_BACK_FULL_PARQUET, columns=["accession", "run_name"])
     trace_back = trace_back[trace_back["accession"].isin(accessions)].drop_duplicates("accession")
-    return dict(zip(trace_back["accession"], trace_back["run_name"]))
+    run_name_by_accession = dict(zip(trace_back["accession"], trace_back["run_name"]))
+    missing = accessions - run_name_by_accession.keys()
+    if missing:
+        raise ValueError(
+            f"{len(missing)} accession(s) from --source-jsonl are no longer in "
+            f"{TRACE_BACK_FULL_PARQUET.name}: {sorted(missing)[:5]}"
+        )
+    return run_name_by_accession
 
 
 def already_processed(out_path: Path) -> set[str]:
