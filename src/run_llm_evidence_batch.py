@@ -129,6 +129,34 @@ def sample_not_found_by_accession(
     return by_accession, run_name_by_accession
 
 
+def not_found_items_from_prior_pass(paths: list[Path]) -> dict[str, list[tuple[str, str]]]:
+    """Items a prior pass of this same tier still couldn't ground (`strategy == "not found"` in
+    its own output -- covers the LLM's own not-found verdicts, call failures, and hallucination-
+    only founds that failed grounding), for reprocessing with a stronger model. `paths` are that
+    prior pass's `--out` files (one per shard); an accession absent from every input `path` never
+    had a gap and is skipped.
+    """
+    by_accession: dict[str, list[tuple[str, str]]] = {}
+    for path in paths:
+        with path.open() as f:
+            for line in f:
+                rec = json.loads(line)
+                items = [(row["target_field"], row["target_value"]) for row in rec["rows"] if row["strategy"] == "not found"]
+                if items:
+                    by_accession[rec["accession"]] = items
+    return by_accession
+
+
+def run_name_lookup(accessions: set[str]) -> dict[str, str]:
+    """`accession -> run_name` for a specific set of accessions, read from the same parquet
+    `sample_not_found_by_accession` uses -- needed when `by_accession` instead comes from a prior
+    pass's own output (see `not_found_items_from_prior_pass`), which doesn't carry `run_name`.
+    """
+    trace_back = pd.read_parquet(TRACE_BACK_FULL_PARQUET, columns=["accession", "run_name"])
+    trace_back = trace_back[trace_back["accession"].isin(accessions)].drop_duplicates("accession")
+    return dict(zip(trace_back["accession"], trace_back["run_name"]))
+
+
 def already_processed(out_path: Path) -> set[str]:
     if not out_path.exists():
         return set()
@@ -167,6 +195,11 @@ def _next_batch(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--sample-size", type=int, default=None, help="distinct accessions to draw from the not-found residual (this shard); omit to process ALL of them")
+    parser.add_argument(
+        "--source-jsonl", type=Path, nargs="+", default=None,
+        help="reprocess only items still 'not found' in these prior pass output files (e.g. a stronger-model second "
+        "pass over the first pass's gaps), instead of drawing the full residual from the trace-back parquet",
+    )
     parser.add_argument("--max-hours", type=float, default=4.0, help="stop after this much wall time, whatever's been done so far")
     parser.add_argument("--batch-size", type=int, default=500, help="accessions per vLLM batch call -- vLLM batches internally, so this trades checkpoint granularity for per-batch overhead, not raw throughput")
     parser.add_argument("--seed", type=int, default=0)
@@ -176,9 +209,15 @@ def main() -> None:
     parser.add_argument("--out", type=Path, default=DEFAULT_OUT)
     args = parser.parse_args()
 
-    by_accession, run_name_by_accession = sample_not_found_by_accession(
-        args.sample_size, args.seed, shard_index=args.shard_index, shard_count=args.shard_count
-    )
+    if args.source_jsonl:
+        by_accession = not_found_items_from_prior_pass(args.source_jsonl)
+        if args.shard_count > 1:
+            by_accession = {a: items for a, items in by_accession.items() if _shard_of(a, args.shard_count) == args.shard_index}
+        run_name_by_accession = run_name_lookup(set(by_accession))
+    else:
+        by_accession, run_name_by_accession = sample_not_found_by_accession(
+            args.sample_size, args.seed, shard_index=args.shard_index, shard_count=args.shard_count
+        )
     run_index = pd.read_csv(RUN_INDEX_TSV, sep="\t").set_index("run_name")
 
     done = already_processed(args.out)

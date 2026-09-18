@@ -74,3 +74,21 @@ INDEPENDENT_REVIEW_MODEL_COMPARISON_100_PARQUET = NOTEBOOK_FIXTURES_DIR / "indep
 # `inputs/`, and stable across trace-back re-runs (unlike trace_back_full.parquet, this doesn't
 # change as the trace-back job progresses, so it never needs rebuilding once it exists).
 BIOSAMPLE_METADATA_PARQUET = DERIVED_DIR / "biosample_metadata.parquet"
+
+# The LLM evidence tier's own full-crate output, one pass per model size, one file per GPU shard
+# within a pass: Qwen3-8B over the ENTIRE deterministic "not found" residual, then Qwen3-32B-AWQ
+# (a second, stronger-model pass -- see `run_llm_evidence_batch.py`'s `--source-jsonl`) over
+# whatever Qwen3-8B still couldn't ground. Each line's `rows` carry their own `strategy` ("llm" if
+# grounded, else "not found"), so these are read directly (not through TRACE_BACK_FULL_PARQUET,
+# which only has the deterministic cascade's own verdict) to tally how much further each LLM pass
+# moved the residual.
+LLM_EVIDENCE_QWEN3_8B_JSONLS = [DERIVED_DIR / "llm_evidence_full_qwen3_8b_gpu0.jsonl", DERIVED_DIR / "llm_evidence_full_qwen3_8b_gpu1.jsonl"]
+LLM_EVIDENCE_QWEN3_32B_JSONLS = [DERIVED_DIR / "llm_evidence_second_pass_qwen3_32b_gpu0.jsonl", DERIVED_DIR / "llm_evidence_second_pass_qwen3_32b_gpu1.jsonl"]
+
+# Independent cross-check of the deterministic cascade's non-exact strategies (normalized,
+# case-insensitive, ontology synonym, fuzzy, bag of words) against EBI Zooma: every distinct
+# (raw_field, raw_matched_phrase, assigned_term_id) case those strategies produced, and Zooma's
+# own text-annotation verdict for each distinct evidence phrase. See run_zooma_batch.py.
+ZOOMA_CASE_UNIVERSE_PARQUET = DERIVED_DIR / "zooma_case_universe.parquet"
+ZOOMA_RESULTS_JSONL = DERIVED_DIR / "zooma_results.jsonl"
+ZOOMA_FAILED_BATCHES_JSONL = DERIVED_DIR / "zooma_failed_batches.jsonl"
