@@ -61,6 +61,22 @@ def confident_candidates(
     ]
 
 
+def exact_match_rank(assigned_term_id: str, candidates: list[dict]) -> str:
+    """Where the assigned term sits in Zooma's own (confidence-sorted) candidate list, with
+    no OLS lookups involved -- a pure candidate-list membership/rank check, distinct from
+    classify_case's fuller exact/child/xref classification. Used to separate two different
+    questions: does the assigned term show up in Zooma's candidates AT ALL ("top1" or
+    "present_not_top1" -- a recall question), versus is it specifically Zooma's OWN top pick
+    ("top1" only -- a precision-at-1 question)."""
+    assigned = canonical_term(assigned_term_id)
+    if not candidates:
+        return "no_zooma_result"
+    for i, c in enumerate(candidates):
+        if canonical_term(c["termId"]) == assigned:
+            return "top1" if i == 0 else "present_not_top1"
+    return "absent"
+
+
 def classify_case(
     assigned_term_id: str, candidates: list[dict], ols: OlsClient
 ) -> dict:
