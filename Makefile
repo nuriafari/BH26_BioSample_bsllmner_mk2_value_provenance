@@ -6,8 +6,8 @@
 # downloads the RO-Crate, and builds the derived tables, but skips any step whose output already
 # exists. Re-running `make notebooks` after that only re-executes the notebooks.
 #
-# Work in progress: `derived` runs a check across the full 4.2M-record RO-Crate and can take a
-# long time on a first build; `llm-evidence` is GPU-bound and can take hours.
+# `derived` runs a check across the full 4.2M-record RO-Crate and can take a long time on a first
+# build; `llm-evidence` is GPU-bound and can take hours.
 
 CONDA_ENV := .conda_env
 CRATE_URL := https://biosampleplus.s3.ap-northeast-1.amazonaws.com/releases/2026-06_mistral-small3.1-24b.tar.gz
@@ -64,7 +64,7 @@ lint: | $(CONDA_ENV)
 	$(RUN) ruff check src notebooks
 	$(RUN) ruff format --check src notebooks
 
-# GPU-bound (see README.md, Environments) -- runs a sample by default, not the full residual.
+# GPU-bound (see README.md) -- runs a sample by default, not the full residual.
 llm-evidence: $(TRACE_BACK_FULL) | $(CONDA_ENV)
 	$(RUN) python src/run_llm_evidence_batch.py --sample-size 8000 --max-hours 4 --seed 0
 

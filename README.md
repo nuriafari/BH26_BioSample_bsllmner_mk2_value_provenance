@@ -1,7 +1,5 @@
 # BH26 BioSample Curation
 
-**Status: work in progress.** The optional LLM evidence tier needs an actual GPU/CUDA driver to run (vLLM won't do anything useful without one), so that part is host-specific and may not run out of the box everywhere. Built with the assistance of [Claude Code](https://claude.com/claude-code).
-
 This project was developed as part of [DBCLS BioHackathon 2026](https://2026.biohackathon.org/), held in Matsuyama, Ehime, Japan, from 13 to 19 September 2026.
 
 ## What this is
@@ -48,22 +46,16 @@ Crate layout (see `data/2026-06_mistral-small3.1-24b/README.md`, published insid
 
 The local `data/derived/` directory is a working cache, not a checked-in result bundle. It is ignored along with the rest of `data/`, and may contain checkpoints in addition to the canonical tables. A clean checkout therefore cannot use those files without rebuilding them — the one exception is the 400-case benchmark evaluation, which is checked into `notebooks/fixtures/` instead (see [Repository layout](#repository-layout)) precisely because it can't be rebuilt.
 
-## Environments
-
-One environment (`environment.yaml`, Python 3.12) covers everything: the notebooks, the deterministic/ontology-synonym trace-back tiers (pandas, spaCy/negspacy for negation-aware text search, matplotlib/wordcloud/nbconvert for output), and the optional GPU-bound LLM evidence tier ([vLLM](https://github.com/vllm-project/vllm)).
-
-If you only want the notebooks (`make notebooks`), the LLM evidence tier's own dependencies still install (they're in the same environment) but nothing about them needs a GPU until you actually run `make llm-evidence` or `src/run_llm_evidence_batch.py` — that step is optional and slow (GPU-bound, hours), and needs an actual CUDA-capable GPU on the host to do anything useful. `biosample_trace_back_evaluation.ipynb` reads the production LLM evidence tier's own output from `data/derived/`; those files are not included in this repository (see [Data](#data--the-ro-crate)), so reproducing that notebook's cascade breakdown in full requires running the LLM evidence tier at production scale first (see [Reproducing](#reproducing)) rather than the smaller sample `make llm-evidence` runs by default.
-
 ## Reproducing
 
 ```sh
-make env        # create the conda environment at .conda_env
+make env        # create the conda environment at .conda_env, from environment.yaml
 make data       # download + extract the RO-Crate (~38GB)
 make derived    # build this project's derived tables from the crate
 make notebooks  # execute both notebooks in place
 ```
 
-`make help` lists every target. `make derived` runs a check across the full 4.2 million-record crate and can take a long time. `make llm-evidence` runs the LLM evidence tier over a small sample as a quick check and needs a CUDA-capable GPU on the host (see [Environments](#environments)); reproducing the full production run that `biosample_trace_back_evaluation.ipynb` and the headline coverage numbers depend on means running `src/run_full_production_pipeline.sh` instead, unattended, over the entire deterministic residual (GPU-bound, hours, resumable if interrupted).
+`make help` lists every target. `make derived` runs a check across the full 4.2 million-record crate and can take a long time. `make llm-evidence` runs the LLM evidence tier over a small sample as a quick check and needs a CUDA-capable GPU on the host; reproducing the full production run that `biosample_trace_back_evaluation.ipynb` and the headline coverage numbers depend on means running `src/run_full_production_pipeline.sh` instead, unattended, over the entire deterministic residual (GPU-bound, hours, resumable if interrupted).
 
 The 400-case LLM evidence-tier evaluation (`notebooks/fixtures/provenance_benchmark_400_results/`) is not reproducible by `make` end to end: `sample_provenance_benchmark.py` and `run_provenance_benchmark_qwen.py` are ordinary, rerunnable scripts, but the Claude Opus 5 reference annotation in between them was a one-off interactive review, not a script. The committed results are the authoritative record of that evaluation; the scripts are provided so the rest of the pipeline around it — sampling, running each candidate model, scoring against the reference, and the failure-mode breakdown — can be re-checked or extended.
 
