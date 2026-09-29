@@ -22,6 +22,7 @@ import spacy
 from negspacy.negation import (
     Negex,  # noqa: F401 -- import registers spaCy's "negex" pipe factory
 )
+from negspacy.termsets import termset
 
 from notebook_utils import RawHTML
 
@@ -177,10 +178,11 @@ def bs_record_table(raw: dict[str, Any]) -> pd.DataFrame:
 
 # The full cascade tried, in order, for one extracted value -- kept as a documented, ordered
 # list so the notebook's stats/plot can key off these names directly rather than hardcoding them.
-# Weakest/riskiest evidence last: a literal match of the value itself (exact/case-insensitive/
-# normalized) is trusted more than a match against a different-but-related string (ontology
-# synonym), which in turn is trusted more than a spelling-tolerant guess (fuzzy).
-MATCH_STRATEGIES: list[str] = ["exact", "case-insensitive", "normalized", "ontology synonym", "bag of words", "fuzzy"]
+# Every strategy against the extracted value's OWN text (exact/case-insensitive/normalized/
+# bag-of-words/fuzzy) is exhausted before falling back to a DIFFERENT string -- the assigned
+# ontology term's label/synonyms -- so a spelling-tolerant guess at the real value is always
+# preferred over even an exact match of a merely-related term.
+MATCH_STRATEGIES: list[str] = ["exact", "case-insensitive", "normalized", "bag of words", "fuzzy", "ontology synonym"]
 
 
 # Values an extraction pipeline can emit that mean "no answer", not a real claim about the
@@ -209,12 +211,67 @@ def bold_span_html(text: str, span: tuple[int, int]) -> RawHTML:
     return RawHTML(f"{html.escape(before)}<b>{html.escape(match)}</b>{html.escape(after)}")
 
 
+@spacy.language.Language.component("cautious_sentencizer")
+def _cautious_sentencizer(doc: spacy.tokens.Doc) -> spacy.tokens.Doc:
+    """A sentence boundary follows `.`/`!`/`?` only when the NEXT token starts with an uppercase
+    letter (or is the end of the text) -- unlike spaCy's built-in `sentencizer`, which splits on
+    every `.` unconditionally. BioSample free text is dense with catalog/reagent abbreviations
+    (`"cat. no 12345"`, `"Fig. 2"`, decimal numbers with a trailing item like `"1. Cells were..."`
+    aside), and an unconditional splitter breaks `"...(Thermo Fisher, cat. no PHG0023), 10ng/ml
+    human FGF-basic..."` into two fragments starting `"no PHG0023), ..."` -- a spurious fragment
+    beginning with the word "no", which `negex` (scoped per-sentence) then wrongly treats as a
+    negation trigger for whatever follows, even though "no" was never a real negation here.
+    Confirmed directly: this produced real false-positive negations in production data (e.g.
+    `FGF-basic`, `A-8301`, `LPA 16:0` inside ordinary reagent-supplement sentences, all following
+    a `"cat. no ..."` catalog citation). Requiring an uppercase letter after the break is the same
+    heuristic real sentence starts satisfy in English and abbreviations before a lowercase
+    continuation do not.
+    """
+    doc[0].is_sent_start = True
+    for i, token in enumerate(doc[:-1]):
+        next_token = doc[i + 1]
+        is_boundary = token.text in {".", "!", "?"} and next_token.text[:1].isupper()
+        next_token.is_sent_start = is_boundary
+    return doc
+
+
+# negspacy's default `en_clinical` termset lists the bare word "no" as a `preceding_negations`
+# trigger (correct for clinical text: "no evidence of X") -- but BioSample reagent/protocol text
+# constantly cites catalog numbers as "cat. no 12345" / "cat no. 12345" / "catalog no. X", where
+# "no" abbreviates "number", not the negation word. Confirmed directly: this produced real
+# false-positive negations in production data (`FGF-basic`, `A-8301`, `LPA 16:0`, each following a
+# catalog-number citation in an ordinary, non-negated reagent-supplement sentence). Added as
+# `pseudo_negations` (negspacy's own mechanism for "this looks like a trigger but isn't" -- see
+# `PhraseMatcher`-based cancellation in `Negex.process_negations`), not by removing "no" from
+# `preceding_negations` outright, since a genuine standalone "no" trigger is still real elsewhere
+# (e.g. "No antibody control with HDAC1 activation sgRNA").
+_CATALOG_NUMBER_PSEUDO_NEGATIONS = [
+    "cat. no", "cat no.", "cat. no.", "cat no",
+    "catalog no", "catalog no.", "catalog number", "catalogue no", "catalogue no.", "catalogue number",
+    "lot no", "lot no.", "lot number",
+    "ref no", "ref no.", "reference no", "reference no.", "reference number",
+    "item no", "item no.", "part no", "part no.",
+    "product no", "product no.", "order no", "order no.", "serial no", "serial no.",
+]
+_NEGATION_TERMSET = termset("en_clinical").get_patterns()
+_NEGATION_TERMSET["pseudo_negations"] = [*_NEGATION_TERMSET["pseudo_negations"], *_CATALOG_NUMBER_PSEUDO_NEGATIONS]
+# `"free"` (bare word) is a `following_negations` trigger in en_clinical -- correct for a clinical
+# "cancer-free"/"disease-free" note, but in this corpus "free" overwhelmingly names a reagent or
+# culture condition ("feeder free", "serum-free", "RNase-free", "xeno-free"), unrelated to whatever
+# value happens to precede it in the sentence. Measured directly on a 400-row sample of the
+# production "not found (negated)" rows: 92/400 (23%) trace to this single trigger, the single
+# largest false-positive source found -- e.g. `cell_line="BGO3"` wrongly negated by "BGO3 (feeder
+# free)". Dropped entirely (not pseudo-negated) since no genuine "disease/cancer-free" usage was
+# observed in this corpus's cell/animal experimental protocols to weigh against it.
+_NEGATION_TERMSET["following_negations"] = [t for t in _NEGATION_TERMSET["following_negations"] if t != "free"]
+
 # Built once at import time (a blank, unparsed pipeline -- no model download needed) rather than
 # per call: negex's own setup cost (trigger-phrase matchers) would otherwise repeat for every
-# match checked.
+# match checked. Uses `cautious_sentencizer` (above), not spaCy's built-in `sentencizer`, so
+# negation scope isn't torn apart by ordinary abbreviation periods in reagent/protocol text.
 _NEGATION_NLP = spacy.blank("en")
-_NEGATION_NLP.add_pipe("sentencizer")
-_NEGEX = _NEGATION_NLP.add_pipe("negex")
+_NEGATION_NLP.add_pipe("cautious_sentencizer")
+_NEGEX = _NEGATION_NLP.add_pipe("negex", config={"neg_termset": _NEGATION_TERMSET})
 
 
 def is_negated(content: str, span: tuple[int, int]) -> bool:
@@ -716,8 +773,8 @@ def _search_group_bag_of_words(needle: str, entries: list[tuple[str, str, str]])
     """Same shape as `_search_group`'s other tiers, but via `_bag_of_words_find` -- its own,
     separately-invoked function (like `_search_group_fuzzy`) since it's a distinct risk tier
     (word-order-tolerant, not spelling-tolerant) that callers try only after every order-preserving
-    option (including ontology synonyms) has failed, and before the spelling-tolerant `fuzzy` tier
-    -- see `MATCH_STRATEGIES`.
+    match of the value's own text has failed, and before the spelling-tolerant `fuzzy` tier and the
+    ontology-synonym fallback -- see `MATCH_STRATEGIES`.
     """
     matches = [(name, content, span) for name, content, _ in entries if (span := _bag_of_words_find(needle, content)) is not None]
     if matches:
@@ -742,10 +799,10 @@ def _search(
     """Two-pass search for one needle string: `attribute_entries` first (structured fields), and
     only if nothing matches there at all, `secondary_entries` (every other field in the record) --
     see `_record_search_groups` for why. Covers `_search_group`'s exact/case-insensitive/normalized
-    tiers only -- NOT `fuzzy`, which the caller tries as its own, final fallback, after ontology
-    synonyms, since a curated ontology synonym is more trustworthy evidence than a spelling-
-    tolerant guess (see `MATCH_STRATEGIES`). Returns `(matches, strategy)`, or `None` if nothing
-    matches anywhere at either of these tiers.
+    tiers only -- NOT `bag of words`/`fuzzy`, which the caller tries next, as its own two fallback
+    stages, still against the extracted value's own text, before ever falling back to a DIFFERENT
+    string (an ontology synonym, tried dead last -- see `MATCH_STRATEGIES`). Returns `(matches,
+    strategy)`, or `None` if nothing matches anywhere at either of these tiers.
     """
     return _search_group(needle, needle_lower, attribute_entries) or _search_group(needle, needle_lower, secondary_entries)
 
@@ -758,53 +815,72 @@ def _search_ontology_synonyms(
     secondary_combined_lower: str,
 ) -> tuple[list[tuple[str, str, tuple[int, int]]], str] | None:
     """Same attributes-first, secondary-second precedence as `_search`, but over a whole list of
-    ontology-synonym candidate strings (a term can have 10-20+). For each candidate, tries: exact/
-    case-insensitive/normalized (`_search_group`, pre-screened with the group's own combined
-    string first, since calling it unconditionally for every candidate is too expensive); then
-    `bag of words` (`_bag_of_words_find`) and `fuzzy` (`_fuzzy_find`) against that same candidate,
-    same as `_search` tries them for the extracted value itself -- e.g. a raw field that states an
-    ontology synonym's words out of order, or with one word spelled differently (British vs.
-    American), which a literal substring check would miss. All three still count as `"ontology
-    synonym"` evidence, not a separate strategy: they differ only in how tolerant the text
-    comparison is, not in what's being compared against (the assigned term's own label/synonyms,
-    not the extracted value's literal text).
+    ontology-synonym candidate strings (a term can have 10-20+): the assigned term's label, exact
+    synonyms, and related synonyms, in that fixed order.
 
-    A candidate shorter than `_ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH` only gets the `exact`
-    (case-sensitive) tier, never the looser ones -- found directly on real data: a free-text
-    dietary note ("No dairy. Limited soy...") case-insensitively matched ChEBI's two-letter symbol
-    for nitric oxide, `"NO"`, purely because the sentence happened to start with the English word
-    "No". Word-boundary enforcement doesn't catch this (`"No"` is a genuine, complete word there),
-    so a length floor is the only thing that does -- exactly the same short-string collision risk
+    STRATEGY-MAJOR, not candidate-major: within one entries group, every candidate is tried at
+    `exact` before any candidate is tried at `case-insensitive`, then every candidate at
+    `normalized`, then every candidate at `bag of words` (`_bag_of_words_find`), then every
+    candidate at `fuzzy` (`_fuzzy_find`) -- so an exact match of the 10th synonym always wins over
+    a fuzzy match of the preferred label; a fuzzy-tolerant guess is only reached once every
+    candidate has failed every stricter strategy. All five still count as `"ontology synonym"`
+    evidence, not a separate strategy: they differ only in how tolerant the text comparison is, not
+    in what's being compared against (the assigned term's own label/synonyms, not the extracted
+    value's literal text).
+
+    A candidate shorter than `_ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH` is tried ONLY at the `exact`
+    (case-sensitive) strategy -- skipped entirely at case-insensitive/normalized/bag-of-words/fuzzy
+    (`loose_candidates` below never includes it). Found directly on real data: a free-text dietary
+    note ("No dairy. Limited soy...") case-insensitively matched ChEBI's two-letter symbol for
+    nitric oxide, `"NO"`, purely because the sentence happened to start with the English word "No".
+    Word-boundary enforcement doesn't catch this (`"No"` is a genuine, complete word there), so a
+    length floor is the only thing that does -- exactly the same short-string collision risk
     already guarded against in `fuzzy`/`normalized`, just previously unguarded here.
 
-    Returns `(matches, "ontology synonym")` for the first candidate/tier combination that matches
-    anywhere in a group -- the matched phrase itself is read back out of each match's own span by
-    the caller, not returned here, since it can differ per match (e.g. a case-insensitive hit reads
-    back in whatever case the raw text actually used).
+    Returns `(matches, "ontology synonym")` for the first strategy/candidate combination that
+    matches anywhere in a group -- the matched phrase itself is read back out of each match's own
+    span by the caller, not returned here, since it can differ per match (e.g. a case-insensitive
+    hit reads back in whatever case the raw text actually used).
     """
+    candidates = [c for c in candidates if c]
+    if not candidates:
+        return None
+    loose_candidates = [c for c in candidates if len(c) >= _ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH]
+
     for entries, combined_lower in [(attribute_entries, attr_combined_lower), (secondary_entries, secondary_combined_lower)]:
+        # exact: every candidate, including short ones (a short candidate gets no other strategy)
         for candidate in candidates:
-            if not candidate:
-                continue
             candidate_lower = candidate.lower()
-            if len(candidate) < _ONTOLOGY_CANDIDATE_MIN_LOOSE_LENGTH:
-                if candidate_lower in combined_lower:
-                    matches = _find_all_matches(candidate, candidate_lower, entries, case_insensitive=False)
-                    if matches:
-                        return _preferred_matches(matches), "ontology synonym"
+            if candidate_lower not in combined_lower:  # cheap pre-screen -- skips the O(attributes) scan when it can't possibly match
                 continue
+            matches = _find_all_matches(candidate, candidate_lower, entries, case_insensitive=False)
+            if matches:
+                return _preferred_matches(matches), "ontology synonym"
 
-            if candidate_lower in combined_lower:  # cheap single-string pre-screen -- skips the O(attributes) _search_group when it can't possibly match
-                found = _search_group(candidate, candidate_lower, entries)
-                if found is not None:
-                    matches, _ = found
-                    return matches, "ontology synonym"
+        # case-insensitive: every LOOSE candidate
+        for candidate in loose_candidates:
+            candidate_lower = candidate.lower()
+            if candidate_lower not in combined_lower:
+                continue
+            matches = _find_all_matches(candidate, candidate_lower, entries, case_insensitive=True)
+            if matches:
+                return _preferred_matches(matches), "ontology synonym"
 
-            # bag-of-words/fuzzy tolerate reordering/spelling drift, so a candidate can match here
-            # even when it's not a literal substring -- the pre-screen above doesn't gate these
+        # normalized: every loose candidate
+        for candidate in loose_candidates:
+            matches = [(name, content, span) for name, content, _ in entries if (span := _search_normalized_one(candidate, content)) is not None]
+            if matches:
+                return _preferred_matches(matches), "ontology synonym"
+
+        # bag of words: every loose candidate -- tolerates reordering, so not gated by the
+        # substring pre-screen above
+        for candidate in loose_candidates:
             matches = [(name, content, span) for name, content, _ in entries if (span := _bag_of_words_find(candidate, content)) is not None]
             if matches:
                 return _preferred_matches(matches), "ontology synonym"
+
+        # fuzzy: every loose candidate
+        for candidate in loose_candidates:
             matches = [(name, content, span) for name, content, _ in entries if (span := _fuzzy_find(candidate, content)) is not None]
             if matches:
                 return _preferred_matches(matches), "ontology synonym"
@@ -828,6 +904,27 @@ VERIFY_COLUMNS = [
 ]
 
 
+def _term_info_for_value(
+    field_results: list[dict[str, Any]] | None, value: str, field_ontology_index: dict[str, Any] | None
+) -> tuple[str, dict[str, Any] | None]:
+    """The ontology term actually assigned to THIS one extracted value -- matched by the result
+    entry's own `value` string, never by its position in `results[field]`. `results[field]` omits
+    entries for values that got no ontology match at all, so it is not guaranteed to be the same
+    length as, or positionally aligned with, `extracted[field]` -- looking it up by list position
+    (an earlier version of this function did) can silently hand a multi-valued field's second or
+    third value someone else's term. Confirmed directly on real data (accession SAMN37097260,
+    `rnaseq_mouse_2024-07`): `extracted["drug"] = ["LPS", "IL4", "actinomycin D"]`, but
+    `results["drug"]` has only two entries (`IL4` got no match) -- indexing by position handed
+    `actinomycin D` the `LPS`/lipopolysaccharide term, producing a false "ontology synonym" match
+    against the literal phrase "LPS" elsewhere in the record.
+    """
+    for entry in field_results or []:
+        if entry.get("value") == value:
+            term_id = entry.get("term_id")
+            return term_id or "", (field_ontology_index or {}).get(term_id) if term_id else None
+    return "", None
+
+
 def verify_extracted_against_raw_rows(
     raw: dict[str, Any],
     extracted: dict[str, Any],
@@ -838,15 +935,16 @@ def verify_extracted_against_raw_rows(
     appears somewhere in this raw BioSample record, in `MATCH_STRATEGIES` order: `exact`
     (case-sensitive substring); `case-insensitive`; `normalized` (case-insensitive with
     parentheticals stripped and hyphens/underscores/whitespace collapsed -- see
-    `_search_normalized_one`); `ontology synonym`, only when `results`/`ontology_indexes` (see
-    `ontology.py:build_field_ontology_indexes`) are supplied -- a match against the LABEL or any
-    SYNONYM of the ontology term `results[field]` actually assigned, i.e. not the extracted
-    value's own text at all, but what the pipeline's own ontology search (`text2term`) already
-    resolved it to, tried literally first and then with the same reordering/spelling tolerance as
-    the tiers below (see `_search_ontology_synonyms`); `bag of words` -- a word-order-
-    tolerant match of the value itself; and finally `fuzzy` -- a spelling-tolerant, word-by-word
-    match of the value itself (see `_fuzzy_find`), tried dead last since it's the one tier not
-    backed by an exact or curated match.
+    `_search_normalized_one`); `bag of words` -- a word-order-tolerant match of the value's own
+    text; `fuzzy` -- a spelling-tolerant, word-by-word match of the value's own text (see
+    `_fuzzy_find`). Only once every one of those five has failed to find the value's OWN text
+    anywhere does the cascade fall back to a DIFFERENT string: `ontology synonym`, tried dead
+    last, only when `results`/`ontology_indexes` (see `ontology.py:build_field_ontology_indexes`)
+    are supplied -- a match against the LABEL or any SYNONYM of the ontology term this specific
+    value was assigned (see `_term_info_for_value`), i.e. not the extracted value's own text at
+    all, but what the pipeline's own ontology search (`text2term`) already resolved it to, itself
+    tried exact/case-insensitive/normalized/bag-of-words/fuzzy across every candidate (see
+    `_search_ontology_synonyms`).
 
     Within a tier, every `Attributes.Attribute` is checked FIRST -- including each attribute's
     own NAME, not just its content, since a value is sometimes encoded as the attribute's label
@@ -858,6 +956,14 @@ def verify_extracted_against_raw_rows(
     genuinely repeated), ALL of those matches are kept, not just the first -- `n_matches` says
     how often that happens. Array-type fields (`extracted[field]` a list) get one row per value,
     not one row per field.
+
+    A row whose retained matches are ALL negated (see `is_negated`) is demoted to
+    `strategy="not found"` -- a negated occurrence never establishes provenance on its own -- but
+    its evidence (`raw_fields`/`raw_texts`/`raw_matched_phrase`/`negated`/`n_matches`) is kept, not
+    blanked, so a downstream consumer (the LLM evidence tier) can tell a genuine blank miss
+    (`row_negated=False`, `raw_fields=[]`) apart from a negated-only miss (`row_negated=True`,
+    `raw_fields` non-empty) and show the LLM what was found, so it can judge whether the negation
+    means the value should be treated as absent.
 
     Returns a plain `list[dict]` (keys: `VERIFY_COLUMNS`), NOT a DataFrame -- constructing a
     `pd.DataFrame` has substantial fixed per-call overhead (Arrow string-array conversion, type
@@ -910,29 +1016,32 @@ def verify_extracted_against_raw_rows(
         if not value:
             continue
 
-        assigned = ((results or {}).get(field) or [None])[0]
-        term_id = (assigned or {}).get("term_id")
-        term_info = ((ontology_indexes or {}).get(field) or {}).get(term_id) if term_id else None
-        term_label = ((term_info or {}).get("label")) or ""
-        term_synonyms = "; ".join(term_info["exact_synonyms"] + term_info["related_synonyms"]) if term_info else ""
+        field_results = (results or {}).get(field)
+        field_ontology_index = (ontology_indexes or {}).get(field)
 
         for one_value in value if isinstance(value, list) else [value]:
+            # looked up per VALUE, not once per field -- see `_term_info_for_value`
+            term_id, term_info = _term_info_for_value(field_results, one_value, field_ontology_index)
+            term_label = (term_info or {}).get("label") or ""
+            term_synonyms = "; ".join(term_info["exact_synonyms"] + term_info["related_synonyms"]) if term_info else ""
+
+            # exact / case-insensitive / normalized of the value's own text
             found = _search(one_value, one_value.lower(), attribute_entries, secondary_entries)
 
-            if found is None and term_info:
-                candidates = [term_info["label"], *term_info["exact_synonyms"], *term_info["related_synonyms"]]
-                found = _search_ontology_synonyms(candidates, attribute_entries, secondary_entries, attr_combined_lower, secondary_combined_lower)
-
             if found is None:
-                # word-order-tolerant (not spelling-tolerant) match, tried after every
-                # order-preserving option -- see `_search_group_bag_of_words`
+                # word-order-tolerant (not spelling-tolerant) match, still of the value's own text
                 found = _search_group_bag_of_words(one_value, attribute_entries) or _search_group_bag_of_words(one_value, secondary_entries)
 
             if found is None:
-                # last resort: spelling-tolerant match of the extracted value itself, tried only
-                # after every exact/normalized/ontology-synonym/bag-of-words option has failed --
-                # see `_search`
+                # spelling-tolerant match, still of the value's own text -- the last strategy tried
+                # against the value itself before falling back to a DIFFERENT string below
                 found = _search_group_fuzzy(one_value, attribute_entries) or _search_group_fuzzy(one_value, secondary_entries)
+
+            if found is None and term_info:
+                # last resort: not the value's own text at all, but the label/synonyms of the
+                # ontology term already assigned to it -- see `_search_ontology_synonyms`
+                candidates = [term_info["label"], *term_info["exact_synonyms"], *term_info["related_synonyms"]]
+                found = _search_ontology_synonyms(candidates, attribute_entries, secondary_entries, attr_combined_lower, secondary_combined_lower)
 
             row = {
                 "target_field": field,
@@ -952,8 +1061,13 @@ def verify_extracted_against_raw_rows(
                 # per match, not per row: the same value can match one attribute where the
                 # surrounding text negates it and another where it doesn't
                 negated_flags = [is_negated(content, span) for _, content, span in matches]
+                row_negated = all(negated_flags)  # True only when EVERY retained match is negated
                 row.update(
-                    strategy=strategy_used,
+                    # a negated-only match never establishes provenance on its own -- demoted to
+                    # "not found" so it flows into the same residual as a genuine blank miss, but
+                    # its evidence is kept below (not blanked), so the LLM evidence tier can be told
+                    # what was found and judge the negation itself, rather than seeing nothing
+                    strategy="not found" if row_negated else strategy_used,
                     raw_fields=[name for name, _, _ in matches],
                     raw_texts=[content for _, content, _ in matches],
                     # the phrase actually found, read straight out of its own match span -- NOT
@@ -961,14 +1075,7 @@ def verify_extracted_against_raw_rows(
                     # `fuzzy` matches whose real text differs (punctuation/spelling) from the value
                     raw_matched_phrase=[content[start:end] for _, content, (start, end) in matches],
                     negated=negated_flags,
-                    # True only when EVERY match for this row sits in a negated context -- a row
-                    # with at least one non-negated match still has genuine standalone evidence, so
-                    # it isn't downgraded just because a DIFFERENT match happened to be negated.
-                    # A row_negated=True row textually matched but shouldn't be trusted as
-                    # confirmed evidence (e.g. "Cre negative; Ccm3..." matching a knockout_gene on
-                    # "Ccm3") -- kept as its own flagged signal alongside `strategy`, not folded
-                    # into "not found" (the match is real, just untrustworthy) or silently trusted.
-                    row_negated=all(negated_flags),
+                    row_negated=row_negated,
                     n_matches=len(matches),
                 )
             rows.append(row)

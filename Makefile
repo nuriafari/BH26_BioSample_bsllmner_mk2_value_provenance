@@ -1,5 +1,5 @@
 # Reproduces the BH26 BioSample curation pipeline. See README.md for context on what this
-# project does and why it needs two separate environments.
+# project does.
 #
 # Real files/directories are used as prerequisites throughout (not phony always-rerun targets),
 # so `make notebooks` alone is self-sufficient from a bare clone -- it creates the environment,
@@ -7,8 +7,7 @@
 # exists. Re-running `make notebooks` after that only re-executes the notebooks.
 #
 # Work in progress: `derived` runs a check across the full 4.2M-record RO-Crate and can take a
-# long time on a first build; `llm-evidence` needs a separate GPU/vLLM environment this Makefile
-# cannot create.
+# long time on a first build; `llm-evidence` is GPU-bound and can take hours.
 
 CONDA_ENV := .conda_env
 CRATE_URL := https://biosampleplus.s3.ap-northeast-1.amazonaws.com/releases/2026-06_mistral-small3.1-24b.tar.gz
@@ -28,7 +27,7 @@ help:
 	@echo "  derived      Build derived parquet tables from the RO-Crate"
 	@echo "  notebooks    Execute all three notebooks in place (builds env/data/derived first if needed)"
 	@echo "  lint         Run ruff over src/ and notebooks/"
-	@echo "  llm-evidence Print how to run the optional GPU/vLLM evidence tier (see README.md)"
+	@echo "  llm-evidence Run the optional LLM evidence tier over a sample (GPU-bound, see README.md)"
 	@echo "  clean        Remove derived data and Python caches (keeps the downloaded RO-Crate)"
 
 env: $(CONDA_ENV)
@@ -66,10 +65,9 @@ lint: | $(CONDA_ENV)
 	$(RUN) ruff check src notebooks
 	$(RUN) ruff format --check src notebooks
 
-llm-evidence:
-	@echo "Requires a separate GPU environment with vLLM installed (see README.md, Environments)."
-	@echo "Example (run from that environment):"
-	@echo "  CUDA_VISIBLE_DEVICES=0 python src/run_llm_evidence_batch.py --sample-size 8000 --max-hours 4 --seed 0"
+# GPU-bound (see README.md, Environments) -- runs a sample by default, not the full residual.
+llm-evidence: $(TRACE_BACK_FULL) | $(CONDA_ENV)
+	$(RUN) python src/run_llm_evidence_batch.py --sample-size 8000 --max-hours 4 --seed 0
 
 clean:
 	rm -rf $(DERIVED_DIR)

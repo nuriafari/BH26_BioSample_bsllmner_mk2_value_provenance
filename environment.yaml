@@ -1,27 +1,41 @@
-name: claude_sandbox_env
+name: bh26-biosample-curation
 channels:
   - conda-forge
   - bioconda
   - defaults
 
 dependencies:
-  # core
   - python=3.12
   - pip
   - setuptools
   - wheel
   - curl
   - pip:
+      # deterministic + ontology-synonym trace-back tiers (bs_entries.py, ontology.py)
       - numpy
       - pandas
-      - scikit-learn
-      - rapidfuzz
-      - torch
-      - transformers
-      - sentence-transformers
-      - matplotlib
-      - streamlit
-      - nltk
-      - nbconvert
+      - pyarrow  # required by pandas for to_parquet/read_parquet -- not pulled in automatically
       - spacy
       - negspacy
+      # text2term-based ontology re-scoring (ontology_rescore.py) -- not currently wired into
+      # any notebook/script, kept for ongoing related ontology-matching work.
+      - text2term
+      # LLM evidence tier (llm_evidence.py, run_llm_evidence_batch.py). Pinned as a group:
+      # an unpinned `vllm` resolves to a torch build compiled against a newer CUDA runtime
+      # than this host's driver supports, so torch.cuda.is_available() silently comes back
+      # False and the GPU tier falls back to (impractically slow) CPU with no error. These
+      # versions are the newest combination confirmed to actually see the GPU here.
+      - torch==2.7.0
+      - torchvision==0.22.0
+      - torchaudio==2.7.0
+      - transformers==4.51.3
+      - vllm==0.9.2
+      # ontology cross-check against EBI Zooma/OLS (zooma_scoring.py, ols_client.py)
+      - requests
+      # notebook execution and output
+      - matplotlib
+      - wordcloud
+      - nbconvert
+      - ipykernel
+      # linting (see CLAUDE.md Tooling)
+      - ruff

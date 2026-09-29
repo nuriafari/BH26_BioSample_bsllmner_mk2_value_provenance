@@ -1,7 +1,7 @@
 # Data
 data/2026-06_mistral-small3.1-24b
 data
-
+docs
 
 # Environments
 .venv
@@ -10,6 +10,10 @@ data
 CLAUDE*
 
 # Caches
-__pycache__/
-.cache
+*cache*
 .cc-toolchain
+
+# Still unfinished
+sandbox
+trash
+
