@@ -1,0 +1,186 @@
+[
+  {
+    "case_index": 260,
+    "accession": "SAMN20177800",
+    "target_field": "knockout_gene",
+    "target_value": "Ryr2",
+    "verdict": "found",
+    "quotes": ["AAV-Ryr2gRNA", "KO5"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 261,
+    "accession": "SAMN06468149",
+    "target_field": "drug",
+    "target_value": "Naproxen",
+    "verdict": "found",
+    "quotes": ["TNF + Naprox", "P3_MT_plus_NAP"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 262,
+    "accession": "SAMEA3113394",
+    "target_field": "drug",
+    "target_value": "Doxycycline",
+    "verdict": "found",
+    "quotes": ["[dox] ug/ml", "ESC-iNkx2.2"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 263,
+    "accession": "SAMN31552617",
+    "target_field": "cell_type",
+    "target_value": "CD4+CD25+Foxp3+ regulatory T cell",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "record's cell type is explicitly Foxp3-negative (CD45+CD4+CD8-CD25+Foxp3-Thy1.1+), contradicting the Foxp3+ component of the claimed value"
+  },
+  {
+    "case_index": 264,
+    "accession": "SAMN10266319",
+    "target_field": "knockout_gene",
+    "target_value": "Synbind1",
+    "verdict": "found",
+    "quotes": ["Synbindinflox"],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  },
+  {
+    "case_index": 265,
+    "accession": "SAMEA104457945",
+    "target_field": "knockout_gene",
+    "target_value": "ATXN2",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "ATXN2 appears only in shared protocol text describing transgenic (ATXN2Q127) mice, while this sample's genotype is stated as wild type genotype and disease normal"
+  },
+  {
+    "case_index": 266,
+    "accession": "SAMN40986006",
+    "target_field": "disease",
+    "target_value": "cardiotoxicity",
+    "verdict": "found",
+    "quotes": ["Cardiotoxic patients"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 267,
+    "accession": "SAMN37546765",
+    "target_field": "overexpressed_gene",
+    "target_value": "FGFR2",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fabricated / no textual basis"
+  },
+  {
+    "case_index": 268,
+    "accession": "SAMN41240358",
+    "target_field": "cell_type",
+    "target_value": "mononuclear cell",
+    "verdict": "found",
+    "quotes": ["mononucelar cells"],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  },
+  {
+    "case_index": 269,
+    "accession": "SAMN30072565",
+    "target_field": "knockout_gene",
+    "target_value": "Trpm4",
+    "verdict": "found",
+    "quotes": ["B6.Cg-Trpm4tm1.2-PG", "KOSHAM_24H"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 270,
+    "accession": "SAMEA111432005",
+    "target_field": "drug",
+    "target_value": "Erastin",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "Erastin appears only in the generic protocol listing all treatment arms (RSL3, N6F11, Fin56, Erastin); this sample is identified as PANC1-N6F11-5microM-6h1, i.e. N6F11-treated"
+  },
+  {
+    "case_index": 271,
+    "accession": "SAMN28159892",
+    "target_field": "knockout_gene",
+    "target_value": "Dmp1",
+    "verdict": "found",
+    "quotes": ["Dmp1cre DTAfl/+", "KO_Bm_4w,scRNAseq"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 272,
+    "accession": "SAMN06609106",
+    "target_field": "knockdown_gene",
+    "target_value": "CD277",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "requires domain knowledge beyond the record"
+  },
+  {
+    "case_index": 273,
+    "accession": "SAMN42011865",
+    "target_field": "knockout_gene",
+    "target_value": "Slc38a2",
+    "verdict": "found",
+    "quotes": ["Slc38a2deltaEC", "E-KO-2, replicate 2, scRNAseq"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 274,
+    "accession": "SAMN08736943",
+    "target_field": "knockout_gene",
+    "target_value": "Aml1",
+    "verdict": "found",
+    "quotes": ["Aml1ETO/+;KrasG12D/+ fetal liver cells"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 275,
+    "accession": "SAMN17315627",
+    "target_field": "knockout_gene",
+    "target_value": "Sfpi1",
+    "verdict": "found",
+    "quotes": ["Pu.1-URE-/-"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 276,
+    "accession": "SAMN10081705",
+    "target_field": "disease",
+    "target_value": "gastric cancer",
+    "verdict": "found",
+    "quotes": ["cancer type", "gastric"],
+    "gap_type": "value combines multiple separate attributes"
+  },
+  {
+    "case_index": 277,
+    "accession": "SAMEA4051975",
+    "target_field": "drug",
+    "target_value": "GDNF",
+    "verdict": "found",
+    "quotes": ["10 ng/ml GDNF (Peprotech)", "GIS_hMLO_2"],
+    "gap_type": "other",
+    "gap_type_note": "value is stated verbatim only inside Description.Comment.Paragraph protocol text, outside the attribute fields the lexical search covered"
+  },
+  {
+    "case_index": 278,
+    "accession": "SAMN53384819",
+    "target_field": "tissue",
+    "target_value": "colorectal",
+    "verdict": "found",
+    "quotes": ["3D engineered CRC tissue", "crc stage"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 279,
+    "accession": "SAMN27145902",
+    "target_field": "cell_type",
+    "target_value": "Anulus fibrosis cell",
+    "verdict": "found",
+    "quotes": ["Anuulus fibrosis (AF) cells"],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  }
+]

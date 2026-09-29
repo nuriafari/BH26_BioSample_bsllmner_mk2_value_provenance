@@ -1,0 +1,225 @@
+[
+ {
+  "case_index": 40,
+  "accession": "SAMEA3485787",
+  "target_field": "chip_antigen",
+  "target_value": "IFITM2",
+  "verdict": "found",
+  "quotes": [
+   "293T_chIFITM2-sc-2357744"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 41,
+  "accession": "SAMN12495638",
+  "target_field": "knockdown_gene",
+  "target_value": "LSH",
+  "verdict": "found",
+  "quotes": [
+   "siDCAF8+siLSH"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 42,
+  "accession": "SAMN07767115",
+  "target_field": "disease",
+  "target_value": "B cell acute lymphoblastic leukemia",
+  "verdict": "found",
+  "quotes": [
+   "Progenitor B-1 B cell ALL"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 43,
+  "accession": "SAMN27603708",
+  "target_field": "chip_antigen",
+  "target_value": "SIRT1",
+  "verdict": "found",
+  "quotes": [
+   "SIRT11"
+  ],
+  "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+ },
+ {
+  "case_index": 44,
+  "accession": "SAMN39602304",
+  "target_field": "knockdown_gene",
+  "target_value": "FBL",
+  "verdict": "found",
+  "quotes": [
+   "siFBL"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 45,
+  "accession": "SAMN44184604",
+  "target_field": "overexpressed_gene",
+  "target_value": "AppGF",
+  "verdict": "found",
+  "quotes": [
+   "AppNL-G-F; Trem2 KO"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 46,
+  "accession": "SAMN34298284",
+  "target_field": "knockout_gene",
+  "target_value": "PRRX1",
+  "verdict": "found",
+  "quotes": [
+   "PRRX1FV",
+   "dTAGV-1 (500 nM)"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 47,
+  "accession": "SAMN37387643",
+  "target_field": "disease",
+  "target_value": "chronic periodontitis",
+  "verdict": "found",
+  "quotes": [
+   "chronic pariodontiits"
+  ],
+  "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+ },
+ {
+  "case_index": 48,
+  "accession": "SAMN10497092",
+  "target_field": "overexpressed_gene",
+  "target_value": "Yap1",
+  "verdict": "found",
+  "quotes": [
+   "Yap1Flagbio"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 49,
+  "accession": "SAMN14050969",
+  "target_field": "cell_type",
+  "target_value": "TH17 cell",
+  "verdict": "found",
+  "quotes": [
+   "C. acnes-specific antimicrobial TH17 clones (AMTH17)"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 50,
+  "accession": "SAMN15405742",
+  "target_field": "drug",
+  "target_value": "Interleukin-27",
+  "verdict": "found",
+  "quotes": [
+   "Dex+IL27"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 51,
+  "accession": "SAMN37628069",
+  "target_field": "overexpressed_gene",
+  "target_value": "FoxC1",
+  "verdict": "found",
+  "quotes": [
+   "MC1(+iFoxC1)"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 52,
+  "accession": "SAMN36338560",
+  "target_field": "cell_type",
+  "target_value": "Adenocarcinoma cell",
+  "verdict": "found",
+  "quotes": [
+   "Human Adenocarcinoma of the lung cells"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 53,
+  "accession": "SAMN30993404",
+  "target_field": "knockdown_gene",
+  "target_value": "SNX5",
+  "verdict": "found",
+  "quotes": [
+   "shcSNX5 cells, rep 2"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 54,
+  "accession": "SAMN03195908",
+  "target_field": "knockdown_gene",
+  "target_value": "XPB",
+  "verdict": "found",
+  "quotes": [
+   "shXPB"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 55,
+  "accession": "SAMN49073785",
+  "target_field": "disease",
+  "target_value": "Conventional central chondrosarcoma",
+  "verdict": "found",
+  "quotes": [
+   "Con. Central CS",
+   "Bone and soft tissue tumor pathology, Pathology, Leiden University Medical Center"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 56,
+  "accession": "SAMEA114337030",
+  "target_field": "drug",
+  "target_value": "DRAQ7",
+  "verdict": "found",
+  "quotes": [
+   "DRAQ7TM Far-Red Fluorescent Live-Cell Impermeant DNA Dye"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 57,
+  "accession": "SAMN16547497",
+  "target_field": "chip_antigen",
+  "target_value": "IgG1",
+  "verdict": "found",
+  "quotes": [
+   "aTGFb_mIgG1"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 58,
+  "accession": "SAMN12600222",
+  "target_field": "disease",
+  "target_value": "enterovirus 71 infection",
+  "verdict": "found",
+  "quotes": [
+   "infection",
+   "Severe EV71"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 59,
+  "accession": "SAMN44017326",
+  "target_field": "overexpressed_gene",
+  "target_value": "USP10",
+  "verdict": "found",
+  "quotes": [
+   "expressing_USP10CA"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ }
+]

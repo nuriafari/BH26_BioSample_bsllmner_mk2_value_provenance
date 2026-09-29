@@ -1,0 +1,213 @@
+[
+ {
+  "case_index": 360,
+  "accession": "SAMN14057162",
+  "target_field": "knockout_gene",
+  "target_value": "Braf",
+  "verdict": "found",
+  "quotes": [
+   "BrafCA/+; Ptenflox/+; Cdkn2aflox/+; Tyr-CreERT2-tg"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 361,
+  "accession": "SAMN20496667",
+  "target_field": "tissue",
+  "target_value": "adrenal gland",
+  "verdict": "found",
+  "quotes": [
+   "isolated adrenocortical cells",
+   "adrenocortical cells"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 362,
+  "accession": "SAMN31289482",
+  "target_field": "cell_type",
+  "target_value": "colorectal cell",
+  "verdict": "found",
+  "quotes": [
+   "colorectal human cells"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 363,
+  "accession": "SAMN20079065",
+  "target_field": "knockout_gene",
+  "target_value": "Lkb1",
+  "verdict": "found",
+  "quotes": [
+   "KrasLSL-G12D;Lkb1XTR/XTR;Rosa26LSL-tdTomato/FLPo-ERT2"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 364,
+  "accession": "SAMN10661537",
+  "target_field": "drug",
+  "target_value": "Dll4",
+  "verdict": "found",
+  "quotes": [
+   "aDll4-treated"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 365,
+  "accession": "SAMD00111729",
+  "target_field": "knockout_gene",
+  "target_value": "AIRE",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 366,
+  "accession": "SAMN50290539",
+  "target_field": "knockdown_gene",
+  "target_value": "SF3B1",
+  "verdict": "found",
+  "quotes": [
+   "siSF3B1a + empty vector",
+   "siSF3B1a A"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 367,
+  "accession": "SAMN34573534",
+  "target_field": "knockout_gene",
+  "target_value": "Id3",
+  "verdict": "found",
+  "quotes": [
+   "Kupffer cells RNAseq samples from Clec4fCreId3f/f mice replicate 2"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 368,
+  "accession": "SAMN39594834",
+  "target_field": "drug",
+  "target_value": "osimertinib",
+  "verdict": "found",
+  "quotes": [
+   "cancer cell line 6650_DTP-PC9-Osi"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 369,
+  "accession": "SAMN19312630",
+  "target_field": "knockdown_gene",
+  "target_value": "ALKBH5",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "other",
+  "gap_type_note": "value appears verbatim but in an explicitly negated context (control sample: 'without ALKBH5 knockdown')"
+ },
+ {
+  "case_index": 370,
+  "accession": "SAMN37551573",
+  "target_field": "disease",
+  "target_value": "glioma",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 371,
+  "accession": "SAMN40289003",
+  "target_field": "drug",
+  "target_value": "ionomycin",
+  "verdict": "found",
+  "quotes": [
+   "cryopreserved PBMCs from EX1001, stimulated with PMAIono for 24h"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 372,
+  "accession": "SAMN44425053",
+  "target_field": "disease",
+  "target_value": "T-cell acute lymphoblastic leukemia",
+  "verdict": "found",
+  "quotes": [
+   "Adult T-ALL"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 373,
+  "accession": "SAMN04910117",
+  "target_field": "knockdown_gene",
+  "target_value": "ARV7",
+  "verdict": "found",
+  "quotes": [
+   "siRNA targeting ARV1/3/4/7 (designated as ARFL+/ARVs-)"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 374,
+  "accession": "SAMN29265411",
+  "target_field": "drug",
+  "target_value": "1,25-dihydroxyvitamin D3",
+  "verdict": "found",
+  "quotes": [
+   "10 ng/g bw 1,25(OH)2D3 + 230 ng/g bw PTH (30 min)"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 375,
+  "accession": "SAMN53488210",
+  "target_field": "knockout_gene",
+  "target_value": "Hr",
+  "verdict": "found",
+  "quotes": [
+   "HrDR5/DR5"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 376,
+  "accession": "SAMEA114522160",
+  "target_field": "chip_antigen",
+  "target_value": "HT2A",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "fabricated / no textual basis"
+ },
+ {
+  "case_index": 377,
+  "accession": "SAMN12842152",
+  "target_field": "tissue",
+  "target_value": "spinal cord",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 378,
+  "accession": "SAMN04331750",
+  "target_field": "knockout_gene",
+  "target_value": "Grpc6",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 379,
+  "accession": "SAMN43787848",
+  "target_field": "tissue",
+  "target_value": "adipose",
+  "verdict": "found",
+  "quotes": [
+   "B type Adipocytes"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ }
+]

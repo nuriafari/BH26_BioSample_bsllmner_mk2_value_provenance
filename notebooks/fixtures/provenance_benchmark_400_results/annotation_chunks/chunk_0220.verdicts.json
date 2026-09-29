@@ -1,0 +1,182 @@
+[
+  {
+    "case_index": 220,
+    "accession": "SAMN17172349",
+    "target_field": "overexpressed_gene",
+    "target_value": "MYCL",
+    "verdict": "found",
+    "quotes": ["mMycl", "RNA_seq_SingleCell_mMycl_Dox2_Day6"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 221,
+    "accession": "SAMN36908522",
+    "target_field": "drug",
+    "target_value": "Idarubicin",
+    "verdict": "found",
+    "quotes": ["RNA expression in T-ALL PDX line with 1.5uM Ida, biological replicate 3", "1.5uM Ida"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 222,
+    "accession": "SAMN04407351",
+    "target_field": "tissue",
+    "target_value": "Hodgkin lymphoma",
+    "verdict": "found",
+    "quotes": ["Hodgkin"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 223,
+    "accession": "SAMN36504780",
+    "target_field": "knockout_gene",
+    "target_value": "Olfr",
+    "verdict": "found",
+    "quotes": ["SgOlfr"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 224,
+    "accession": "SAMN04160582",
+    "target_field": "knockdown_gene",
+    "target_value": "MAF1",
+    "verdict": "found",
+    "quotes": ["INPUT DNA IMR90hTert cells, #1MAF1_siRNA", "Cells treated with #2MAF1 siRNA (Ambion 427037, id s38691), 36hrs; then serum starved (8 hrs)"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 225,
+    "accession": "SAMN03865914",
+    "target_field": "cell_type",
+    "target_value": "CD138+ plasma cell",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "requires domain knowledge beyond the record"
+  },
+  {
+    "case_index": 226,
+    "accession": "SAMN08275839",
+    "target_field": "drug",
+    "target_value": "cirmtuzumab",
+    "verdict": "found",
+    "quotes": ["cirmtuzumab3"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 227,
+    "accession": "SAMN25289303",
+    "target_field": "knockdown_gene",
+    "target_value": "FGFR1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 228,
+    "accession": "SAMN18819597",
+    "target_field": "knockout_gene",
+    "target_value": "Shisa9",
+    "verdict": "found",
+    "quotes": ["4DShisa9 KO-0day#2"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 229,
+    "accession": "SAMN19313630",
+    "target_field": "knockout_gene",
+    "target_value": "Def6",
+    "verdict": "found",
+    "quotes": ["Def6tr/trSwap70-/-", "F_DKO_CD11c-pos_GCB_3"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 230,
+    "accession": "SAMN22600388",
+    "target_field": "overexpressed_gene",
+    "target_value": "CYP3A7",
+    "verdict": "found",
+    "quotes": ["humanized PXR-CAR-CYP3A4/3A7"],
+    "gap_type": "compound token (word/phrase inserted between parts of the value)"
+  },
+  {
+    "case_index": 231,
+    "accession": "SAMN08389549",
+    "target_field": "knockout_gene",
+    "target_value": "Shp2",
+    "verdict": "found",
+    "quotes": ["Shp2F/F"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 232,
+    "accession": "SAMN08731676",
+    "target_field": "cell_type",
+    "target_value": "glomerulus cell",
+    "verdict": "found",
+    "quotes": ["Day 21 kidney organoid derived glomeruli, MAFB-BFP heterozygous", "HET.14.2_Glomeruli_S5"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 233,
+    "accession": "SAMN07440869",
+    "target_field": "tissue",
+    "target_value": "bone marrow",
+    "verdict": "found",
+    "quotes": ["BMDM"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 234,
+    "accession": "SAMN02232084",
+    "target_field": "knockout_gene",
+    "target_value": "piwi2",
+    "verdict": "found",
+    "quotes": ["polII_piwi1/2_corto", "piwi_corto_mutant_polII"],
+    "gap_type": "compound token (word/phrase inserted between parts of the value)"
+  },
+  {
+    "case_index": 235,
+    "accession": "SAMN19030118",
+    "target_field": "knockout_gene",
+    "target_value": "PAX8",
+    "verdict": "found",
+    "quotes": ["USCS-ARK2-ShPAX8-2-biological replicate 2"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 236,
+    "accession": "SAMN18912716",
+    "target_field": "knockout_gene",
+    "target_value": "KLRG1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 237,
+    "accession": "SAMN12342509",
+    "target_field": "knockdown_gene",
+    "target_value": "ARRB1",
+    "verdict": "found",
+    "quotes": ["beta-arrestin 1/2 double knockown expressing PAR4+YFP"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 238,
+    "accession": "SAMN10460098",
+    "target_field": "disease",
+    "target_value": "Liver metastasis",
+    "verdict": "found",
+    "quotes": ["Derived from metastatic site: Liver"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 239,
+    "accession": "SAMN47834997",
+    "target_field": "knockout_gene",
+    "target_value": "Rpgr",
+    "verdict": "found",
+    "quotes": ["RpgrORFd5", "1_RpgrORFd5_18mths"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  }
+]

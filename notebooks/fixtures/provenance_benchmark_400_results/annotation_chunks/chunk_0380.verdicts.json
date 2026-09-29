@@ -1,0 +1,225 @@
+[
+ {
+  "case_index": 380,
+  "accession": "SAMN12566567",
+  "target_field": "disease",
+  "target_value": "Koolen de Vries syndrome",
+  "verdict": "found",
+  "quotes": [
+   "Koolen de Vries patient",
+   "human_fibroblast_PolyA_RNAseq_KdV_patient3"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 381,
+  "accession": "SAMN03342079",
+  "target_field": "overexpressed_gene",
+  "target_value": "PDGFRalpha",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 382,
+  "accession": "SAMN38937029",
+  "target_field": "knockout_gene",
+  "target_value": "TARDBP",
+  "verdict": "found",
+  "quotes": [
+   "TardbpKIhet1"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 383,
+  "accession": "SAMEA113541743",
+  "target_field": "drug",
+  "target_value": "A-8301",
+  "verdict": "found",
+  "quotes": [
+   "1 µM A-8301 (APExBIO Cat#A3133)"
+  ],
+  "gap_type": "other",
+  "gap_type_note": "value appears verbatim in the free-text Description.Comment.Paragraph protocol; the hyphenated code was missed by token-level matching"
+ },
+ {
+  "case_index": 384,
+  "accession": "SAMN37906289",
+  "target_field": "cell_type",
+  "target_value": "gastric cancer cell",
+  "verdict": "found",
+  "quotes": [
+   "gastric cancer patient-derived cells"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 385,
+  "accession": "SAMN30812759",
+  "target_field": "drug",
+  "target_value": "Clostridium ramosum",
+  "verdict": "found",
+  "quotes": [
+   "None, C. ramosum, E. coli Nissl, E. coli kifCD"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 386,
+  "accession": "SAMN08004992",
+  "target_field": "knockout_gene",
+  "target_value": "Srg",
+  "verdict": "found",
+  "quotes": [
+   "E17.5Srg170dcKO_C_4",
+   "BAF dcKO_hGFAP-Cre"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 387,
+  "accession": "SAMN53082188",
+  "target_field": "chip_antigen",
+  "target_value": "Bcl6",
+  "verdict": "found",
+  "quotes": [
+   "SI_gd_Bcl6p_3"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 388,
+  "accession": "SAMN20693824",
+  "target_field": "disease",
+  "target_value": "hypertrophic cardiomyopathy",
+  "verdict": "found",
+  "quotes": [
+   "Obstructive HCM"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 389,
+  "accession": "SAMN50682098",
+  "target_field": "overexpressed_gene",
+  "target_value": "WNT3A",
+  "verdict": "found",
+  "quotes": [
+   "APAP-treated mice, day 3, exoWNT3A/RSPO1 treatment, rep1"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 390,
+  "accession": "SAMN11357153",
+  "target_field": "knockdown_gene",
+  "target_value": "SHH",
+  "verdict": "found",
+  "quotes": [
+   "shSHH"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 391,
+  "accession": "SAMN17575747",
+  "target_field": "knockout_gene",
+  "target_value": "let7c2",
+  "verdict": "found",
+  "quotes": [
+   "let7b/c2 hepatocyte knockout",
+   "Let7bc2LKO1"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 392,
+  "accession": "SAMN43931147",
+  "target_field": "knockdown_gene",
+  "target_value": "shRNA",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "other",
+  "gap_type_note": "target_value is the vector type, not a gene; the record's only shRNA mention is a negative-control construct (NC)"
+ },
+ {
+  "case_index": 393,
+  "accession": "SAMD00241758",
+  "target_field": "overexpressed_gene",
+  "target_value": "C11orf95",
+  "verdict": "found",
+  "quotes": [
+   "293T_C11orf95RELA_HA_BR2",
+   "Lentiviral/Retroviral vector-mediated"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 394,
+  "accession": "SAMN19795931",
+  "target_field": "knockout_gene",
+  "target_value": "Wnt7a",
+  "verdict": "found",
+  "quotes": [
+   "Wnt7acre/+PgrALsL/+"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 395,
+  "accession": "SAMD01618943",
+  "target_field": "tissue",
+  "target_value": "Epididymal adipose tissue",
+  "verdict": "found",
+  "quotes": [
+   "Epididyaml primary adipocytes"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 396,
+  "accession": "SAMN16956359",
+  "target_field": "knockout_gene",
+  "target_value": "Rb",
+  "verdict": "found",
+  "quotes": [
+   "deltaRb/p107",
+   "DKO-D0-1047823-2"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 397,
+  "accession": "SAMN16333309",
+  "target_field": "knockout_gene",
+  "target_value": "Ngn1",
+  "verdict": "found",
+  "quotes": [
+   "Mash1CreER*/+; Rosa-CAG-tdtomfl/fl; Ngn1gfp",
+   "RNAseq_Zone2_Ngn1GFPdim_r2"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 398,
+  "accession": "SAMN11234237",
+  "target_field": "drug",
+  "target_value": "iBET151",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "other",
+  "gap_type_note": "value is present verbatim but explicitly negated: the sample is described as being in the absence of the drug"
+ },
+ {
+  "case_index": 399,
+  "accession": "SAMN54917626",
+  "target_field": "overexpressed_gene",
+  "target_value": "IRF71",
+  "verdict": "found",
+  "quotes": [
+   "primary cardiac fibroblasts, OEIRF71"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ }
+]

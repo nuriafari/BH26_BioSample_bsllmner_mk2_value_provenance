@@ -1,0 +1,215 @@
+[
+ {
+  "case_index": 340,
+  "accession": "SAMN03497826",
+  "target_field": "knockout_gene",
+  "target_value": "Nrf2",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 341,
+  "accession": "SAMN48361547",
+  "target_field": "knockout_gene",
+  "target_value": "Bach2",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 342,
+  "accession": "SAMN46421736",
+  "target_field": "knockdown_gene",
+  "target_value": "RN6",
+  "verdict": "found",
+  "quotes": [
+   "RNase_R+_293T_shRN6"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 343,
+  "accession": "SAMN39422789",
+  "target_field": "overexpressed_gene",
+  "target_value": "CEBPAbZIP",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 344,
+  "accession": "SAMN16935291",
+  "target_field": "knockdown_gene",
+  "target_value": "RPB9",
+  "verdict": "found",
+  "quotes": [
+   "kdRpb9"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 345,
+  "accession": "SAMEA5970064",
+  "target_field": "tissue",
+  "target_value": "oropharynx",
+  "verdict": "found",
+  "quotes": [
+   "Oropharyngeal Cancer Patient"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 346,
+  "accession": "SAMN10924872",
+  "target_field": "overexpressed_gene",
+  "target_value": "RBFOX1",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+ },
+ {
+  "case_index": 347,
+  "accession": "SAMEA4812492",
+  "target_field": "drug",
+  "target_value": "LPA 16:0",
+  "verdict": "found",
+  "quotes": [
+   "LPA-Mix LPA 16:0 (1 µM)"
+  ],
+  "gap_type": "other",
+  "gap_type_note": "value stated verbatim in the free-text protocol Comment rather than in an Attribute field"
+ },
+ {
+  "case_index": 348,
+  "accession": "SAMN49741199",
+  "target_field": "cell_type",
+  "target_value": "carcinoma cell",
+  "verdict": "found",
+  "quotes": [
+   "cell line established from the lung of a C57BL mouse bearing a tumor resulting from an implantation of primary Lewis lung carcinoma"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 349,
+  "accession": "SAMN06964966",
+  "target_field": "cell_type",
+  "target_value": "islet cell",
+  "verdict": "found",
+  "quotes": [
+   "Non-diabetic human islet single cell"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 350,
+  "accession": "SAMN06831027",
+  "target_field": "knockdown_gene",
+  "target_value": "TF3C5",
+  "verdict": "found",
+  "quotes": [
+   "SHEP_NMYCER_TF3C5depletion_RNAPII_N20_plusOHT_DOX"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 351,
+  "accession": "SAMN08897540",
+  "target_field": "cell_type",
+  "target_value": "HSC",
+  "verdict": "found",
+  "quotes": [
+   "Sorted HSCs"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 352,
+  "accession": "SAMN39052123",
+  "target_field": "drug",
+  "target_value": "cigarette smoke extract",
+  "verdict": "found",
+  "quotes": [
+   "CSE - DEC side"
+  ],
+  "gap_type": "abbreviation (raw text abbreviates the value)"
+ },
+ {
+  "case_index": 353,
+  "accession": "SAMN51962441",
+  "target_field": "drug",
+  "target_value": "interferon-γ",
+  "verdict": "found",
+  "quotes": [
+   "interferon-ɣ exposed"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 354,
+  "accession": "SAMN06345837",
+  "target_field": "overexpressed_gene",
+  "target_value": "KHDRBS1",
+  "verdict": "found",
+  "quotes": [
+   "hKHDRBS1-Y440F"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 355,
+  "accession": "SAMN04366006",
+  "target_field": "disease",
+  "target_value": "chronic myeloid leukemia",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 356,
+  "accession": "SAMN04536604",
+  "target_field": "knockout_gene",
+  "target_value": "MBNL2",
+  "verdict": "found",
+  "quotes": [
+   "mbnl1/2",
+   "Double knockout"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 357,
+  "accession": "SAMN07142731",
+  "target_field": "chip_antigen",
+  "target_value": "Atp6b1",
+  "verdict": "found",
+  "quotes": [
+   "iAKI Atp6b1v1 Pulldown 4"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 358,
+  "accession": "SAMN07731523",
+  "target_field": "drug",
+  "target_value": "TgfB inhibitor",
+  "verdict": "found",
+  "quotes": [
+   "with Forskolin and TgfB inhibitor"
+  ],
+  "gap_type": "other",
+  "gap_type_note": "value stated verbatim in Description.Title; no representational gap in the record itself"
+ },
+ {
+  "case_index": 359,
+  "accession": "SAMN25127740",
+  "target_field": "knockout_gene",
+  "target_value": "CASP3",
+  "verdict": "found",
+  "quotes": [
+   "inactivated executioner caspase -3"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ }
+]

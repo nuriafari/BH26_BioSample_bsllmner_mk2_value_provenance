@@ -1,0 +1,184 @@
+[
+  {
+    "case_index": 280,
+    "accession": "SAMN18319147",
+    "target_field": "disease",
+    "target_value": "bile duct cancer",
+    "verdict": "found",
+    "quotes": ["Human bile duct carcinomas"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 281,
+    "accession": "SAMN41049676",
+    "target_field": "knockout_gene",
+    "target_value": "Lmnb1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "requires domain knowledge beyond the record"
+  },
+  {
+    "case_index": 282,
+    "accession": "SAMN12500517",
+    "target_field": "drug",
+    "target_value": "acetate",
+    "verdict": "found",
+    "quotes": ["challenged with 1mM of total SCFA (0.7mM acetate, 0.2mM propionate, 0.1mM butyrate)."],
+    "gap_type": "other",
+    "gap_type_note": "No representational gap: the value appears verbatim as its own word inside the long free-text treatment attribute; the deterministic search presumably did not cover that field."
+  },
+  {
+    "case_index": 283,
+    "accession": "SAMD00439250",
+    "target_field": "drug",
+    "target_value": "anti-PD-1 antibody",
+    "verdict": "found",
+    "quotes": ["mouse TIL CD8+Tbet+ T cells_antiPD-1Ab", "antiPD-1Ab"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 284,
+    "accession": "SAMN26354343",
+    "target_field": "knockdown_gene",
+    "target_value": "OAS1",
+    "verdict": "found",
+    "quotes": ["PLEKs were treated with siRNAOAS1 for 48h", "PLEKsiOAS1"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 285,
+    "accession": "SAMN35813694",
+    "target_field": "knockout_gene",
+    "target_value": "Glut1",
+    "verdict": "found",
+    "quotes": ["Cd4creGlut10fl/fl"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 286,
+    "accession": "SAMN53527764",
+    "target_field": "knockdown_gene",
+    "target_value": "AD4",
+    "verdict": "found",
+    "quotes": ["B16 cells, shAD4-2, Replicate 1"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 287,
+    "accession": "SAMN20521268",
+    "target_field": "disease",
+    "target_value": "Ovarian cancer",
+    "verdict": "found",
+    "quotes": ["Ovarian_tumor", "Ovarian_tumor_recurrence_to_liver,spleen_from_BRCA12_Mutation_Carrier"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 288,
+    "accession": "SAMN20511761",
+    "target_field": "knockdown_gene",
+    "target_value": "AHRB",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "Target value is a mis-segmentation of the sample label \"siAHRB5\"; the record itself names the silenced gene as AhR (\"AhR-specific siRNA #5\"), so \"AHRB\" is not a gene the record supports."
+  },
+  {
+    "case_index": 289,
+    "accession": "SAMN56257899",
+    "target_field": "drug",
+    "target_value": "Cetuximab",
+    "verdict": "found",
+    "quotes": ["Cet-ICG", "Cet-ICG-5"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 290,
+    "accession": "SAMEA7505496",
+    "target_field": "knockdown_gene",
+    "target_value": "H2AF",
+    "verdict": "found",
+    "quotes": ["sh3H2AF_SEN_2", "to induce the expression of sh-RNAs"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 291,
+    "accession": "SAMN02324828",
+    "target_field": "cell_type",
+    "target_value": "Human umbilical vein endothelial cell",
+    "verdict": "found",
+    "quotes": ["HUVECs", "Human umbilical vein cells"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 292,
+    "accession": "SAMN00738476",
+    "target_field": "tissue",
+    "target_value": "mammary duct",
+    "verdict": "found",
+    "quotes": ["epithelial cell line derived from a mammary ductal carcinoma."],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 293,
+    "accession": "SAMN37473570",
+    "target_field": "cell_type",
+    "target_value": "mesenchymal stem cell",
+    "verdict": "found",
+    "quotes": ["Mouse mesechymal stem cells"],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  },
+  {
+    "case_index": 294,
+    "accession": "SAMN15167576",
+    "target_field": "disease",
+    "target_value": "dilated cardiomyopathy",
+    "verdict": "found",
+    "quotes": ["DCM"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 295,
+    "accession": "SAMN19115515",
+    "target_field": "knockout_gene",
+    "target_value": "FTn",
+    "verdict": "found",
+    "quotes": ["APP/PS1/FTnKO"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 296,
+    "accession": "SAMN04103868",
+    "target_field": "knockout_gene",
+    "target_value": "DNMT1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "requires domain knowledge beyond the record"
+  },
+  {
+    "case_index": 297,
+    "accession": "SAMN38195219",
+    "target_field": "disease",
+    "target_value": "alcohol use disorder",
+    "verdict": "found",
+    "quotes": ["AUD"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 298,
+    "accession": "SAMN35713939",
+    "target_field": "knockout_gene",
+    "target_value": "Kl",
+    "verdict": "found",
+    "quotes": ["Klhet", "Klotho het, old, 5"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 299,
+    "accession": "SAMN28986149",
+    "target_field": "overexpressed_gene",
+    "target_value": "RARalpha",
+    "verdict": "found",
+    "quotes": ["Ncr1-Cre; Rosa26-RARalpha403"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  }
+]

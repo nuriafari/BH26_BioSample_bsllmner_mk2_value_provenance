@@ -1,0 +1,12 @@
+{
+  "model": "Qwen/Qwen2.5-3B-Instruct",
+  "temperature": 0,
+  "max_output_tokens": 256,
+  "max_model_len": 3072,
+  "n_cases": 400,
+  "conditions": [
+    "attributes",
+    "full_record"
+  ],
+  "started_at": "2026-09-24T16:21:29.977382+00:00"
+}

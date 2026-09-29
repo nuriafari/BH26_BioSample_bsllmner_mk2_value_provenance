@@ -17,10 +17,10 @@ from __future__ import annotations
 
 import pandas as pd
 
-from paths import DERIVED_DIR
+from paths import PROVENANCE_BENCHMARK_400_RESULTS_DIR
 
 CLAUDE_REFERENCE_PARQUET = (
-    DERIVED_DIR / "provenance_benchmark_400" / "claude_reference.parquet"
+    PROVENANCE_BENCHMARK_400_RESULTS_DIR / "claude_reference.parquet"
 )
 
 

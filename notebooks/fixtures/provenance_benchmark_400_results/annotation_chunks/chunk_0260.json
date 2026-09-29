@@ -1,0 +1,2521 @@
+[
+  {
+    "case_index": 260,
+    "accession": "SAMN20177800",
+    "target_field": "knockout_gene",
+    "target_value": "Ryr2",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2022-05-22T00:00:00.000",
+        "last_update": "2022-05-22T01:30:18.913",
+        "submission_date": "2021-07-12T17:35:05.750",
+        "id": "20177800",
+        "accession": "SAMN20177800",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN20177800"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS9460270"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM5440873"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "KO5",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Peking University"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Yuxuan",
+                "Last": "Guo"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "heart"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "heart"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "cardiomyocyte"
+            },
+            {
+              "attribute_name": "treatment",
+              "harmonized_name": "treatment",
+              "display_name": "treatment",
+              "content": "AAV-Ryr2gRNA"
+            },
+            {
+              "attribute_name": "developmental stage",
+              "harmonized_name": "dev_stage",
+              "display_name": "development stage",
+              "content": "4 week old"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM5440873",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5440873"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA745973",
+              "content": "745973"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2022-05-22T01:21:14.400"
+        }
+      },
+      "accession": "SAMN20177800"
+    }
+  },
+  {
+    "case_index": 261,
+    "accession": "SAMN06468149",
+    "target_field": "drug",
+    "target_value": "Naproxen",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2019-03-01T00:00:00.000",
+        "last_update": "2019-03-01T01:19:39.843",
+        "submission_date": "2017-03-02T14:35:30.140",
+        "id": "6468149",
+        "accession": "SAMN06468149",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN06468149"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS2018159"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM2516976"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "P3_MT_plus_NAP",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Weill Cornell Medical College"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "David",
+                "Last": "Kuo"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "primary macrophages"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "primary macrophages"
+            },
+            {
+              "attribute_name": "treatment",
+              "harmonized_name": "treatment",
+              "display_name": "treatment",
+              "content": "TNF + Naprox"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM2516976",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2516976"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA377567",
+              "content": "377567"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2019-03-01T00:50:12.537"
+        }
+      },
+      "accession": "SAMN06468149"
+    }
+  },
+  {
+    "case_index": 262,
+    "accession": "SAMEA3113394",
+    "target_field": "drug",
+    "target_value": "Doxycycline",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2016-03-09T00:00:00.000",
+        "last_update": "2021-08-21T03:50:32.000",
+        "submission_date": "2016-03-15T12:14:14.253",
+        "id": "4555083",
+        "accession": "SAMEA3113394",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMEA3113394"
+            },
+            {
+              "db": "SRA",
+              "content": "ERS580615"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "A24-n22-300RAsd",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "EBI"
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "ENA first public",
+              "content": "2016-03-09"
+            },
+            {
+              "attribute_name": "ENA last update",
+              "content": "2014-11-10"
+            },
+            {
+              "attribute_name": "ENA-CHECKLIST",
+              "content": "ERC000011"
+            },
+            {
+              "attribute_name": "External Id",
+              "content": "SAMEA3113394"
+            },
+            {
+              "attribute_name": "INSDC center alias",
+              "content": "MRC NATIONAL INSTITUTE FOR MEDICAL RESEARCH"
+            },
+            {
+              "attribute_name": "INSDC center name",
+              "content": "MRC NATIONAL INSTITUTE FOR MEDICAL RESEARCH"
+            },
+            {
+              "attribute_name": "INSDC first public",
+              "content": "2016-03-09T17:02:32Z"
+            },
+            {
+              "attribute_name": "INSDC last update",
+              "content": "2014-11-10T17:59:35Z"
+            },
+            {
+              "attribute_name": "INSDC status",
+              "content": "public"
+            },
+            {
+              "attribute_name": "Submitter Id",
+              "content": "086-A24-n22-300RAsd"
+            },
+            {
+              "attribute_name": "[RA] ng/ml",
+              "content": "300"
+            },
+            {
+              "attribute_name": "[Shh] ug/ml",
+              "content": "1"
+            },
+            {
+              "attribute_name": "[dox] ug/ml",
+              "content": "1"
+            },
+            {
+              "attribute_name": "cell line",
+              "harmonized_name": "cell_line",
+              "display_name": "cell line",
+              "content": "ESC-iNkx2.2"
+            },
+            {
+              "attribute_name": "common name",
+              "content": "house mouse"
+            },
+            {
+              "attribute_name": "condition",
+              "content": "24h-pMN+Nkx2.2"
+            },
+            {
+              "attribute_name": "sample name",
+              "harmonized_name": "sample_name",
+              "display_name": "sample name",
+              "content": "086-A24-n22-300RAsd"
+            },
+            {
+              "attribute_name": "time point",
+              "harmonized_name": "timepoint",
+              "display_name": "timepoint",
+              "content": "24h"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2018-03-06T13:03:44"
+        }
+      },
+      "accession": "SAMEA3113394"
+    }
+  },
+  {
+    "case_index": 263,
+    "accession": "SAMN31552617",
+    "target_field": "cell_type",
+    "target_value": "CD4+CD25+Foxp3+ regulatory T cell",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2023-06-15T00:00:00.000",
+        "last_update": "2023-06-15T02:20:34.050",
+        "submission_date": "2022-11-01T10:40:04.773",
+        "id": "31552617",
+        "accession": "SAMN31552617",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN31552617"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS15609775"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM6701687"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "DSMwt_Treg1_RNA",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "PBL-D, Salk Institute for Biological Studies"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Jesse",
+                "Last": "Dixon"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "Thymus"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "Thymus"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "CD45+CD4+CD8-CD25+Foxp3-Thy1.1+ wild-type T-cells"
+            },
+            {
+              "attribute_name": "strain",
+              "harmonized_name": "strain",
+              "display_name": "strain",
+              "content": "C57BL/6"
+            },
+            {
+              "attribute_name": "geo_loc_name",
+              "harmonized_name": "geo_loc_name",
+              "display_name": "geographic location",
+              "content": "missing"
+            },
+            {
+              "attribute_name": "collection_date",
+              "harmonized_name": "collection_date",
+              "display_name": "collection date",
+              "content": "missing"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM6701687",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM6701687"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA896528",
+              "content": "896528"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2023-06-14T22:59:42.400"
+        }
+      },
+      "accession": "SAMN31552617"
+    }
+  },
+  {
+    "case_index": 264,
+    "accession": "SAMN10266319",
+    "target_field": "knockout_gene",
+    "target_value": "Synbind1",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2019-01-03T00:00:00.000",
+        "last_update": "2019-01-03T02:19:22.253",
+        "submission_date": "2018-10-22T08:36:04.563",
+        "id": "10266319",
+        "accession": "SAMN10266319",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN10266319"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS3956512"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM3439228"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "flox-tumor 2",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Shanghai Institute of Digestive Disease, Division of Gastroenterology and Hepatology, Shanghai Jiao Tong University"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Luoyan",
+                "Last": "Ai"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "colon tumor"
+            },
+            {
+              "attribute_name": "strain",
+              "harmonized_name": "strain",
+              "display_name": "strain",
+              "content": "C57BL/6"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "colon"
+            },
+            {
+              "attribute_name": "tumor stage",
+              "content": "tumor"
+            },
+            {
+              "attribute_name": "genotype/variation",
+              "harmonized_name": "genotype",
+              "display_name": "genotype",
+              "content": "Synbindinflox"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM3439228",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM3439228"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA497795",
+              "content": "497795"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2019-01-03T02:16:16.161"
+        }
+      },
+      "accession": "SAMN10266319"
+    }
+  },
+  {
+    "case_index": 265,
+    "accession": "SAMEA104457945",
+    "target_field": "knockout_gene",
+    "target_value": "ATXN2",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2018-01-09T00:00:00.000",
+        "last_update": "2021-08-20T23:11:19.000",
+        "submission_date": "2018-01-10T08:06:03.996",
+        "id": "8336471",
+        "accession": "SAMEA104457945",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMEA104457945"
+            },
+            {
+              "db": "SRA",
+              "content": "ERS2075887"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "10630X5.txt.gz",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          },
+          "Comment": {
+            "Paragraph": "Protocols: Whole cerebellar tissue was extracted from WT and transgenic (ATXN2Q127) mice that were age matched for each experiment. Mice were anesthetized using isoflurane and sacrificed. The cerebellum was quickly dissected and placed in ice-cold extracellular solution (119 mM NaCl, 26 mM NaHCO3, 11 mM glucose, 2.5 mM KCl, 2.5 mM CaCl2, 1.3 mM MgCl2 and 1 mM NaH2PO4, pH 7.4 when gassed with 5% CO2 and 95% O2). Total RNA was isolated using miRNeasy Mini Kit (Qiagen Inc., USA) according to the manufacturer\u2019s protocol. Illumina TrueSeq Stranded Total RNA Sample Prep with Ribo-Zero rRNA Removal Kit for mouse"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "EBI"
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "ENA first public",
+              "content": "2018-01-09"
+            },
+            {
+              "attribute_name": "ENA last update",
+              "content": "2018-01-09"
+            },
+            {
+              "attribute_name": "ENA-CHECKLIST",
+              "content": "ERC000011"
+            },
+            {
+              "attribute_name": "External Id",
+              "content": "SAMEA104457945"
+            },
+            {
+              "attribute_name": "INSDC center alias",
+              "content": "University of Utah"
+            },
+            {
+              "attribute_name": "INSDC center name",
+              "content": "University of Utah"
+            },
+            {
+              "attribute_name": "INSDC first public",
+              "content": "2018-01-09T17:03:27Z"
+            },
+            {
+              "attribute_name": "INSDC last update",
+              "content": "2018-01-09T10:51:35Z"
+            },
+            {
+              "attribute_name": "INSDC status",
+              "content": "public"
+            },
+            {
+              "attribute_name": "Submitter Id",
+              "content": "E-MTAB-6293:10630X5.txt.gz"
+            },
+            {
+              "attribute_name": "age",
+              "harmonized_name": "age",
+              "display_name": "age",
+              "content": "1"
+            },
+            {
+              "attribute_name": "broker name",
+              "content": "ArrayExpress"
+            },
+            {
+              "attribute_name": "common name",
+              "content": "house mouse"
+            },
+            {
+              "attribute_name": "disease",
+              "harmonized_name": "disease",
+              "display_name": "disease",
+              "content": "normal"
+            },
+            {
+              "attribute_name": "genotype",
+              "harmonized_name": "genotype",
+              "display_name": "genotype",
+              "content": "wild type genotype"
+            },
+            {
+              "attribute_name": "organism part",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "cerebellum"
+            },
+            {
+              "attribute_name": "sample name",
+              "harmonized_name": "sample_name",
+              "display_name": "sample name",
+              "content": "E-MTAB-6293:10630X5.txt.gz"
+            },
+            {
+              "attribute_name": "sex",
+              "harmonized_name": "sex",
+              "display_name": "sex",
+              "content": "male"
+            },
+            {
+              "attribute_name": "strain",
+              "harmonized_name": "strain",
+              "display_name": "strain",
+              "content": "B6D2"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2018-01-10T12:06:19.013"
+        }
+      },
+      "accession": "SAMEA104457945"
+    }
+  },
+  {
+    "case_index": 266,
+    "accession": "SAMN40986006",
+    "target_field": "disease",
+    "target_value": "cardiotoxicity",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2024-06-05T00:00:00.000",
+        "last_update": "2024-06-05T21:38:15.964",
+        "submission_date": "2024-04-16T20:14:08.020",
+        "id": "40986006",
+        "accession": "SAMN40986006",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN40986006"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS21041880"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM8212354"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "TX2-40 P37D36 T200 [62_S16]",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Ravi Iyengar, Department of Pharmacological Sciences, Icahn School of Medicine at Mount Sinai"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Jens",
+                "Last": "Hansen"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "TX2"
+            },
+            {
+              "attribute_name": "cell line",
+              "harmonized_name": "cell_line",
+              "display_name": "cell line",
+              "content": "TX2"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "iPSC derived cardiomyocyte"
+            },
+            {
+              "attribute_name": "subject status",
+              "content": "Cardiotoxic patients"
+            },
+            {
+              "attribute_name": "treatment",
+              "harmonized_name": "treatment",
+              "display_name": "treatment",
+              "content": "TRS-200"
+            },
+            {
+              "attribute_name": "geo_loc_name",
+              "harmonized_name": "geo_loc_name",
+              "display_name": "geographic location",
+              "content": "missing"
+            },
+            {
+              "attribute_name": "collection_date",
+              "harmonized_name": "collection_date",
+              "display_name": "collection date",
+              "content": "missing"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM8212354",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8212354"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA1101013",
+              "content": "1101013"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2024-06-05T21:38:15.964"
+        }
+      },
+      "accession": "SAMN40986006"
+    }
+  },
+  {
+    "case_index": 267,
+    "accession": "SAMN37546765",
+    "target_field": "overexpressed_gene",
+    "target_value": "FGFR2",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2023-10-04T00:50:12.010",
+        "last_update": "2023-10-04T00:50:12.010",
+        "submission_date": "2023-09-26T17:34:04.560",
+        "id": "37546765",
+        "accession": "SAMN37546765",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN37546765"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS18983052"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM7805181"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "L35145, MHNA",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Banovich Lab, Integrated Cancer Genomics, TGen - Translational Genomics Research Institute"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Nicholas",
+                "Last": "Banovich"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "Peritoneal metastasis"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "Peritoneal metastasis"
+            },
+            {
+              "attribute_name": "pathology reviewed",
+              "content": "Mod/High-grade Non-mucinous adenocarcinoma"
+            },
+            {
+              "attribute_name": "pathology abbreviated",
+              "content": "MHNA"
+            },
+            {
+              "attribute_name": "pathology",
+              "content": "Moderate Adenocarcinoma"
+            },
+            {
+              "attribute_name": "pathology 2",
+              "content": "Moderate-High grade appendiceal adenocarcinoma"
+            },
+            {
+              "attribute_name": "Sex",
+              "harmonized_name": "sex",
+              "display_name": "sex",
+              "content": "male"
+            },
+            {
+              "attribute_name": "age",
+              "harmonized_name": "age",
+              "display_name": "age",
+              "content": "58"
+            },
+            {
+              "attribute_name": "ethnicity",
+              "harmonized_name": "ethnicity",
+              "display_name": "ethnicity",
+              "content": "Non-HISPANIC WHITE"
+            },
+            {
+              "attribute_name": "clinical diagnosis",
+              "content": "Moderate-high"
+            },
+            {
+              "attribute_name": "status",
+              "content": "Cancerous"
+            },
+            {
+              "attribute_name": "gemextra",
+              "content": "APC(L779*); APC(R1450*); ASXL1(R693*); KRAS(G12D); PIK3CA(H1047R); TP53(L201*); SMAD3(V86_C89del); TMB-Low(3mut/Mb); MSS Stable"
+            },
+            {
+              "attribute_name": "vus",
+              "content": "ABCF2 (R195C) Missense 41 ADD2 (D255N) Missense 24 ADH7 (A318S) Missense 22 AFF1 (H124R) Missense 5 AMER1 (E219*) Stop Gain 49 ANK3 (A713T) Missense 22 ANKRD11 (T150M) Missense 21 AP3B2 (V908M) Missense 35 APOH (T149M) Missense 22 ARC (E276K) Missense 17 ARHGAP30 (R393W) Missense 22 ASCL5 (R12Q) Missense 23 BNIPL (R309W) Missense 24 BOD1L1 (S683L) Missense 22 C17orf47 (R242S) Missense 24 C17orf74 (P145L) Missense 35 C2orf16 (R242Q) Missense 22 C2orf71 (P908T) Missense 21 C6orf163 (K102I) Missense 22 C9orf92 (G23A) Missense 29 CACNG3 (V76M) Missense 20 CAMP (I32T) Missense 22 CASD1 (A658T) Missense 34 CCDC148 (T144P) Missense 24 CDKL4 (L220I) Missense 21 CLVS2 (A73V) Missense 20 COL22A1 (G112R) Missense 15 CTSV (V228G) Missense 26 CUL1 (E439K) Missense 34 DAZL (A2V) Missense 21 DCAF13 (G580E) Missense 44 DCLK1 (R233C) Missense 20 DGKH (P683L) Missense 35 DMXL1 (L1948V) Missense 22 DRD2 (A420T) Missense 22 ELFN1 (T373M) Missense 20 EPPK1 (L2161*) Stop Gain 48 FAM35A (H513L) Missense 25 FBXL7 (P93L) Missense 31 FGF17 (R72H) Missense 24 FGF22 (R102C) Missense 26 FLG (H630Y) Missense 22 GABBR1 (R126Q) Missense 24 GNB2L1 (S115del) Inframe Deletion 9 H2AFY2 (E222K) Missense 14 HECW1 (R32*) Stop Gain 18 HPS3 (R530Q) Missense 21 IGDCC4 (A925V) Missense 30 KIF9 (E645V) Missense 22 KIRREL (H611L) Missense 21 KL (S742F) Missense 40 LATS2 (G200S) Missense 37 LHX6 (D375N) Missense 23 LRFN2 (G415R) Missense 23 LZTS3 (R10H) Missense 27 MAP1LC3A (E40K) Missense 25 MCF2 (Q888*) Stop Gain 43 MRPL10 (R123*) Stop Gain 23 NCKAP5 (T1564fs) Frameshift 23 NIN (K503fs) Frameshift 20 NPAP1 (R121H) Missense 34 NPFFR2 (L225F) Missense 22 NPY (G11R) Missense 17 OR2F2 (H89N) Missense 16 OTOP3 (A31V) Missense 25 OTUD5 (I398V) Missense 8 OTUD6A (C152R) Missense 47 PCCB (T234M) Missense 22 PCNXL3 (P728S) Missense 20 PIM3 (V316M) Missense 23 PMS1 (T926S) Missense 23 POLR3B (R340Q) Missense 22 PROM1 (P336S) Missense 23 ROBO1 (V1444M) Missense 25 RP11- 613M10.9 (Q42fs) Frameshift 18 RYR1 (D1027A) Missense 22 SHB (Q42fs) Frameshift 18 SLC25A4 (A90V) Missense 18 SPIC (N146fs) Frameshift 24 SUPT20H (R759Q) Missense 17 SYP (V205M) Missense 42 TADA1 (R69C) Missense 16 TGFB2 (N302fs) Frameshift 21 THAP11 (Q132dup) Inframe Insertion 12 TIMP3 (R107H) Missense 24 TMEM229A (S89C) Missense 21 TMSB4X (I10del) Inframe Deletion 37 TNRC6B (W858*) Stop Gain 25 TRPC4 (G110R) Missense 16 TTLL6 (P716A) Missense 24 TTN (R35174H) Missense 22 UAP1 (N284fs) Frameshift 20 WDR17 (L1042I) Missense 18 WNT4 (V97I) Missense 25 XYLT2 (R70Q) Missense 22 ZBBX (A427D) Missense 22 ZC3H3 (S593F) Missense 47 ZFP36L2 (A340fs) Frameshift 15 ZFP57 (G255S) Missense 23 ZFYVE20 (R538P) Missense 22 ZNF131 (N364S) Missense 20 ZNF578 (I476V) Missense 22ROBO1 (V1444M) Missense 25 RP11- 613M10.9 (Q42fs) Frameshift 18 RYR1 (D1027A) Missense 22 SHB (Q42fs) Frameshift 18 SLC25A4 (A90V) Missense 18 SPIC (N146fs) Frameshift 24 SUPT20H (R759Q) Missense 17 SYP (V205M) Missense 42 TADA1 (R69C) Missense 16 TGFB2 (N302fs) Frameshift 21 THAP11 (Q132dup) Inframe Insertion 12 TIMP3 (R107H) Missense 24 TMEM229A (S89C) Missense 21 TMSB4X (I10del) Inframe Deletion 37 TNRC6B (W858*) Stop Gain 25 TRPC4 (G110R) Missense 16 TTLL6 (P716A) Missense 24 TTN (R35174H) Missense 22 UAP1 (N284fs) Frameshift 20 WDR17 (L1042I) Missense 18 WNT4 (V97I) Missense 25 XYLT2 (R70Q) Missense 22 ZBBX (A427D) Missense 22 ZC3H3 (S593F) Missense 47 ZFP36L2 (A340fs) Frameshift 15 ZFP57 (G255S) Missense 23 ZFYVE20 (R538P) Missense 22 ZNF131 (N364S) Missense 20 ZNF578 (I476V) Missense 22"
+            },
+            {
+              "attribute_name": "geo_loc_name",
+              "harmonized_name": "geo_loc_name",
+              "display_name": "geographic location",
+              "content": "missing"
+            },
+            {
+              "attribute_name": "collection_date",
+              "harmonized_name": "collection_date",
+              "display_name": "collection date",
+              "content": "missing"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM7805181",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM7805181"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA1021142",
+              "content": "1021142"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2023-10-04T00:50:12.010"
+        }
+      },
+      "accession": "SAMN37546765"
+    }
+  },
+  {
+    "case_index": 268,
+    "accession": "SAMN41240358",
+    "target_field": "cell_type",
+    "target_value": "mononuclear cell",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2024-08-19T00:00:00.000",
+        "last_update": "2024-08-19T21:37:04.817",
+        "submission_date": "2024-05-06T22:03:10.040",
+        "id": "41240358",
+        "accession": "SAMN41240358",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN41240358"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS21226910"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM8254518"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "Skeletal Muscle, Ischemic",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Heart Research Insitute"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Mary",
+                "Last": "Kavurma"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "Skeletal muscle; Flexus hallucis longus"
+            },
+            {
+              "attribute_name": "Sex",
+              "harmonized_name": "sex",
+              "display_name": "sex",
+              "content": "male"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "Skeletal muscle; Flexus hallucis longus"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "mononucelar cells"
+            },
+            {
+              "attribute_name": "disease state",
+              "harmonized_name": "disease",
+              "display_name": "disease",
+              "content": "Ischemic; diabetic"
+            },
+            {
+              "attribute_name": "geo_loc_name",
+              "harmonized_name": "geo_loc_name",
+              "display_name": "geographic location",
+              "content": "missing"
+            },
+            {
+              "attribute_name": "collection_date",
+              "harmonized_name": "collection_date",
+              "display_name": "collection date",
+              "content": "missing"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM8254518",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8254518"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA1108330",
+              "content": "1108330"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2024-08-19T21:37:04.817"
+        }
+      },
+      "accession": "SAMN41240358"
+    }
+  },
+  {
+    "case_index": 269,
+    "accession": "SAMN30072565",
+    "target_field": "knockout_gene",
+    "target_value": "Trpm4",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2023-02-15T00:00:00.000",
+        "last_update": "2023-02-15T17:16:21.656",
+        "submission_date": "2022-07-31T18:05:04.486",
+        "id": "30072565",
+        "accession": "SAMN30072565",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN30072565"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS14372410"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM6422865"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "KOSHAM_24H",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Group Abriel, IBMM University of Berne"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Mey",
+                "Last": "Boukenna"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "Heart"
+            },
+            {
+              "attribute_name": "cell line",
+              "harmonized_name": "cell_line",
+              "display_name": "cell line",
+              "content": "Non-cardiomyocytes"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "Heart"
+            },
+            {
+              "attribute_name": "strain",
+              "harmonized_name": "strain",
+              "display_name": "strain",
+              "content": "B6.Cg-Trpm4tm1.2-PG"
+            },
+            {
+              "attribute_name": "age",
+              "harmonized_name": "age",
+              "display_name": "age",
+              "content": "8-12 weeks old"
+            },
+            {
+              "attribute_name": "treatment",
+              "harmonized_name": "treatment",
+              "display_name": "treatment",
+              "content": "24h after SHAM intervention"
+            },
+            {
+              "attribute_name": "Sex",
+              "harmonized_name": "sex",
+              "display_name": "sex",
+              "content": "male"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM6422865",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM6422865"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA864066",
+              "content": "864066"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2023-02-15T17:16:21.656"
+        }
+      },
+      "accession": "SAMN30072565"
+    }
+  },
+  {
+    "case_index": 270,
+    "accession": "SAMEA111432005",
+    "target_field": "drug",
+    "target_value": "Erastin",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2023-10-18T00:00:00.000",
+        "last_update": "2023-10-19T11:06:22.000",
+        "submission_date": "2023-10-20T08:18:48.560",
+        "id": "37901015",
+        "accession": "SAMEA111432005",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMEA111432005"
+            },
+            {
+              "db": "SRA",
+              "content": "ERS13525680"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "PANC1-N6F11-5microM-6h1",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          },
+          "Comment": {
+            "Paragraph": "Protocols: 1)plate Panc-1 cells 6x105/well in 6-wells cell culture plates with DMEM medium containing 10% FBS and 1%Pen/Strep on day1. 2) cells were treated with or without RSL3,N6F11,Fin56, and Erastin for 6hours on day2. 3)Aspirate and discard the cell culture medium, wash the cells with 1XPBS buffer X2 times. 4)collect cell lysates with 35oul GTC Lysis Buffer/well. Vortex or pipet up and down to mix thoroughly. GTC lysis buffer(E.Z.N.A.\u00ae HP Total RNA Kit,Cat#R6812-02, Omega) RNA extraction: Using E.Z.N.A.\u00ae HP Total RNA Kit,Cat#R6812-02, Omega 1) Insert a RNA Homogenizer Mini Column into a 2 mL Collection Tube. 2)Transfer the lysate to the RNA Homogenizer Mini Column. 3)Centrifuge at 13,000 x g for 1 minute 4)Add 1 volume 70% ethanol. Vortex to mix thoroughly. Do not centrifugeve the filtrate and discard the RNA Homogenizer Mini Column. 5)Insert a HiBind\u00ae RNA Mini Column into a 2 mL Collection Tube. 6)Transfer 700 \u03bcL sample (including any precipitate that may have formed) to the HiBind\u00ae RNA Mini Column. 7)Centrifuge at 10,000 x g for 1 minute 8)Discard the filtrate and reuse the Collection Tube 9)Add 500 \u03bcL RNA Wash Buffer II. 10)Centrifuge at 10,000 x g for 1 minute 11)Discard the filtrate and reuse the Collection Tube 12)Centrifuge at maximum speed for 2 minutes to completely dry the HiBind\u00ae RNA Mini Column. 13)Transfer the HiBind\u00ae RNA Mini Column to a clean 1.5 mL microcentrifuge tube (not provided) 14)Add 40-70 \u03bcL Nuclease-free Water. 15)Centrifuge at maximum speed for 2 minutes then measure the RNA concentration and store eluted RNA at -80\u00b0C. An Illumina TruSeq Stranded mRNA Library prep kit (20020594) was used to generate the RNA libraries.Illumina TruSeq Stranded mRNA Sample Preparation Protocol. In briefly protocol is described as below: A: on day1 \uf0a7 Step 1: Isolate mRNA \uf0a7 Step 2: 1st strand cDNA synthesis \uf0a7 Step 3: 2nd strand cDNA synthesis \uf0a7 Step 4: Reaction clean-up B: on day2 \uf0a7 Step 5: Adenylate cDNA ends \uf0a7 Step 6: ligate adapters to ends \uf0a7 Step 7: PCR amplify library \uf0a7 Normalize and Pool \uf0a7 Setup Run in Basespace \uf0a7 Loading the Sequencer"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "EBI"
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "ENA-CHECKLIST",
+              "content": "ERC000011"
+            },
+            {
+              "attribute_name": "ENA-FIRST-PUBLIC",
+              "content": "2023-10-18T00:22:57Z"
+            },
+            {
+              "attribute_name": "ENA-LAST-UPDATE",
+              "content": "2023-10-18T00:22:57Z"
+            },
+            {
+              "attribute_name": "External Id",
+              "content": "SAMEA111432005"
+            },
+            {
+              "attribute_name": "INSDC center alias",
+              "content": "Surgery Department at University of Texas Southwestern Medical center at Dallas"
+            },
+            {
+              "attribute_name": "INSDC center name",
+              "content": "Surgery Department at University of Texas Southwestern Medical center at Dallas"
+            },
+            {
+              "attribute_name": "INSDC first public",
+              "content": "2023-10-18T00:22:57Z"
+            },
+            {
+              "attribute_name": "INSDC last update",
+              "content": "2023-10-18T00:22:57Z"
+            },
+            {
+              "attribute_name": "INSDC status",
+              "content": "public"
+            },
+            {
+              "attribute_name": "Submitter Id",
+              "content": "E-MTAB-12241:PANC1-N6F11-5microM-6h1"
+            },
+            {
+              "attribute_name": "broker name",
+              "content": "ArrayExpress"
+            },
+            {
+              "attribute_name": "cell_line",
+              "harmonized_name": "cell_line",
+              "display_name": "cell line",
+              "content": "Panc1"
+            },
+            {
+              "attribute_name": "common name",
+              "content": "human"
+            },
+            {
+              "attribute_name": "developmental stage",
+              "harmonized_name": "dev_stage",
+              "display_name": "development stage",
+              "content": "adult"
+            },
+            {
+              "attribute_name": "disease",
+              "harmonized_name": "disease",
+              "display_name": "disease",
+              "content": "epithelioid carcinoma"
+            },
+            {
+              "attribute_name": "genotype",
+              "harmonized_name": "genotype",
+              "display_name": "genotype",
+              "content": "wild type genotype"
+            },
+            {
+              "attribute_name": "isolate",
+              "harmonized_name": "isolate",
+              "display_name": "isolate",
+              "content": "not applicable"
+            },
+            {
+              "attribute_name": "organism part",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "pancreatic duct"
+            },
+            {
+              "attribute_name": "sample name",
+              "harmonized_name": "sample_name",
+              "display_name": "sample name",
+              "content": "E-MTAB-12241:PANC1-N6F11-5microM-6h1"
+            },
+            {
+              "attribute_name": "scientific_name",
+              "content": "Homo sapiens"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2023-10-21T08:29:34.413"
+        }
+      },
+      "accession": "SAMEA111432005"
+    }
+  },
+  {
+    "case_index": 271,
+    "accession": "SAMN28159892",
+    "target_field": "knockout_gene",
+    "target_value": "Dmp1",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2022-11-21T00:00:00.000",
+        "last_update": "2022-11-21T07:36:04.950",
+        "submission_date": "2022-05-09T09:21:03.403",
+        "id": "28159892",
+        "accession": "SAMN28159892",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN28159892"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS12948026"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM6123567"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "KO_Bm_4w,scRNAseq",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Orthopaedics, Shanghai Jiao Tong University Affiliated Sixth People\u2019s Hospital"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Peng",
+                "Last": "Ding"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "Bone marrow"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "Bone marrow"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "Bone marrow cells"
+            },
+            {
+              "attribute_name": "genotype",
+              "harmonized_name": "genotype",
+              "display_name": "genotype",
+              "content": "Dmp1cre DTAfl/+"
+            },
+            {
+              "attribute_name": "age",
+              "harmonized_name": "age",
+              "display_name": "age",
+              "content": "4 weeks old"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM6123567",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM6123567"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA836422",
+              "content": "836422"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2022-11-21T07:36:04.950"
+        }
+      },
+      "accession": "SAMN28159892"
+    }
+  },
+  {
+    "case_index": 272,
+    "accession": "SAMN06609106",
+    "target_field": "knockdown_gene",
+    "target_value": "CD277",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2017-06-12T00:00:00.000",
+        "last_update": "2017-06-12T01:17:49.477",
+        "submission_date": "2017-03-16T16:58:05.490",
+        "id": "6609106",
+        "accession": "SAMN06609106",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN06609106"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS2052830"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM2539009"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "CD4.WT.na.naive.si277",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "NIAMS, NIH"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Fred",
+                "Last": "Davis"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "CD4+ T cells"
+            },
+            {
+              "attribute_name": "strain",
+              "harmonized_name": "strain",
+              "display_name": "strain",
+              "content": "C57BL/6"
+            },
+            {
+              "attribute_name": "genotype",
+              "harmonized_name": "genotype",
+              "display_name": "genotype",
+              "content": "WT"
+            },
+            {
+              "attribute_name": "culture condition",
+              "content": "cell isolation protocol"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM2539009",
+              "content": "http://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM2539009"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA379464",
+              "content": "379464"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2017-06-12T00:50:04.570"
+        }
+      },
+      "accession": "SAMN06609106"
+    }
+  },
+  {
+    "case_index": 273,
+    "accession": "SAMN42011865",
+    "target_field": "knockout_gene",
+    "target_value": "Slc38a2",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2025-07-09T00:00:00.000",
+        "last_update": "2025-07-09T21:41:04.619",
+        "submission_date": "2024-06-24T14:34:04.623",
+        "id": "42011865",
+        "accession": "SAMN42011865",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN42011865"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS21727029"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM8346399"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "E-KO-2, replicate 2, scRNAseq",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Dalian medical university"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Chunxiu",
+                "Last": "Du"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "aorta"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "aorta"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "Goblet cells"
+            },
+            {
+              "attribute_name": "genotype",
+              "harmonized_name": "genotype",
+              "display_name": "genotype",
+              "content": "Slc38a2deltaEC"
+            },
+            {
+              "attribute_name": "treatment",
+              "harmonized_name": "treatment",
+              "display_name": "treatment",
+              "content": "The mice were given a high-salt diet for 3 weeks"
+            },
+            {
+              "attribute_name": "geo_loc_name",
+              "harmonized_name": "geo_loc_name",
+              "display_name": "geographic location",
+              "content": "missing"
+            },
+            {
+              "attribute_name": "collection_date",
+              "harmonized_name": "collection_date",
+              "display_name": "collection date",
+              "content": "missing"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM8346399",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM8346399"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA1127474",
+              "content": "1127474"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2025-07-09T21:41:04.619"
+        }
+      },
+      "accession": "SAMN42011865"
+    }
+  },
+  {
+    "case_index": 274,
+    "accession": "SAMN08736943",
+    "target_field": "knockout_gene",
+    "target_value": "Aml1",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2019-09-01T00:00:00.000",
+        "last_update": "2019-09-01T04:16:17.273",
+        "submission_date": "2018-03-19T14:16:25.470",
+        "id": "8736943",
+        "accession": "SAMN08736943",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN08736943"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS3066215"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM3053074"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "1B2_S16",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Weatherall Institute of Molecular Medicine, University of Oxford"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Cristina",
+                "Last": "Di Genua"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "bone marrow cells of transplanted mice"
+            },
+            {
+              "attribute_name": "strain background",
+              "content": "C57BL/6"
+            },
+            {
+              "attribute_name": "transplanted with",
+              "content": "Aml1ETO/+;KrasG12D/+ fetal liver cells"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "bone marrow"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "bulk LSKCD150+Flt3-CD45.2+ cells"
+            },
+            {
+              "attribute_name": "batch",
+              "content": "2"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM3053074",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM3053074"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA438971",
+              "content": "438971"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2019-09-01T00:50:06.407"
+        }
+      },
+      "accession": "SAMN08736943"
+    }
+  },
+  {
+    "case_index": 275,
+    "accession": "SAMN17315627",
+    "target_field": "knockout_gene",
+    "target_value": "Sfpi1",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2021-01-15T00:00:00.000",
+        "last_update": "2021-01-15T02:47:16.313",
+        "submission_date": "2021-01-14T12:11:06.860",
+        "id": "17315627",
+        "accession": "SAMN17315627",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN17315627"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS8031475"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM5020833"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "Pu.1-URE-/- 1",
+          "Organism": {
+            "taxonomy_id": "10090",
+            "taxonomy_name": "Mus musculus",
+            "OrganismName": "Mus musculus"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Albert Einstein College of Medicine"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Ulrich",
+                "Last": "Steidl"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "Bone marrow"
+            },
+            {
+              "attribute_name": "genotype/variation",
+              "harmonized_name": "genotype",
+              "display_name": "genotype",
+              "content": "Pu.1-URE-/-"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "Flk2- Lin-Sca-1+Kit+ hematopoietic stem cells"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM5020833",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5020833"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA692186",
+              "content": "692186"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2021-01-14T18:38:48.930"
+        }
+      },
+      "accession": "SAMN17315627"
+    }
+  },
+  {
+    "case_index": 276,
+    "accession": "SAMN10081705",
+    "target_field": "disease",
+    "target_value": "gastric cancer",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2019-08-07T00:00:00.000",
+        "last_update": "2019-08-07T01:54:20.273",
+        "submission_date": "2018-09-18T08:04:13.957",
+        "id": "10081705",
+        "accession": "SAMN10081705",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN10081705"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS3793480"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM3393409"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "post1_Blood_CD8_0005",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Department of Molecular regulation of Inflammatory and Immune Diseases, Tokyo University of Science"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Shigeyuki",
+                "Last": "Shichino"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "CD8+ peripheral blood T cells"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "CD8+ CD4- T cells"
+            },
+            {
+              "attribute_name": "age",
+              "harmonized_name": "age",
+              "display_name": "age",
+              "content": "74"
+            },
+            {
+              "attribute_name": "Sex",
+              "harmonized_name": "sex",
+              "display_name": "sex",
+              "content": "female"
+            },
+            {
+              "attribute_name": "cancer type",
+              "content": "gastric"
+            },
+            {
+              "attribute_name": "dose level",
+              "content": "1.0 mg/kg"
+            },
+            {
+              "attribute_name": "agent",
+              "harmonized_name": "compound",
+              "display_name": "compound",
+              "content": "IT1208"
+            },
+            {
+              "attribute_name": "organ",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "peripheral blood"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM3393409",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM3393409"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA491658",
+              "content": "491658"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2019-08-07T01:53:03.940"
+        }
+      },
+      "accession": "SAMN10081705"
+    }
+  },
+  {
+    "case_index": 277,
+    "accession": "SAMEA4051975",
+    "target_field": "drug",
+    "target_value": "GDNF",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2016-08-24T00:00:00.000",
+        "last_update": "2021-08-21T12:16:29.000",
+        "submission_date": "2016-08-26T03:49:18.476",
+        "id": "5709150",
+        "accession": "SAMEA4051975",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMEA4051975"
+            },
+            {
+              "db": "SRA",
+              "content": "ERS1223085"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "GIS_hMLO_2",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          },
+          "Comment": {
+            "Paragraph": "Protocols: Total RNAs were isolated from either hMLOs, 2D-DA neurons, or undifferentiated hESCs using TRIzol Reagent (Invitrogen). DNA contaminants were digested with DNASE I (Ambion). hPSC lines before passage 40 were used to generate hMLOs. The hPSCs were dissociated from intact colonies to single cells with TrypLETM Express (Life Technologies), and 10,000 cells were plated in each well of low-cell-adhesion 96-well culture plates with V-bottomed conical wells (Sumitomo Bakelite) to form uniform EBs. The wells contained neuronal induction medium containing DMEM/F12:Neurobasal (1:1), 1:100 N2 supplement (Invitrogen), 1:50 B27 without vitamin A (Invitrogen), 1% GlutaMAX (Invitrogen), 1% minimum essential media-nonessential amino acid (Invitrogen), and 0.1% \u03b2-mercaptoethanol (Invitrogen) supplemented with 1\u03bcg/ml heparin (Sigma-Aldrich), 10\u03bcM SB431542 (Stemgent), 200 ng/ml Noggin (Prospec), 0.8\u03bcM CHIR99021 (Reagents Direct), and 10\u03bcM ROCK inhibitor Y27632 (Calbiochem). The ROCK inhibitor was added for the first 48 h, and the neuronal induction medium was changed on day 2. On day 4, hMLOs were cultured with the addition of 100 ng/ml SHH-C25II (R&D Systems) and 100 ng/ml FGF8 (R&D Systems) for midbrain patterning. After 3 days, the hMLOs started to extrude neuroectodermal buds. At this point, the media was completely removed, and 30\u03bcl of reduced growth factor Matrigel was immediately added to each well using a pipettor equipped with a pre-chilled 200\u03bcl pipette tip. The Matrigel-embedded midbrain organoid was placed into a 37\u00b0C incubator for 30 min to allow the Matrigel to solidify and was grown in tissue growth induction medium containing Neurobasal medium, 1:100 N2 supplement (Invitrogen), 1:50 B27 without vitamin A (Invitrogen), 1% GlutaMAX (Invitrogen), 1% minimum essential media-nonessential amino acid (Invitrogen), and 0.1% \u03b2-mercaptoethanol (Invitrogen) supplemented with 2.5 \u03bcg/ml insulin (Sigma-Aldrich), 200 ng/ml laminin (Sigma-Aldrich), 100 ng/ml SHH-C25II (R&D Systems), and 100 ng/ml FGF8 (R&D Systems) for 24 h. Once the hMLOs were embedded in Matrigel, a more expanded neuroepithelium began to form in the organoids. To promote growth and differentiation, the hMLOs were transferred into ultra-low-attachment 6-well-plates (Costar) by pipetting using a cut 1000 \u03bcl pipette tip. The plates contained the final differentiation media, which consisted of Neurobasal medium, 1:100 N2 supplement (Invitrogen), 1:50 B27 without vitamin A (Invitrogen), 1% GlutaMAX (Invitrogen), 1% minimum essential media-nonessential amino acid (Invitrogen), 0.1% \u03b2-mercaptoethanol (Invitrogen), 10ng/ml BDNF (Peprotech), 10 ng/ml GDNF (Peprotech), 100 \u03bcM ascorbic acid (Sigma-Aldrich), and 125 \u03bcM db-cAMP (Sigma-Aldrich). The hMLOs were cultured using an orbital shaker to enhance nutrients and oxygen exchange (Lancaster and Knoblich, 2014). Antibiotics (100 U/ml penicillin G and 100 \u03bcg/ml streptomycin) were included in the culture media to prevent potential bacterial contamination over long-term culture. The medium was replaced every 3 days. For RNA-seq library preparation of hMLOs and 2D-DA neurons, the total RNA was further purified by column (Puelink RNA Mini kit, Ambion), and was prepared using 4\u03bcg of total RNA according to manufacturer\u2019s protocol (TruSeq RNA Sample Preparation Kit v2, Illumina). Samples were multiplexed and sequenced single read 150bp paired end (HiSeq 2000, Illumina)."
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "EBI"
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "ENA first public",
+              "content": "2016-08-24"
+            },
+            {
+              "attribute_name": "ENA last update",
+              "content": "2016-06-27"
+            },
+            {
+              "attribute_name": "ENA-CHECKLIST",
+              "content": "ERC000011"
+            },
+            {
+              "attribute_name": "External Id",
+              "content": "SAMEA4051975"
+            },
+            {
+              "attribute_name": "INSDC center alias",
+              "content": "GIS"
+            },
+            {
+              "attribute_name": "INSDC center name",
+              "content": "Genome Institute of Singapore"
+            },
+            {
+              "attribute_name": "INSDC first public",
+              "content": "2016-08-24T17:08:01Z"
+            },
+            {
+              "attribute_name": "INSDC last update",
+              "content": "2016-06-27T18:04:29Z"
+            },
+            {
+              "attribute_name": "INSDC status",
+              "content": "public"
+            },
+            {
+              "attribute_name": "Submitter Id",
+              "content": "E-MTAB-4868:GIS_hMLO_2"
+            },
+            {
+              "attribute_name": "broker name",
+              "content": "ArrayExpress"
+            },
+            {
+              "attribute_name": "cell line",
+              "harmonized_name": "cell_line",
+              "display_name": "cell line",
+              "content": "H9"
+            },
+            {
+              "attribute_name": "common name",
+              "content": "human"
+            },
+            {
+              "attribute_name": "organism part",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "cell"
+            },
+            {
+              "attribute_name": "sample name",
+              "harmonized_name": "sample_name",
+              "display_name": "sample name",
+              "content": "E-MTAB-4868:GIS_hMLO_2"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2016-08-29T08:23:02.610"
+        }
+      },
+      "accession": "SAMEA4051975"
+    }
+  },
+  {
+    "case_index": 278,
+    "accession": "SAMN53384819",
+    "target_field": "tissue",
+    "target_value": "colorectal",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2025-12-01T00:55:10.020",
+        "last_update": "2025-12-01T00:55:10.020",
+        "submission_date": "2025-11-25T07:15:26.403",
+        "id": "53384819",
+        "accession": "SAMN53384819",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN53384819"
+            },
+            {
+              "db": "SRA",
+              "content": "SRS27202388"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM9322487"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "1001_B11_3D_D15",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Auburn University"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Michael",
+                "Last": "Greene"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "3D engineered CRC tissue"
+            },
+            {
+              "attribute_name": "batch",
+              "content": "Batch 11"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "3D engineered CRC tissue"
+            },
+            {
+              "attribute_name": "pdx model",
+              "content": "In vitro"
+            },
+            {
+              "attribute_name": "crc stage",
+              "content": "Stage III-B"
+            },
+            {
+              "attribute_name": "geo_loc_name",
+              "harmonized_name": "geo_loc_name",
+              "display_name": "geographic location",
+              "content": "missing"
+            },
+            {
+              "attribute_name": "collection_date",
+              "harmonized_name": "collection_date",
+              "display_name": "collection date",
+              "content": "missing"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM9322487",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM9322487"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA1368849",
+              "content": "1368849"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2025-12-01T00:55:10.020"
+        }
+      },
+      "accession": "SAMN53384819"
+    }
+  },
+  {
+    "case_index": 279,
+    "accession": "SAMN27145902",
+    "target_field": "cell_type",
+    "target_value": "Anulus fibrosis cell",
+    "raw_biosample_record": {
+      "BioSample": {
+        "access": "public",
+        "publication_date": "2022-04-02T00:00:00.000",
+        "last_update": "2022-04-02T01:53:12.700",
+        "submission_date": "2022-03-31T12:30:05.300",
+        "id": "27145902",
+        "accession": "SAMN27145902",
+        "Ids": {
+          "Id": [
+            {
+              "db": "BioSample",
+              "is_primary": "1",
+              "content": "SAMN27145902"
+            },
+            {
+              "db": "GEO",
+              "content": "GSM5989809"
+            }
+          ]
+        },
+        "Description": {
+          "Title": "AFD",
+          "Organism": {
+            "taxonomy_id": "9606",
+            "taxonomy_name": "Homo sapiens",
+            "OrganismName": "Homo sapiens"
+          }
+        },
+        "Owner": {
+          "Name": {
+            "content": "Canadian Centre for Computational Genomics (C3G)"
+          },
+          "Contacts": {
+            "Contact": {
+              "Name": {
+                "First": "Alain",
+                "Last": "Pacis"
+              }
+            }
+          }
+        },
+        "Models": {
+          "Model": {
+            "content": "Generic"
+          }
+        },
+        "Package": {
+          "display_name": "Generic",
+          "content": "Generic.1.0"
+        },
+        "Attributes": {
+          "Attribute": [
+            {
+              "attribute_name": "source_name",
+              "harmonized_name": "source_name",
+              "display_name": "source name",
+              "content": "Anuulus fibrosis (AF) cells from degenerate (D) human Intervertebral disc"
+            },
+            {
+              "attribute_name": "tissue",
+              "harmonized_name": "tissue",
+              "display_name": "tissue",
+              "content": "Human disc tissue"
+            },
+            {
+              "attribute_name": "cell type",
+              "harmonized_name": "cell_type",
+              "display_name": "cell type",
+              "content": "Anuulus fibrosis (AF) cells"
+            },
+            {
+              "attribute_name": "condition",
+              "content": "degenerate intervertebral disc"
+            }
+          ]
+        },
+        "Links": {
+          "Link": [
+            {
+              "type": "url",
+              "label": "GEO Sample GSM5989809",
+              "content": "https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSM5989809"
+            },
+            {
+              "type": "entrez",
+              "target": "bioproject",
+              "label": "PRJNA821854",
+              "content": "821854"
+            }
+          ]
+        },
+        "Status": {
+          "status": "live",
+          "when": "2022-03-31T18:40:35.013"
+        }
+      },
+      "accession": "SAMN27145902"
+    }
+  }
+]

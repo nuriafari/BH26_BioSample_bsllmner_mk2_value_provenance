@@ -7,10 +7,12 @@
 # rather than restarting.
 
 set -u
-SRC=/workspace/BH26/BH26_BioSample_curation/src
-DERIVED=/workspace/BH26/BH26_BioSample_curation/data/derived
-TMP=/workspace/BH26/BH26_BioSample_curation/.claude-config/jobs/11655e74/tmp
-CONDA=/workspace/BH26/BH26_BioSample_curation/.conda_env/bin
+SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PROJECT_ROOT="$(dirname "$SRC")"
+DERIVED=$PROJECT_ROOT/data/derived
+TMP=$PROJECT_ROOT/logs/full_production_pipeline
+CONDA=$PROJECT_ROOT/.conda_env/bin
+mkdir -p "$TMP"
 export CUDA_VISIBLE_DEVICES=0
 export VLLM_WORKER_MULTIPROC_METHOD=spawn
 export HF_HUB_DISABLE_XET=1

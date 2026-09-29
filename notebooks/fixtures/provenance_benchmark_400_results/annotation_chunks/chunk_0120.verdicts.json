@@ -1,0 +1,223 @@
+[
+  {
+    "case_index": 120,
+    "accession": "SAMN10037751",
+    "target_field": "disease",
+    "target_value": "Candida albicans infection",
+    "verdict": "found",
+    "quotes": [
+      "Female C57BL/6/J mice were infected intratrachealy with 1x105 Candida albicans diluted in 50 ml PBS.",
+      "Candida_Disease"
+    ],
+    "gap_type": "value combines multiple separate attributes"
+  },
+  {
+    "case_index": 121,
+    "accession": "SAMN43912226",
+    "target_field": "drug",
+    "target_value": "Listeria monocytogenes",
+    "verdict": "found",
+    "quotes": [
+      "L.m.",
+      "PDCD6-L.m.-1"
+    ],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 122,
+    "accession": "SAMN39833073",
+    "target_field": "cell_type",
+    "target_value": "Synovial cell",
+    "verdict": "found",
+    "quotes": [
+      "Synovial single-cell suspensions"
+    ],
+    "gap_type": "compound token (word/phrase inserted between parts of the value)"
+  },
+  {
+    "case_index": 123,
+    "accession": "SAMN37231190",
+    "target_field": "drug",
+    "target_value": "palmitic acid",
+    "verdict": "found",
+    "quotes": [
+      "Primary hepatocytes of Trim56-KO mice were treated with C75 (25 M) and induced by PA+OA (0.5 mM + 1 mM) for 18 hours replicate 2"
+    ],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 124,
+    "accession": "SAMN13680445",
+    "target_field": "drug",
+    "target_value": "Leukemia Inhibitory Factor",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "The value appears verbatim but is explicitly negated: cells were cultured 'in the absence of Leukemia Inhibitory Factor (LIF)', so LIF is not a treatment of this sample."
+  },
+  {
+    "case_index": 125,
+    "accession": "SAMN16382946",
+    "target_field": "knockout_gene",
+    "target_value": "Bmal1",
+    "verdict": "found",
+    "quotes": [
+      "Alb-Cre, Bmal fl/fl (BLKO)",
+      "WAT_250_BLKO_AL_8B"
+    ],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 126,
+    "accession": "SAMN54442207",
+    "target_field": "drug",
+    "target_value": "Angiopoietin-2",
+    "verdict": "found",
+    "quotes": [
+      "multimeric Ang2"
+    ],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 127,
+    "accession": "SAMN48330866",
+    "target_field": "drug",
+    "target_value": "AO",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 128,
+    "accession": "SAMN26367068",
+    "target_field": "knockout_gene",
+    "target_value": "SUZ12",
+    "verdict": "found",
+    "quotes": [
+      "hEnSCs_n3_SUZ12D93_0"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 129,
+    "accession": "SAMN17120399",
+    "target_field": "tissue",
+    "target_value": "synovium",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "requires domain knowledge beyond the record"
+  },
+  {
+    "case_index": 130,
+    "accession": "SAMN05408030",
+    "target_field": "knockout_gene",
+    "target_value": "p50",
+    "verdict": "found",
+    "quotes": [
+      "p50ko",
+      "poly(A) mRNA MDSC_p50ko_UT R1"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 131,
+    "accession": "SAMN08712521",
+    "target_field": "drug",
+    "target_value": "hyaluronic acid",
+    "verdict": "found",
+    "quotes": [
+      "3D_7.36mg/ml_Mtrgl_1mg/ml_HA_30mpml_5wk_iN_ma_rep2"
+    ],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 132,
+    "accession": "SAMN33562087",
+    "target_field": "tissue",
+    "target_value": "colorectal tissue",
+    "verdict": "found",
+    "quotes": [
+      "normal colorectal tissue6"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 133,
+    "accession": "SAMN56394681",
+    "target_field": "cell_type",
+    "target_value": "All retinal cell types",
+    "verdict": "found",
+    "quotes": [
+      "All reitnal cell types at embryonic day 15"
+    ],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  },
+  {
+    "case_index": 134,
+    "accession": "SAMEA113566595",
+    "target_field": "knockout_gene",
+    "target_value": "Firmc",
+    "verdict": "found",
+    "quotes": [
+      "ChIP_SSDS_DMC1_FirrmcKO_B"
+    ],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  },
+  {
+    "case_index": 135,
+    "accession": "SAMN56373584",
+    "target_field": "drug",
+    "target_value": "lenvatinib",
+    "verdict": "found",
+    "quotes": [
+      "lenvatinib20μM"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 136,
+    "accession": "SAMN40207372",
+    "target_field": "drug",
+    "target_value": "Forskolin",
+    "verdict": "found",
+    "quotes": [
+      "FRSK",
+      "BeWo_TFEB_KO_CTRL_FRSK_2"
+    ],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 137,
+    "accession": "SAMN11318998",
+    "target_field": "overexpressed_gene",
+    "target_value": "Lmo2",
+    "verdict": "found",
+    "quotes": [
+      "Lmo2tg; Ldb1-KO"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 138,
+    "accession": "SAMEA115537444",
+    "target_field": "chip_antigen",
+    "target_value": "custom panel of 192 oligo-barcoded antibodies (TotalSeq-C Custom Human Panel, Biolegend) for CITE-Seq experiments; details in Tables S23 and S24.",
+    "verdict": "found",
+    "quotes": [
+      "custom panel of 192 oligo-barcoded antibodies (TotalSeq-C Custom Human Panel, Biolegend)",
+      "Antibody details are included in Tables S23 and S24."
+    ],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 139,
+    "accession": "SAMN46368025",
+    "target_field": "drug",
+    "target_value": "Prednisone",
+    "verdict": "found",
+    "quotes": [
+      "Tac, MMF, Pred"
+    ],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  }
+]

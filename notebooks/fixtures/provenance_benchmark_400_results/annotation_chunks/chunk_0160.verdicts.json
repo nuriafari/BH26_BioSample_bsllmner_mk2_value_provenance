@@ -1,0 +1,218 @@
+[
+  {
+    "case_index": 160,
+    "accession": "SAMEA12118602",
+    "target_field": "drug",
+    "target_value": "TGFβ inhibitor SB4342",
+    "verdict": "found",
+    "quotes": [
+      "TGFβ inhibitor SB431542 (MedChem express, HY-10431)"
+    ],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  },
+  {
+    "case_index": 161,
+    "accession": "SAMN09495794",
+    "target_field": "overexpressed_gene",
+    "target_value": "FOXO3",
+    "verdict": "found",
+    "quotes": [
+      "hMSC_FOXO32SA/2SA_3 RNA-Seq P7"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 162,
+    "accession": "SAMN14544349",
+    "target_field": "tissue",
+    "target_value": "sternum",
+    "verdict": "found",
+    "quotes": [
+      "Primary Sternal Chondrocytes"
+    ],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 163,
+    "accession": "SAMN39878463",
+    "target_field": "drug",
+    "target_value": "FKB1-Ab",
+    "verdict": "found",
+    "quotes": [
+      "HFD33w_bFKB1-Ab12w"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 164,
+    "accession": "SAMN16620668",
+    "target_field": "cell_type",
+    "target_value": "stromal vascular fraction cell",
+    "verdict": "found",
+    "quotes": [
+      "stromal vascular fraction of BAT",
+      "SVF-BAT cells"
+    ],
+    "gap_type": "value combines multiple separate attributes"
+  },
+  {
+    "case_index": 165,
+    "accession": "SAMN04867266",
+    "target_field": "overexpressed_gene",
+    "target_value": "TEAD4",
+    "verdict": "found",
+    "quotes": [
+      "expressing YAP-TEAD434"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 166,
+    "accession": "SAMN40904656",
+    "target_field": "cell_line",
+    "target_value": "GBM-21",
+    "verdict": "found",
+    "quotes": [
+      "Patient-derived GBM cell line-21"
+    ],
+    "gap_type": "compound token (word/phrase inserted between parts of the value)"
+  },
+  {
+    "case_index": 167,
+    "accession": "SAMEA4938133",
+    "target_field": "overexpressed_gene",
+    "target_value": "Dppa2",
+    "verdict": "found",
+    "quotes": [
+      "c43+Dppa2Dppa4_rep2"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 168,
+    "accession": "SAMN18907431",
+    "target_field": "overexpressed_gene",
+    "target_value": "NTF3",
+    "verdict": "found",
+    "quotes": [
+      "AdNTF3-Tg"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 169,
+    "accession": "SAMN40588821",
+    "target_field": "knockout_gene",
+    "target_value": "Mgp",
+    "verdict": "found",
+    "quotes": [
+      "Cdh5cre;Mgpflox/flox",
+      "Tamoxifen treated"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 170,
+    "accession": "SAMN07514224",
+    "target_field": "chip_antigen",
+    "target_value": "Ezh2",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 171,
+    "accession": "SAMN33730940",
+    "target_field": "knockout_gene",
+    "target_value": "CX3CR1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 172,
+    "accession": "SAMN45102583",
+    "target_field": "drug",
+    "target_value": "α-amanitin",
+    "verdict": "found",
+    "quotes": [
+      "Dox + 10 µM ⍺-amanitin"
+    ],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 173,
+    "accession": "SAMEA4812490",
+    "target_field": "drug",
+    "target_value": "LPA 18:2",
+    "verdict": "found",
+    "quotes": [
+      "LPA 18:2 (1,625 µM)"
+    ],
+    "gap_type": "other",
+    "gap_type_note": "value appears verbatim, but only in the Description.Comment.Paragraph protocol free text rather than in an Attribute"
+  },
+  {
+    "case_index": 174,
+    "accession": "SAMN05904645",
+    "target_field": "knockout_gene",
+    "target_value": "Nras",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 175,
+    "accession": "SAMN04993677",
+    "target_field": "knockout_gene",
+    "target_value": "NRAS",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "value appears verbatim but inside an explicitly negating phrase (\"double-negative for BRAF and NRAS mutations\")"
+  },
+  {
+    "case_index": 176,
+    "accession": "SAMN54232038",
+    "target_field": "cell_type",
+    "target_value": "pericyte",
+    "verdict": "found",
+    "quotes": [
+      "Pericyte6"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 177,
+    "accession": "SAMN55058478",
+    "target_field": "knockout_gene",
+    "target_value": "Bap1",
+    "verdict": "found",
+    "quotes": [
+      "RNAseq raw fastq for Bap1Math1 mut late cerebellum"
+    ],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 178,
+    "accession": "SAMN47308796",
+    "target_field": "knockout_gene",
+    "target_value": "nicoA1",
+    "verdict": "found",
+    "quotes": [
+      "without nicoA1",
+      "wo nico-1"
+    ],
+    "gap_type": "other",
+    "gap_type_note": "value appears verbatim in the title and sample name; the gap is the 'without' framing, not a spelling difference"
+  },
+  {
+    "case_index": 179,
+    "accession": "SAMEA4799317",
+    "target_field": "knockout_gene",
+    "target_value": "CTNNB1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  }
+]

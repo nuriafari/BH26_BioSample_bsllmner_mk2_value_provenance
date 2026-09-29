@@ -1,0 +1,183 @@
+[
+  {
+    "case_index": 180,
+    "accession": "SAMN06604140",
+    "target_field": "knockdown_gene",
+    "target_value": "ERG",
+    "verdict": "found",
+    "quotes": ["siERG", "HOXB13 siERG ChIP-seq, rep3"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 181,
+    "accession": "SAMN45886658",
+    "target_field": "knockout_gene",
+    "target_value": "391m",
+    "verdict": "found",
+    "quotes": ["23CSplus391m_ko", "23CSplus391m_ko_glom"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 182,
+    "accession": "SAMN16480036",
+    "target_field": "knockout_gene",
+    "target_value": "Cx3cr1",
+    "verdict": "found",
+    "quotes": ["Cx3cr1CreERT2:R26tdTomato"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 183,
+    "accession": "SAMN23138067",
+    "target_field": "knockout_gene",
+    "target_value": "Skiv2",
+    "verdict": "found",
+    "quotes": ["Skiv2lfl/fl-Cd79a-Cre", "pro-B KO1"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 184,
+    "accession": "SAMN02438207",
+    "target_field": "knockout_gene",
+    "target_value": "Dlx3",
+    "verdict": "found",
+    "quotes": ["Dlx3Oc-cKO", "5-week-old metaphysis, Dlx3Oc-cKO"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 185,
+    "accession": "SAMN01164133",
+    "target_field": "cell_type",
+    "target_value": "urinary bladder cell",
+    "verdict": "found",
+    "quotes": ["Urinary Bladder", "cell"],
+    "gap_type": "value combines multiple separate attributes"
+  },
+  {
+    "case_index": 186,
+    "accession": "SAMN44617822",
+    "target_field": "knockdown_gene",
+    "target_value": "CAF10",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "\"CAF10\" is this record's fibroblast cell-line/patient label (cell_line CAF10si1, isolate patient10, cell_type fibroblast); the record names no knocked-down gene, so the value is a category error rather than a lexical gap."
+  },
+  {
+    "case_index": 187,
+    "accession": "SAMN46367996",
+    "target_field": "drug",
+    "target_value": "Methylprednisolone",
+    "verdict": "found",
+    "quotes": ["Tac, MMF, Methypred"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 188,
+    "accession": "SAMN09862872",
+    "target_field": "disease",
+    "target_value": "Atopic asthma",
+    "verdict": "found",
+    "quotes": ["Atopic asthmatic"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 189,
+    "accession": "SAMEA3112150",
+    "target_field": "overexpressed_gene",
+    "target_value": "Nkx2.2",
+    "verdict": "found",
+    "quotes": ["ESC-iNkx2.2HD-EnR", "36h-dorsal(30RA)+Nkx2.2HD-EnR"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 190,
+    "accession": "SAMN41196068",
+    "target_field": "knockdown_gene",
+    "target_value": "Ezh2",
+    "verdict": "found",
+    "quotes": ["shCtrl gEzh2", "shCtrl gEzh2 Rep 3"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 191,
+    "accession": "SAMN18878551",
+    "target_field": "knockout_gene",
+    "target_value": "AID",
+    "verdict": "found",
+    "quotes": ["AIDKO TCL1 tg"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 192,
+    "accession": "SAMEA104125197",
+    "target_field": "tissue",
+    "target_value": "yolk sac",
+    "verdict": "found",
+    "quotes": ["M02695976_yolk_sac3"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 193,
+    "accession": "SAMN39223080",
+    "target_field": "knockout_gene",
+    "target_value": "Ing4",
+    "verdict": "found",
+    "quotes": ["Ing4Ing5_DKO", "Ing4Ing5_DKO_1459_1"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 194,
+    "accession": "SAMEA4414978",
+    "target_field": "cell_line",
+    "target_value": "MCF7",
+    "verdict": "found",
+    "quotes": ["MCF7mimic_RNA6447169"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 195,
+    "accession": "SAMN12646843",
+    "target_field": "knockout_gene",
+    "target_value": "rtxA1",
+    "verdict": "found",
+    "quotes": ["Vibrio vulnificus (MO6-24) ΔrtxA1"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 196,
+    "accession": "SAMN32252531",
+    "target_field": "knockout_gene",
+    "target_value": "Ifn",
+    "verdict": "found",
+    "quotes": ["IfnKO", "Sample 4_IfnKO_Non_Phag"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 197,
+    "accession": "SAMN15832332",
+    "target_field": "tissue",
+    "target_value": "mesenteric artery",
+    "verdict": "found",
+    "quotes": ["Endothelial cells freshly isolated from human mesenteric arteries", "Human mesenteric arterial Endothelial Cells from healthy donor 2, file 4"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 198,
+    "accession": "SAMN03465002",
+    "target_field": "drug",
+    "target_value": "statin",
+    "verdict": "found",
+    "quotes": ["RNA632statin", "481-RNA632statin", "Cholesterol and Pharmacogenetics (CAP) Study"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 199,
+    "accession": "SAMEA5139464",
+    "target_field": "drug",
+    "target_value": "CL-316, 243",
+    "verdict": "found",
+    "quotes": ["β3 adrenergic receptor agonist (CL-316, 243)"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  }
+]

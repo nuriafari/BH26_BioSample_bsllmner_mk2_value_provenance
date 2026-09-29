@@ -1,0 +1,186 @@
+[
+  {
+    "case_index": 240,
+    "accession": "SAMN28571054",
+    "target_field": "drug",
+    "target_value": "insulin",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "insulin appears only in explicitly negated form ('No insulin/No rMmp12 [1]' as title and treatment), so the record states insulin was NOT administered"
+  },
+  {
+    "case_index": 241,
+    "accession": "SAMN04625625",
+    "target_field": "knockdown_gene",
+    "target_value": "GFP",
+    "verdict": "found",
+    "quotes": ["shGFP", "shGFP_TFIIIC_1"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 242,
+    "accession": "SAMN16955782",
+    "target_field": "knockout_gene",
+    "target_value": "TCF11",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "record describes a cell line stably EXPRESSING a truncated/dominant-negative construct ('stabilize the expression of TCF11DN', cell line 'TCF11detaN'); reading that as a TCF11 knockout contradicts the stated expression and needs outside knowledge"
+  },
+  {
+    "case_index": 243,
+    "accession": "SAMN40444259",
+    "target_field": "disease",
+    "target_value": "Scleroderma",
+    "verdict": "found",
+    "quotes": ["Bleomycin-induced SSc (BLM-SSc)"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 244,
+    "accession": "SAMN17190614",
+    "target_field": "knockdown_gene",
+    "target_value": "D62",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fabricated / no textual basis"
+  },
+  {
+    "case_index": 245,
+    "accession": "SAMN08013073",
+    "target_field": "knockdown_gene",
+    "target_value": "PC1",
+    "verdict": "found",
+    "quotes": ["AAV9-shPC1", "AAV9-shPC1-7"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 246,
+    "accession": "SAMN41697842",
+    "target_field": "knockout_gene",
+    "target_value": "Ctsl",
+    "verdict": "found",
+    "quotes": ["Lm54 Rag1-/- CtsldeltaTEC", "M2_CtslΔTEC mouse3"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 247,
+    "accession": "SAMN34081888",
+    "target_field": "knockout_gene",
+    "target_value": "MYD88",
+    "verdict": "found",
+    "quotes": ["CD4creMYD88-MA-GEX_ASC1908A10", "Cross of B6.Cg-Tg(Cd4-cre)1Cwi/BfluJ and B6.129P2(SJL)-Myd88tm1Defr/J"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 248,
+    "accession": "SAMN08712538",
+    "target_field": "knockout_gene",
+    "target_value": "NGN1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "NGN1 appears only negated ('day30_no-NGN1/2', 'without NGN1/2 expression') in a sample whose genotype is 'wild type' - absence of an induced transgene, not a knockout"
+  },
+  {
+    "case_index": 249,
+    "accession": "SAMN08499159",
+    "target_field": "cell_type",
+    "target_value": "cervical carcinoma cell",
+    "verdict": "found",
+    "quotes": ["cervical carcinoma", "HeLa S3 cells"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 250,
+    "accession": "SAMN05392004",
+    "target_field": "knockdown_gene",
+    "target_value": "Kdm5a",
+    "verdict": "found",
+    "quotes": ["shKdm5ABC", "H3K4tri shKdm5ABC Day 0 exp. 2"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 251,
+    "accession": "SAMN27288139",
+    "target_field": "knockdown_gene",
+    "target_value": "Cth",
+    "verdict": "found",
+    "quotes": ["shCth", "shCth_Rep1_set3"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 252,
+    "accession": "SAMN04338696",
+    "target_field": "knockout_gene",
+    "target_value": "Med12",
+    "verdict": "found",
+    "quotes": ["H3K4me3_ChIPSeq_Med12KO3", "KO"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 253,
+    "accession": "SAMN38083044",
+    "target_field": "knockout_gene",
+    "target_value": "Kcnb1",
+    "verdict": "found",
+    "quotes": ["C57BL/6J-Kcnb1em2Sesf/J", "115_KO (NULL)"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 254,
+    "accession": "SAMN03257040",
+    "target_field": "knockdown_gene",
+    "target_value": "CIC",
+    "verdict": "found",
+    "quotes": ["shCIC", "PC3_shCIC1"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 255,
+    "accession": "SAMEA113907499",
+    "target_field": "drug",
+    "target_value": "prostaglandin E2",
+    "verdict": "found",
+    "quotes": ["To investigate the effects of PGE₂, NK cell cultures were additionally supplemented with 500 ng/mL synthetic PGE₂ (Sigma) 24 hours prior to cell harvesting and lysis."],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 256,
+    "accession": "SAMN24124437",
+    "target_field": "cell_type",
+    "target_value": "monocyte-derived macrophage",
+    "verdict": "found",
+    "quotes": ["mDM", "MSU_rep1_mDM"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 257,
+    "accession": "SAMN46440389",
+    "target_field": "knockout_gene",
+    "target_value": "JAG1",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "other",
+    "gap_type_note": "title '231JAG1KOCon tumor 4' names the JAG1KO study's control arm and the sample's own genotype field says 'empty vector', so a JAG1 knockout in THIS sample is contradicted rather than supported"
+  },
+  {
+    "case_index": 258,
+    "accession": "SAMN32237375",
+    "target_field": "chip_antigen",
+    "target_value": "TEChi",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fabricated / no textual basis"
+  },
+  {
+    "case_index": 259,
+    "accession": "SAMN46012247",
+    "target_field": "drug",
+    "target_value": "lead acetate",
+    "verdict": "found",
+    "quotes": ["3 hr, Pb-acet, 1 μM", "LUHMES cells, 3hours, Pb-acet,1 μM-2"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  }
+]

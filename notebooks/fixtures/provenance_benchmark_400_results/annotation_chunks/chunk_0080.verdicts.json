@@ -1,0 +1,212 @@
+[
+ {
+  "case_index": 80,
+  "accession": "SAMN37327940",
+  "target_field": "cell_type",
+  "target_value": "metastatic castration-resistant prostate cancer",
+  "verdict": "found",
+  "quotes": [
+   "metatatic castration resistant prostate cancer; AR-positive"
+  ],
+  "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+ },
+ {
+  "case_index": 81,
+  "accession": "SAMN42265804",
+  "target_field": "knockout_gene",
+  "target_value": "Meg3",
+  "verdict": "found",
+  "quotes": [
+   "KO_Meg3mix-1"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 82,
+  "accession": "SAMN14117697",
+  "target_field": "overexpressed_gene",
+  "target_value": "Dlx2",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 83,
+  "accession": "SAMN07442027",
+  "target_field": "knockout_gene",
+  "target_value": "Ago3",
+  "verdict": "found",
+  "quotes": [
+   "Blm-/-;Ago1,2,3,4-/-;CreERT2;TT-FHAgo2"
+  ],
+  "gap_type": "compound token (word/phrase inserted between parts of the value)"
+ },
+ {
+  "case_index": 84,
+  "accession": "SAMN26541797",
+  "target_field": "knockout_gene",
+  "target_value": "EMX1",
+  "verdict": "found",
+  "quotes": [
+   "spegEMX1_3(A>G),7(C>T)"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 85,
+  "accession": "SAMN10748814",
+  "target_field": "tissue",
+  "target_value": "omentum",
+  "verdict": "found",
+  "quotes": [
+   "G164, primary omental adipocytes and fibroblasts"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 86,
+  "accession": "SAMN06101808",
+  "target_field": "overexpressed_gene",
+  "target_value": "Hoxa10",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 87,
+  "accession": "SAMN19658220",
+  "target_field": "knockout_gene",
+  "target_value": "pdx1",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 88,
+  "accession": "SAMN32950678",
+  "target_field": "disease",
+  "target_value": "clear cell renal cell carcinoma",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 89,
+  "accession": "SAMN08161511",
+  "target_field": "cell_type",
+  "target_value": "stem/progenitor cell",
+  "verdict": "found",
+  "quotes": [
+   "stem/progenitor from bone marrow",
+   "19176_WT-HSPC-native-H3K9me2_L999_R1_001"
+  ],
+  "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+ },
+ {
+  "case_index": 90,
+  "accession": "SAMN33463788",
+  "target_field": "drug",
+  "target_value": "A8301",
+  "verdict": "found",
+  "quotes": [
+   "Treated with Noggin Rspondin1 A8301and CHIR 2 days"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 91,
+  "accession": "SAMN07629781",
+  "target_field": "knockout_gene",
+  "target_value": "Kdm6b",
+  "verdict": "found",
+  "quotes": [
+   "Kdm6bMuT injected",
+   "RNA_Blastocyst_Kdm6bMuT_rep1"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 92,
+  "accession": "SAMN16549982",
+  "target_field": "knockout_gene",
+  "target_value": "Bin1",
+  "verdict": "found",
+  "quotes": [
+   "Bin1mck-/-"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 93,
+  "accession": "SAMN05970441",
+  "target_field": "overexpressed_gene",
+  "target_value": "Kras",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 94,
+  "accession": "SAMN13922048",
+  "target_field": "knockout_gene",
+  "target_value": "Il17rc",
+  "verdict": "found",
+  "quotes": [
+   "AdIl17rc KO"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 95,
+  "accession": "SAMN41070185",
+  "target_field": "overexpressed_gene",
+  "target_value": "SORL1",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "fabricated / no textual basis"
+ },
+ {
+  "case_index": 96,
+  "accession": "SAMN39878456",
+  "target_field": "chip_antigen",
+  "target_value": "FKB1",
+  "verdict": "not_found",
+  "quotes": [],
+  "gap_type": "requires domain knowledge beyond the record"
+ },
+ {
+  "case_index": 97,
+  "accession": "SAMN10817071",
+  "target_field": "knockdown_gene",
+  "target_value": "GR",
+  "verdict": "found",
+  "quotes": [
+   "shGR",
+   "shGR_INPUT2"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 98,
+  "accession": "SAMN54177569",
+  "target_field": "overexpressed_gene",
+  "target_value": "CETP",
+  "verdict": "found",
+  "quotes": [
+   "APPxCETP double transgenic"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ },
+ {
+  "case_index": 99,
+  "accession": "SAMN42535834",
+  "target_field": "knockout_gene",
+  "target_value": "Hoxb13",
+  "verdict": "found",
+  "quotes": [
+   "Hoxb13hd homozygous",
+   "RNA-seq of E10.5 headless embryo Hoxb13hd homozygous replicate 2"
+  ],
+  "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+ }
+]

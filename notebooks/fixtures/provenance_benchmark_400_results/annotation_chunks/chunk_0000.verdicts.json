@@ -1,0 +1,184 @@
+[
+  {
+    "case_index": 0,
+    "accession": "SAMN32817925",
+    "target_field": "cell_type",
+    "target_value": "CD45 positive cell",
+    "verdict": "found",
+    "quotes": ["CD45 positives cells", "hCD45 cells, WT-MSC, rep 3"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 1,
+    "accession": "SAMN49991465",
+    "target_field": "drug",
+    "target_value": "nivolumab",
+    "verdict": "found",
+    "quotes": ["Repeat Ure+Nivo", "PD-1/PD-L1 treatment naive"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 2,
+    "accession": "SAMN50545886",
+    "target_field": "knockout_gene",
+    "target_value": "Trsp",
+    "verdict": "found",
+    "quotes": ["TrspN2_CR"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 3,
+    "accession": "SAMD00204456",
+    "target_field": "overexpressed_gene",
+    "target_value": "Bmi1",
+    "verdict": "found",
+    "quotes": ["mBmi1-overexpressing MM.1S cells", "MM1S_mBmi1_OE"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 4,
+    "accession": "SAMN14837113",
+    "target_field": "cell_type",
+    "target_value": "cholangiocyte",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "requires domain knowledge beyond the record"
+  },
+  {
+    "case_index": 5,
+    "accession": "SAMN17036691",
+    "target_field": "knockout_gene",
+    "target_value": "Dnmt3b",
+    "verdict": "found",
+    "quotes": ["Dnmt1/3a/3b-TKO"],
+    "gap_type": "compound token (word/phrase inserted between parts of the value)"
+  },
+  {
+    "case_index": 6,
+    "accession": "SAMN00622324",
+    "target_field": "tissue",
+    "target_value": "amnion",
+    "verdict": "found",
+    "quotes": ["Human Amniotic Epithelial Cells"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 7,
+    "accession": "SAMD00266187",
+    "target_field": "cell_type",
+    "target_value": "osteoblast",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "requires domain knowledge beyond the record"
+  },
+  {
+    "case_index": 8,
+    "accession": "SAMD00216652",
+    "target_field": "knockout_gene",
+    "target_value": "Crk",
+    "verdict": "found",
+    "quotes": ["ChIP_CrkCrkL KO_HA1100_input"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 9,
+    "accession": "SAMEA6124270",
+    "target_field": "drug",
+    "target_value": "interleukin 35",
+    "verdict": "found",
+    "quotes": ["interleukin 35 (IL-35)/IL-10 cotreatment"],
+    "gap_type": "other",
+    "gap_type_note": "No lexical gap at all: the value is verbatim in Description.Comment.Paragraph, a field the deterministic search evidently did not cover."
+  },
+  {
+    "case_index": 10,
+    "accession": "SAMN18978444",
+    "target_field": "drug",
+    "target_value": "Interferon-beta",
+    "verdict": "found",
+    "quotes": ["IFNb-treated Th1 cells", "Th1-3rd_IFNb_RNA"],
+    "gap_type": "abbreviation (raw text abbreviates the value)"
+  },
+  {
+    "case_index": 11,
+    "accession": "SAMEA116346607",
+    "target_field": "drug",
+    "target_value": "IL-27",
+    "verdict": "found",
+    "quotes": ["25 ng/ml murine IL-27 (R&D Systems)"],
+    "gap_type": "other",
+    "gap_type_note": "No lexical gap at all: the value is verbatim in Description.Comment.Paragraph, a field the deterministic search evidently did not cover."
+  },
+  {
+    "case_index": 12,
+    "accession": "SAMN05580024",
+    "target_field": "knockout_gene",
+    "target_value": "endoA2",
+    "verdict": "found",
+    "quotes": ["endoA1A2 double KO (DKO)"],
+    "gap_type": "compound token (word/phrase inserted between parts of the value)"
+  },
+  {
+    "case_index": 13,
+    "accession": "SAMD00195589",
+    "target_field": "cell_type",
+    "target_value": "Six2 positive cell",
+    "verdict": "found",
+    "quotes": ["Six2 possitive cells isolated from Foxc1 and Foxc2 double conditional knockout kidney at E18.5."],
+    "gap_type": "misspelling (typo, below fuzzy's safe length threshold)"
+  },
+  {
+    "case_index": 14,
+    "accession": "SAMN37849997",
+    "target_field": "knockout_gene",
+    "target_value": "C13",
+    "verdict": "found",
+    "quotes": ["LS200C13-A ko", "LS200"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 15,
+    "accession": "SAMN17496950",
+    "target_field": "knockdown_gene",
+    "target_value": "SRC",
+    "verdict": "found",
+    "quotes": ["siSrc transfected (24hrs) SARS-CoV-2 infected (MOI 0.1)"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 16,
+    "accession": "SAMN46199590",
+    "target_field": "cell_type",
+    "target_value": "pancreatic cancer cell",
+    "verdict": "found",
+    "quotes": ["Murine pancreatic cancer"],
+    "gap_type": "reworded (paraphrase, word-form, or punctuation variant)"
+  },
+  {
+    "case_index": 17,
+    "accession": "SAMN25244359",
+    "target_field": "cell_line",
+    "target_value": "NCI-H596",
+    "verdict": "found",
+    "quotes": ["MET delta 14 exon 3h HGF NCIH596S3skp143hHGF2"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 18,
+    "accession": "SAMN40378243",
+    "target_field": "overexpressed_gene",
+    "target_value": "MET",
+    "verdict": "found",
+    "quotes": ["G3: S45Y-CTNNB1 + hMET"],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  },
+  {
+    "case_index": 19,
+    "accession": "SAMN17610439",
+    "target_field": "knockdown_gene",
+    "target_value": "AS",
+    "verdict": "not_found",
+    "quotes": [],
+    "gap_type": "fused token (value's letters directly attached to a prefix or suffix, no separator)"
+  }
+]

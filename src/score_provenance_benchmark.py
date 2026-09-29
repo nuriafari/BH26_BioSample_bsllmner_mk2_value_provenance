@@ -1,7 +1,7 @@
 """Scores Benchmark A (`paths.PROVENANCE_BENCHMARK_400_PARQUET`) once every piece is ready:
 the Claude Opus reference annotation (20 chunk `.verdicts.json` files, see
 `build_benchmark_annotation_chunks.py`) and each Qwen model's two-condition run (see
-`run_provenance_benchmark_qwen.py`, one `.jsonl` per model in `data/derived/provenance_benchmark_400/`).
+`run_provenance_benchmark_qwen.py`, one `.jsonl` per model in `notebooks/fixtures/provenance_benchmark_400_results/`).
 
 Three things this reports:
 1. Precision/recall/accuracy per model, per context condition (`attributes` vs `full_record`),
@@ -27,7 +27,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from bs_entries import _record_search_groups, as_list, unwrap_biosample
+from bs_entries import as_list, unwrap_biosample
 from build_benchmark_annotation_chunks import _raw_records_by_run
 from llm_evidence import _ground_quotes
 from paths import PROVENANCE_BENCHMARK_400_PARQUET
@@ -45,11 +45,15 @@ def load_claude_annotations(chunks_dir: Path) -> pd.DataFrame:
     df = pd.DataFrame(rows)
     missing = set(range(400)) - set(df["case_index"])
     if missing:
-        raise ValueError(f"{len(missing)} case(s) have no Claude verdict: {sorted(missing)[:10]}")
+        raise ValueError(
+            f"{len(missing)} case(s) have no Claude verdict: {sorted(missing)[:10]}"
+        )
     return df.sort_values("case_index").reset_index(drop=True)
 
 
-def verify_claude_quotes(claude_df: pd.DataFrame, raw_by_accession: dict) -> pd.DataFrame:
+def verify_claude_quotes(
+    claude_df: pd.DataFrame, raw_by_accession: dict
+) -> pd.DataFrame:
     """Independently re-grounds every Claude quote against the complete record (Claude was shown
     the complete record, so `full_record=True`), with the SAME all-quotes-must-ground rule used for
     Qwen -- closes the asymmetry flagged in the pre-existing methods review. Adds `claude_accepted`
@@ -68,7 +72,9 @@ def verify_claude_quotes(claude_df: pd.DataFrame, raw_by_accession: dict) -> pd.
     return claude_df
 
 
-def evidence_in_attribute(accession: str, evidence_fields: list[str], raw_by_accession: dict) -> bool:
+def evidence_in_attribute(
+    accession: str, evidence_fields: list[str], raw_by_accession: dict
+) -> bool:
     """Whether EVERY one of Claude's grounded evidence fields is a genuine submitted attribute name
     on this record (not `title`, `comment`, or any other secondary field) -- the filter this
     benchmark's context-scope comparison is restricted to, since only these cases are ones the
@@ -78,7 +84,10 @@ def evidence_in_attribute(accession: str, evidence_fields: list[str], raw_by_acc
         return False
     raw = raw_by_accession[accession]
     bs = unwrap_biosample(raw)
-    attribute_names = {a.get("attribute_name") for a in as_list((bs.get("Attributes") or {}).get("Attribute"))}
+    attribute_names = {
+        a.get("attribute_name")
+        for a in as_list((bs.get("Attributes") or {}).get("Attribute"))
+    }
     return all(field in attribute_names for field in evidence_fields)
 
 
@@ -86,7 +95,9 @@ def load_qwen_results() -> pd.DataFrame:
     frames = []
     for path in sorted(QWEN_OUT_DIR.glob("*.jsonl")):
         model = json.loads(path.with_suffix(".meta.json").read_text())["model"]
-        rows = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
+        rows = [
+            json.loads(line) for line in path.read_text().splitlines() if line.strip()
+        ]
         for row in rows:
             row["model"] = model
         frames.append(pd.DataFrame(rows))
@@ -103,7 +114,16 @@ def score(predicted: pd.Series, reference: pd.Series) -> dict:
     precision = tp / (tp + fp) if (tp + fp) else float("nan")
     recall = tp / (tp + fn) if (tp + fn) else float("nan")
     accuracy = (tp + tn) / len(predicted) if len(predicted) else float("nan")
-    return {"n": len(predicted), "tp": tp, "fp": fp, "fn": fn, "tn": tn, "precision": precision, "recall": recall, "accuracy": accuracy}
+    return {
+        "n": len(predicted),
+        "tp": tp,
+        "fp": fp,
+        "fn": fn,
+        "tn": tn,
+        "precision": precision,
+        "recall": recall,
+        "accuracy": accuracy,
+    }
 
 
 def main() -> None:
@@ -117,26 +137,46 @@ def main() -> None:
     claude_df = load_claude_annotations(args.chunks_dir)
     claude_df = verify_claude_quotes(claude_df, raw_by_accession)
     claude_df["evidence_in_attribute"] = [
-        evidence_in_attribute(acc, fields, raw_by_accession) for acc, fields in zip(claude_df["accession"], claude_df["claude_evidence_fields"])
+        evidence_in_attribute(acc, fields, raw_by_accession)
+        for acc, fields in zip(
+            claude_df["accession"], claude_df["claude_evidence_fields"]
+        )
     ]
 
-    print(f"Claude reference: {claude_df['claude_accepted'].sum()}/{len(claude_df)} accepted as found")
-    n_hallucinated = ((claude_df["verdict"] == "found") & ~claude_df["claude_accepted"]).sum()
+    print(
+        f"Claude reference: {claude_df['claude_accepted'].sum()}/{len(claude_df)} accepted as found"
+    )
+    n_hallucinated = (
+        (claude_df["verdict"] == "found") & ~claude_df["claude_accepted"]
+    ).sum()
     if n_hallucinated:
-        print(f"  {n_hallucinated} Claude 'found' verdicts had a quote that failed independent grounding -- demoted to not-accepted")
-    print(f"  {claude_df['evidence_in_attribute'].sum()}/{claude_df['claude_accepted'].sum()} accepted cases have ALL evidence in a submitted attribute")
+        print(
+            f"  {n_hallucinated} Claude 'found' verdicts had a quote that failed independent grounding -- demoted to not-accepted"
+        )
+    print(
+        f"  {claude_df['evidence_in_attribute'].sum()}/{claude_df['claude_accepted'].sum()} accepted cases have ALL evidence in a submitted attribute"
+    )
 
     qwen_df = load_qwen_results()
-    merged = qwen_df.merge(claude_df[["case_index", "claude_accepted", "evidence_in_attribute"]], on="case_index")
+    merged = qwen_df.merge(
+        claude_df[["case_index", "claude_accepted", "evidence_in_attribute"]],
+        on="case_index",
+    )
 
-    print("\n=== Precision/recall/accuracy per model x condition, vs Claude reference ===")
+    print(
+        "\n=== Precision/recall/accuracy per model x condition, vs Claude reference ==="
+    )
     summary_rows = []
     for (model, condition), group in merged.groupby(["model", "condition"]):
         s = score(group["accepted"], group["claude_accepted"])
         s["model"], s["condition"] = model, condition
         summary_rows.append(s)
-        print(f"{model:30s} {condition:12s} n={s['n']:3d} precision={s['precision']:.3f} recall={s['recall']:.3f} accuracy={s['accuracy']:.3f}")
-    pd.DataFrame(summary_rows).to_parquet(QWEN_OUT_DIR / "summary_precision_recall.parquet", index=False)
+        print(
+            f"{model:30s} {condition:12s} n={s['n']:3d} precision={s['precision']:.3f} recall={s['recall']:.3f} accuracy={s['accuracy']:.3f}"
+        )
+    pd.DataFrame(summary_rows).to_parquet(
+        QWEN_OUT_DIR / "summary_precision_recall.parquet", index=False
+    )
 
     print("\n=== Context-scope comparison: evidence-in-attribute subset only ===")
     subset = merged[merged["evidence_in_attribute"]]
